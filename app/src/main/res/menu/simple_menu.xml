@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="cn.wsgwz.myapplication.MainActivity">
+  <!--  <item
+        android:id="@+id/action_again_send_request"
+        android:orderInCategory="100"
+        android:title="重新发送"
+        app:showAsAction="never" />-->
+
+    <item android:id="@+id/search"
+          android:title="搜索"
+          app:showAsAction="always"
+          app:actionViewClass="androidx.appcompat.widget.SearchView"
+    />
+
+</menu>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<color name="colorPrimary">#D8A714</color>-->
+    <color name="colorPrimary">#D8A714</color>
+    <color name="colorPrimaryDark">#EE9614</color>
+    <color name="colorAccent">#CA1452</color>
+    <color name="windowsBackground">@android:color/white</color>
+    <color name="toolbarBackground">#11333333</color>
+</resources>

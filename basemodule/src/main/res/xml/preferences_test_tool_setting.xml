@@ -1,0 +1,25 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:title="@string/app_name">
+
+
+    <!--<PreferenceCategory >-->
+    <CheckBoxPreference
+            android:key="is_show_network_data_suspension_window"
+            android:title="@string/suspension_windows"/>
+
+
+
+
+        <ListPreference
+                android:title="@string/base_url"
+                android:key="base_url"
+                android:entries="@array/base_url_entries"
+                android:entryValues="@array/base_url_entryValues"
+        ></ListPreference>
+
+
+
+
+    <!--</PreferenceCategory>-->
+
+</PreferenceScreen>

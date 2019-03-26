@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/parent_fl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/suspension_window_bg">
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/data_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+
+    <View
+            android:id="@+id/drag_v"
+            android:clickable="true"
+            android:layout_width="53.333dp"
+            android:layout_height="30dp"
+            android:layout_gravity="bottom"
+            android:background="#44282727"/>
+
+</FrameLayout>

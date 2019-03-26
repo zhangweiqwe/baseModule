@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".NetworkDataActivity">
+    <!--  <item
+          android:id="@+id/action_again_send_request"
+          android:orderInCategory="100"
+          android:title="重新发送"
+          app:showAsAction="never" />-->
+
+    <item android:id="@+id/resend"
+          android:title="@string/resend"
+          app:showAsAction="ifRoom"
+    />
+
+</menu>

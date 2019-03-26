@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <paths>
+
+        <external-cache-path name="ext_cache" path="/"/>
+        <external-files-path
+            name="Files"
+            path="." />
+    <!--
+            <files-path name="my_files" path= "." />-->
+
+    </paths>
+
+
+
