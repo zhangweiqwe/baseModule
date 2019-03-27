@@ -9,14 +9,14 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application android:networkSecurityConfig="@xml/network_security_config">
         <activity android:name=".TestToolSettingActivity"
                   android:launchMode="singleTask"
                   android:label="@string/test_tool"></activity>
-        <activity android:name=".NetworkDataActivity"
-
-                  >
+        <activity android:name=".NetworkDataActivity">
         </activity>
         <activity
                 android:name=".BaseWebViewActivity"
