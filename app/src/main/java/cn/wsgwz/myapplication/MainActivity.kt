@@ -7,6 +7,7 @@ import android.app.Notification
 import android.app.NotificationManager
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.database.Observable
 import android.net.Uri
 import android.os.Bundle
@@ -33,23 +34,22 @@ import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.FormBody
 import javax.inject.Inject
 import cn.wsgwz.basemodule.data.User
+import cn.wsgwz.basemodule.utilities.*
 import cn.wsgwz.basemodule.utilities.manager.DownloadManager
 import cn.wsgwz.basemodule.utilities.manager.FileManager
 import cn.wsgwz.basemodule.utilities.manager.UserManager
-import cn.wsgwz.basemodule.utilities.ApkUtil
-import cn.wsgwz.basemodule.utilities.DownloadsUtil
-import cn.wsgwz.basemodule.utilities.GlideUtil
-import cn.wsgwz.basemodule.utilities.RetrofitUtil
 import cn.wsgwz.basemodule.widgets.ProgressView
 import cn.wsgwz.basemodule.widgets.suspension.SuspensionWindowManager
 import com.wanglu.photoviewerlibrary.PhotoViewer
 import io.reactivex.ObservableEmitter
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.Observer
+import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
 import okhttp3.Request
 import retrofit2.Call
 import retrofit2.Response
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -189,20 +189,6 @@ class MainActivity : AppBaseActivity() {
         notificationBuilder.setOngoing(true)
 
 
-        var disposableObserver: DisposableObserver<ProgressInfo>? = null
-
-        val progressView = ProgressView(context = this)
-        val alertDialog =
-                AlertDialog.Builder(this).setTitle(cn.wsgwz.basemodule.R.string.downloading).setView(progressView)
-                        .setCancelable(false)
-                        .setPositiveButton(R.string.cancel) { _, _ ->
-                            disposableObserver?.dispose()
-                            Handler().postDelayed({
-                                notificationBuilder.setOngoing(false)
-                                notificationBuilder.setContentTitle(getString(R.string.user_canceled))
-                                notificationManager.notify(notifyId, notificationBuilder.build())
-                            }, 200)
-                        }.create()
         //alertDialog.show()
 
         if (false)
@@ -226,22 +212,6 @@ class MainActivity : AppBaseActivity() {
 
                                     notificationManager.notify(notifyId, notificationBuilder.build())
 
-                                    alertDialog.setTitle(R.string.download_success)
-                                    alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).also {
-                                        it.text = getString(R.string.install)
-                                        it.setOnClickListener {
-                                            startActivity(ApkUtil.getInstallIntent(
-                                                    this@MainActivity,
-                                                    DownloadManager.getFile(
-                                                            this@MainActivity,
-                                                            FileManager.UPDATE_FILE_NAME
-                                                    )?.apply {
-                                                        Logger.t(TAG).d("${exists()}")
-                                                    }
-                                            ))
-                                        }
-                                    }
-                                    alertDialog.dismiss()
                                     //Logger.t(TAG).d("onComplete")
                                 }
 
@@ -257,7 +227,6 @@ class MainActivity : AppBaseActivity() {
                                             notificationBuilder.build().apply {
                                                 flags = flags or Notification.FLAG_ONLY_ALERT_ONCE
                                             })
-                                    progressView.updateProgress(t)
                                     //Logger.t(TAG).d("onNext ${t.bytesRead} ${t.contentLength} ${Thread.currentThread().id}")
                                 }
 
@@ -265,11 +234,9 @@ class MainActivity : AppBaseActivity() {
                                     notificationBuilder.setOngoing(false)
                                     notificationBuilder.setContentTitle(getString(R.string.download_error))
                                     notificationManager.notify(notifyId, notificationBuilder.build())
-                                    alertDialog.dismiss()
                                     //Logger.t(TAG).d("onError ${e.let { it.javaClass.canonicalName +"${it is IOException}"+ it.message}} ${Thread.currentThread().id}")
                                 }
                             }.apply {
-                                disposableObserver = this
                                 compositeDisposable.add(this)
                             }
                     )
@@ -308,88 +275,126 @@ class MainActivity : AppBaseActivity() {
         }
 
 
-    if(false){
-        val mDownloadManager = getSystemService(DOWNLOAD_SERVICE) as android.app.DownloadManager
-        val resource = Uri.parse(BaseConst.SIMPLE_FILE_URL_2);
-        val request = android.app.DownloadManager.Request(resource);
-//下载的本地路径，表示设置下载地址为SD卡的Download文件夹，文件名为mobileqq_android.apk。
-        //request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "mobileqq_android${SimpleDateFormat(BaseConst.SIMPLE_DATA_FORMAT_2).format(Date())}.apk");
-        request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, "update${SimpleDateFormat(BaseConst.SIMPLE_DATA_FORMAT_2).format(Date())}.apk");
+        if (true) {
 
-//start 一些非必要的设置
-        request.setAllowedNetworkTypes(android.app.DownloadManager.Request.NETWORK_MOBILE or android.app.DownloadManager.Request.NETWORK_WIFI);
-        request.setNotificationVisibility(android.app.DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.setVisibleInDownloadsUi(true);
-        request.setTitle(getString(R.string.app_name));
-//end 一些非必要的设置
-        val id = mDownloadManager.enqueue(request);
+            var disposable: Disposable? = null
+            val fileName = "update${SimpleDateFormat(BaseConst.SIMPLE_DATA_FORMAT_2).format(Date())}.apk"
 
 
+            val progressView = ProgressView(context = this)
+            val alertDialog =
+                    AlertDialog.Builder(this).setTitle(cn.wsgwz.basemodule.R.string.downloading).setView(progressView)
+                            .setCancelable(false)
+                            .setOnDismissListener {
+                                disposable?.also {
+                                    if (!it.isDisposed) {
+                                        it.dispose()
+                                    }
+                                }
+                            }
+                            .setPositiveButton(R.string.cancel) { _, _ ->
 
-        io.reactivex.Observable.create(ObservableOnSubscribe<DownloadsUtil.DownloadInfo> {
-            Logger.t(TAG).d("start download"+DownloadsUtil.downLoadMangerIsEnable(this))
+                            }.create()
+            alertDialog.show()
 
-            while (true) {
 
-                try {
-                    Thread.sleep(100)
-                } catch (e: InterruptedException) {
-                    e.printStackTrace()
+            val mDownloadManager = getSystemService(DOWNLOAD_SERVICE) as android.app.DownloadManager
+            val resource = Uri.parse(BaseConst.SIMPLE_FILE_URL_2);
+            val request = android.app.DownloadManager.Request(resource);
+            request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, fileName)
+            request.setAllowedNetworkTypes(android.app.DownloadManager.Request.NETWORK_MOBILE or android.app.DownloadManager.Request.NETWORK_WIFI);
+            request.setNotificationVisibility(android.app.DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            request.setVisibleInDownloadsUi(true)
+            request.setTitle(getString(R.string.app_name));
+            val id = mDownloadManager.enqueue(request);
+
+
+
+
+
+
+            io.reactivex.Observable.create(ObservableOnSubscribe<DownloadsUtil.DownloadInfo> {
+                while (true) {
+
+                    try {
+                        Thread.sleep(100)
+                    } catch (e: InterruptedException) {
+                        e.printStackTrace()
+                    }
+
+                    val info = DownloadsUtil.getById(this, id)
+                    if (info == null) {
+                        it.onError(Throwable("info == null"))
+                        //Logger.t(TAG).d(info)
+                        break
+
+                    } else if (info.status == android.app.DownloadManager.STATUS_FAILED) {
+                        it.onError(Throwable(info.toString()))
+                        //Logger.t(TAG).d(info)
+                        break
+
+                    } else if (info.status == android.app.DownloadManager.STATUS_SUCCESSFUL) {
+                        //Logger.t(TAG).d(info)
+                        it.onComplete()
+                        break
+                    } else {
+                        it.onNext(info)
+                        //Logger.t(TAG).d(info)
+                    }
+
                 }
 
-                val info = DownloadsUtil.getById(this, id)
-                if (info == null) {
-                    Logger.t(TAG).d(info)
-                    break
+            })
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(object : DisposableObserver<DownloadsUtil.DownloadInfo>() {
+                        override fun onComplete() {
+                            alertDialog.setTitle(R.string.download_success)
+                            progressView.visibility = View.GONE
+                            val file = File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), fileName)
+                            alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).also {
+                                it.text = getString(R.string.install)
+                                it.setOnClickListener {
+                                    startActivity(ApkUtil.getInstallIntent(this@MainActivity, file))
+                                }
+                                alertDialog.dismiss()
+                            }
 
-                } else if (info.status == android.app.DownloadManager.STATUS_FAILED) {
-                    Logger.t(TAG).d(info)
+                        }
 
-                    break
+                        override fun onNext(info: DownloadsUtil.DownloadInfo) {
+                            if (info.totalSize <= 0 || info.status != android.app.DownloadManager.STATUS_RUNNING) {
+                                alertDialog.setTitle(R.string.waiting_for_download)
+                            } else {
+                                alertDialog.setTitle(cn.wsgwz.basemodule.R.string.downloading)
+                                progressView.updateProgress(info)
+                            }
+                        }
 
-                } else if (info.status == android.app.DownloadManager.STATUS_SUCCESSFUL) {
-                    Logger.t(TAG).d(info)
-                    break
-                } else {
-                    //Logger.t(TAG).d(info)
-                }
-
-            }
+                        override fun onError(e: Throwable) {
+                            alertDialog.setTitle(R.string.download_error)
+                            progressView.visibility = View.GONE
+                        }
 
 
-        })
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : DisposableObserver<DownloadsUtil.DownloadInfo>() {
-                    override fun onComplete() {
+                    }.also {
+                        disposable = it
+                    })
+        }
 
-                    }
+        /*Logger.t(TAG).d(DownloadsUtil.downLoadMangerIsEnable(this))
 
-                    override fun onNext(info: DownloadsUtil.DownloadInfo) {
-                        /*  if (info.totalSize <= 0 || info.status != DownloadManager.STATUS_RUNNING) {
-                              dialog.setContent(R.string.download_view_waiting);
-                              dialog.setShowProcess(false);
-                          } else {
-                              dialog.setContent(R.string.download_running);
-                              dialog.setProgress(info.bytesDownloaded / 1024);
-                              dialog.setMaxProgress(info.totalSize / 1024);
-                              dialog.setShowProcess(true);
-                          }
-                        */
-                    }
-
-                    override fun onError(e: Throwable) {
-                    }
-
-                })
-    }
-
-        Logger.t(TAG).d(DownloadsUtil.downLoadMangerIsEnable(this))
-
-        DownloadsUtil.openDownloadSetting(this)
+        DownloadsUtil.openDownloadSetting(this)*/
 
     }
 
+
+    override fun onConnectivityChange() {
+        super.onConnectivityChange()
+
+        if (NetworkUtil.isNetworkActive(this)) {
+        }
+    }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {

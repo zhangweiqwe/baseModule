@@ -27,6 +27,7 @@
     <string name="whether_to_cancel">是否取消？</string>
     <string name="downloading">下载中</string>
     <string name="download_error">下载失败</string>
+    <string name="waiting_for_download">等待下载</string>
     <string name="download_success">下载成功</string>
     <string name="user_canceled">用户取消</string>
     <string name="install">安装</string>
