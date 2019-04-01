@@ -23,6 +23,8 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary true
 
+        renderscriptTargetApi 25
+        renderscriptSupportModeEnabled true
         multiDexEnabled true
     }
    /* buildTypes {
@@ -108,7 +110,8 @@ dependencies {
 
     kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion" // Dagger 2 注解处理
 
-    implementation project(':basemodule')
+    //implementation project(':basemodule')
+    implementation project(':common')
 
     //https://github.com/razerdp/BasePopup
     implementation 'com.github.razerdp:BasePopup:2.1.8'

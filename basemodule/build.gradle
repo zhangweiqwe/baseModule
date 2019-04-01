@@ -22,8 +22,6 @@ android {
         vectorDrawables.useSupportLibrary true
 
 
-        renderscriptTargetApi 25
-        renderscriptSupportModeEnabled true
         multiDexEnabled true
 
     }
