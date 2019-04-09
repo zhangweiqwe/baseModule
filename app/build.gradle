@@ -27,7 +27,7 @@ android {
         renderscriptSupportModeEnabled true
         multiDexEnabled true
     }
-   /* buildTypes {
+    buildTypes {
         release {
             shrinkResources true
             minifyEnabled true
@@ -46,7 +46,7 @@ android {
                 }
             }
         }
-    }*/
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
