@@ -90,7 +90,7 @@ class Toolbar private constructor() {
                         dividerDrawable = ShapeDrawable(RoundRectShape(FloatArray(8), null, null)).apply {
                             paint.color = Color.TRANSPARENT
                             paint.style = Paint.Style.STROKE
-                            intrinsicWidth = DensityUtil.dp2px(context, 8f).toInt()
+                            intrinsicWidth = DensityUtil.dp2px( 8f).toInt()
                         }
                     }
 

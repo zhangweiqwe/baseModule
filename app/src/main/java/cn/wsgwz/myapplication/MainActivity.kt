@@ -320,6 +320,7 @@ class MainActivity : AppBaseActivity() {
                         Thread.sleep(100)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
+                        break
                     }
 
                     val info = DownloadsUtil.getById(this, id)

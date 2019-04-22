@@ -25,6 +25,7 @@ object BaseConst {
     //44M
     const val SIMPLE_FILE_URL_2 =
         "http://p.gdown.baidu.com/0b5e19798c11d5bbf21ac65cebcfbe7ae546f4bbdd8034443334a2012475b281612e6b175bf821e3ce2bf45b0ca3256ea7012e6d8b0b068a0143f46f144dda403d822df2cc2d19ff2e660a9a4a7b1d3b285fba1186e3f7b94aa1b39a861985dfdd2f536d8b9a4a3a4100a537f8158315eb73a5aa23bea5791542c5208de62224f2950017821ac6486d1f9015322f940cd3ee4fefefe0075c44341c125b461feed312c2c83e9214da61e714cc0489e48061288f43ef3adc02ed30cf11856d02558a1ab5e957033f72945fe60ca3207e577782082a5bb4e8cd71a39a6d29a9dd35abd8cbdf1606666bb45be77c7b343107c1250aa4f4faf97115245122d521684581bcdaa0db3de549c443fadf9796956c6a709516c9b3bd05a782d04b6a8e7643d067a313cc6ac96e60aa968608843c719c3e075339d1942e"
+
     //16M
     const val SIMPLE_FILE_URL_3 =
         "https://downapp.baidu.com/appsearch/AndroidPhone/1.0.77.166/1/1012271b/20190128174051/appsearch_AndroidPhone_1-0-77-166_1012271b.apk?responseContentDisposition=attachment%3Bfilename%3D%22appsearch_AndroidPhone_1012271b.apk%22&responseContentType=application%2Fvnd.android.package-archive&request_id=1550041334_9525465496&type=static"

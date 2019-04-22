@@ -52,10 +52,10 @@ class LogSuspensionWindow private constructor(private val context: Context) : Su
 
     init {
         wmLayoutParams = WindowManager.LayoutParams().apply {
-            width = DensityUtil.dp2px(context, 120f).toInt().apply {
+            width = DensityUtil.dp2px( 120f).toInt().apply {
                 wWidth = this
             }
-            height = DensityUtil.dp2px(context, 213.333f).toInt().apply {
+            height = DensityUtil.dp2px( 213.333f).toInt().apply {
                 wHeight = this
             }
             //windowAnimations = R.style.Zoom
@@ -158,8 +158,8 @@ class LogSuspensionWindow private constructor(private val context: Context) : Su
                     if (suspensionWindow == null) {
                         val insertSuspensionWindow = cn.wsgwz.basemodule.data.SuspensionWindow(
                             TAG,
-                            DensityUtil.dp2px(context, 138f).toInt(),
-                            DensityUtil.dp2px(context, 22f).toInt()
+                            DensityUtil.dp2px( 138f).toInt(),
+                            DensityUtil.dp2px( 22f).toInt()
                         )
                         wmLayoutParams.x = insertSuspensionWindow.x
                         wmLayoutParams.y = insertSuspensionWindow.y

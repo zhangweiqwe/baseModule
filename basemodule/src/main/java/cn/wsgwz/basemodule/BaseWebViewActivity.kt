@@ -33,7 +33,7 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
 
     private var windowTranslucentStatus: Boolean = false
 
-    protected lateinit var toolbar_cl: ConstraintLayout
+    protected lateinit var toolbar_parent_cl: ConstraintLayout
     private lateinit var progress_layout: ProgressConstraintLayout
     private lateinit var web_view: ScrollWebView
     private lateinit var video_container_fl: FrameLayout
@@ -44,7 +44,7 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base_web_view)
-        toolbar_cl = findViewById(R.id.parent_cl)
+        toolbar_parent_cl = findViewById(R.id.toolbar_parent_cl)
         progress_layout = findViewById(R.id.progress_layout)
         web_view = findViewById(R.id.web_view)
         video_container_fl = findViewById(R.id.video_container_fl)
@@ -178,10 +178,10 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
                 override fun onScrollChange(v: View, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int) {
                     if (height > scrollY) {
                         val color = 255 * scrollY / height shl 24 or color1
-                        toolbar_cl.setBackgroundColor(color)
+                        toolbar_parent_cl.setBackgroundColor(color)
                         //supportActionBar?.setBackgroundDrawable(ColorDrawable(color))
                     } else {
-                        toolbar_cl.setBackgroundColor(color0)
+                        toolbar_parent_cl.setBackgroundColor(color0)
                         //supportActionBar?.setBackgroundDrawable(ColorDrawable(color0))
                     }
 

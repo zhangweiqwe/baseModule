@@ -1,67 +1,64 @@
 package cn.wsgwz.basemodule.utilities;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.TypedValue;
 
 /**
  * 常用单位转换的辅助类
  * 
  *
- * 
+ * context.getResources().getDisplayMetrics()
  */
 public class DensityUtil
 {
 	private DensityUtil(){}
 	/**
 	 * dp转px
-	 * 
-	 * @param context
+	 *
 	 * @param dpVal
 	 * @return
 	 */
-	public static float dp2px(Context context, float dpVal)
+	public static float dp2px( float dpVal)
 	{
 		return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-				dpVal, context.getResources().getDisplayMetrics());
+				dpVal, Resources.getSystem().getDisplayMetrics());
 	}
 
 
 	/**
 	 * sp转px
-	 * 
-	 * @param context
+	 *
 	 * @param spVal
 	 * @return
 	 */
-	public static int sp2px(Context context, float spVal)
+	public static int sp2px( float spVal)
 	{
 		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
-				spVal, context.getResources().getDisplayMetrics());
+				spVal, Resources.getSystem().getDisplayMetrics());
 	}
 
 	/**
 	 * px转dp
-	 * 
-	 * @param context
+	 *
 	 * @param pxVal
 	 * @return
 	 */
-	public static float px2dp(Context context, float pxVal)
+	public static float px2dp( float pxVal)
 	{
-		final float scale = context.getResources().getDisplayMetrics().density;
+		final float scale = Resources.getSystem().getDisplayMetrics().density;
 		return (pxVal / scale);
 	}
 
 	/**
 	 * px转sp
-	 * 
-	 * @param context
+	 *
 	 * @param pxVal
 	 * @return
 	 */
-	public static float px2sp(Context context, float pxVal)
+	public static float px2sp( float pxVal)
 	{
-		return (pxVal / context.getResources().getDisplayMetrics().scaledDensity);
+		return (pxVal / Resources.getSystem().getDisplayMetrics().scaledDensity);
 	}
 
 }
