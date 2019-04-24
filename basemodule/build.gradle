@@ -105,7 +105,8 @@ dependencies {
     api "com.google.dagger:dagger-android-support:$rootProject.daggerVersion" // Dagger 2 Android 支持包
 
     //https://github.com/google/gson
-    api 'com.google.code.gson:gson:2.8.5'
+    api "com.google.code.gson:gson:$rootProject.gsonVersion"
+
 
 
     api "com.squareup.okhttp3:okhttp:$rootProject.okhttpVersion"

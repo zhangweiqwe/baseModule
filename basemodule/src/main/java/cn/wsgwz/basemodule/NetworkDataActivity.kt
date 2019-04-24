@@ -27,7 +27,7 @@ class NetworkDataActivity : BaseActivity(), NetworkDataManager.OnResponseItemDat
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_network_data)
         requestData = intent.getParcelableExtra<RequestData>("requestData").also {
-            request_url_et.setText(it.url)
+            request_url_et.setText(it.uri.toString())
         }
         networkDataManager.addOnResponseItemDataChangeListener(this)
 
@@ -55,7 +55,7 @@ class NetworkDataActivity : BaseActivity(), NetworkDataManager.OnResponseItemDat
 
     private fun reSend() {
         progress_bar.visibility = View.VISIBLE
-        BaseConst.OK_HTTP_CLIENT.newCall(Request.Builder().tag(this).url(requestData.url).build())
+        BaseConst.OK_HTTP_CLIENT.newCall(Request.Builder().tag(this).url(requestData.uri.toString()).build())
             .enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     progress_bar.post {

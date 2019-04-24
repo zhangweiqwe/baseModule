@@ -34,7 +34,7 @@ class NetworkDataAdapter(private val context: Context) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         networkDataManager.getRequestData()[position].also { item ->
             holder.parent_cl.tag = item
-            holder.simple_tv.text = item.url
+            holder.simple_tv.text = item.uri.toString()
         }
     }
 

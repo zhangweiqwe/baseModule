@@ -1,18 +1,19 @@
 package cn.wsgwz.basemodule.data
 
+
+import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
 
-class RequestData(val id: String, val url: String):Parcelable {
+class RequestData(val id: String, val uri:Uri) :Parcelable{
     constructor(parcel: Parcel) : this(
-        parcel.readString(),
-        parcel.readString()
-    ) {
+            parcel.readString(),
+            parcel.readParcelable(Uri::class.java.classLoader)) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(id)
-        parcel.writeString(url)
+        parcel.writeParcelable(uri, flags)
     }
 
     override fun describeContents(): Int {
@@ -28,4 +29,5 @@ class RequestData(val id: String, val url: String):Parcelable {
             return arrayOfNulls(size)
         }
     }
+
 }

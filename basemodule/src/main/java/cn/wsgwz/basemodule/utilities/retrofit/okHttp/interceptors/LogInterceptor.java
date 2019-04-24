@@ -16,6 +16,8 @@
 
 package cn.wsgwz.basemodule.utilities.retrofit.okHttp.interceptors;
 
+import android.net.Uri;
+
 import cn.wsgwz.basemodule.data.RequestData;
 import cn.wsgwz.basemodule.data.ResponseData;
 import cn.wsgwz.basemodule.utilities.manager.NetworkDataManager;
@@ -39,22 +41,29 @@ public class LogInterceptor
         String id = chain.hashCode() + "";
 
         RequestBody requestBody = request.body();
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(request.url());
+
+        Uri uri = Uri.parse(request.url().toString());
+        Uri.Builder builder = uri.buildUpon();
+        /*StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(request.url());*/
         if (requestBody instanceof FormBody) {
-            stringBuilder.append("?");
+            /*stringBuilder.append("?");
             FormBody formBody = (FormBody) requestBody;
             for (int i = 0; i < formBody.size(); i++) {
                 if (i != 0) {
                     stringBuilder.append("&");
                 }
                 stringBuilder.append(formBody.encodedName(i) + "=" + formBody.encodedValue(i));
+            }*/
+            FormBody formBody = (FormBody) requestBody;
+            for (int i = 0; i < formBody.size(); i++) {
+                builder.appendQueryParameter(formBody.encodedName(i),  formBody.encodedValue(i));
             }
         }
 
-        RequestData requestData = new RequestData(id, stringBuilder.toString());
+        RequestData requestData = new RequestData(id, builder.build());
         networkDataManager.addRequestData(requestData);
-        Logger.t(TAG).d(requestData.getId() + "-->" + requestData.getUrl());
+        Logger.t(TAG).d(requestData.getId() + "-->" + requestData.getUri().toString());
 
 
         Response response = chain.proceed(request);
