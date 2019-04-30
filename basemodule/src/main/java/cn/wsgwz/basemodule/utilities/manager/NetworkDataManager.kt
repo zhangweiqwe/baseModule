@@ -34,6 +34,7 @@ class NetworkDataManager private constructor() {
 
             if (requestData.size > MAX_LENGTH) {
                 requestData.clear()
+                recyclerView?.adapter?.notifyDataSetChanged()
             }
 
             when (msg.what) {
