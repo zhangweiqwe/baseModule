@@ -42,7 +42,7 @@ buildscript {
 
         multidexVersion = "1.0.3"
         rxpermissionsVersion = "0.10.2"
-        daggerVersion = "2.21"
+        daggerVersion = "2.23.2"
         okhttpVersion = "3.12.1"
         rxandroidVersion = "2.1.0"
         rxjavaVersion = "2.2.6"

@@ -22,7 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class BaseApplication extends Application {
+
+public class BaseApplication extends Application  {
 
     private static final String TAG = BaseApplication.class.getSimpleName();
 
@@ -33,6 +34,8 @@ public class BaseApplication extends Application {
     private SharedPreferences mPref;
 
     private static final List<Activity> activities = new ArrayList<>();
+
+
 
 
     public static BaseApplication getInstance() {
@@ -88,7 +91,8 @@ public class BaseApplication extends Application {
         super.onCreate();
 
         LLog.d(TAG, getCurrentProcessName());
-
+        /*DaggerAppComponent.create()
+                .inject(this);*/
         mInstance = this;
         mUiThread = Thread.currentThread();
         mMainHandler = new Handler();

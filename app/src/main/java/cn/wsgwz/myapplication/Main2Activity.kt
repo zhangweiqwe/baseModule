@@ -11,17 +11,24 @@ import androidx.recyclerview.widget.RecyclerView
 import cn.wsgwz.baselibrary.permission.PermissionV2
 import cn.wsgwz.baselibrary.widgets.suspension.SuspensionWindowManager
 import cn.wsgwz.basemodule.other.SimpleViewHolder
+import cn.wsgwz.basemodule.utilities.LLog
 import cn.wsgwz.basemodule.utilities.NetworkUtil
 import cn.wsgwz.common.ToolbarManager
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_main2.*
 import kotlinx.android.synthetic.main.list_item_test.view.*
+import javax.inject.Inject
+import javax.inject.Named
 
 class Main2Activity : AppBaseActivity() {
 
     companion object {
         private const val TAG = "Main2Activity"
     }
+
+    @Inject
+    @Named("str0")
+    internal lateinit var s:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +39,7 @@ class Main2Activity : AppBaseActivity() {
         ToolbarManager.get().into(this).title("测试")
 
 
+        LLog.d(TAG,s)
 
 
         class TestItem(val name: String?, val onClickListener: View.OnClickListener?)

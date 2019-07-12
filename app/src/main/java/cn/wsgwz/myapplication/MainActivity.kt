@@ -8,7 +8,6 @@ import cn.wsgwz.basemodule.BaseConst
 import cn.wsgwz.basemodule.adapters.BaseFragmentPagerAdapter
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
 import cn.wsgwz.basemodule.utilities.*
 import com.wanglu.photoviewerlibrary.PhotoViewer
 
