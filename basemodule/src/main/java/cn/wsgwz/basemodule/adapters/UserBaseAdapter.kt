@@ -9,7 +9,6 @@ import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import cn.wsgwz.basemodule.R
 import cn.wsgwz.basemodule.data.User
-import cn.wsgwz.basemodule.interfaces.listeners.OnUserSelectListener
 import cn.wsgwz.basemodule.utilities.InjectorUtils
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking

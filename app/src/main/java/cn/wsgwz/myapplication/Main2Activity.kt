@@ -3,6 +3,7 @@ package cn.wsgwz.myapplication
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import cn.wsgwz.baselibrary.permission.PermissionV2
 import cn.wsgwz.baselibrary.widgets.suspension.SuspensionWindowManager
 import cn.wsgwz.basemodule.other.SimpleViewHolder
+import cn.wsgwz.basemodule.utilities.NetworkUtil
 import cn.wsgwz.common.ToolbarManager
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_main2.*
@@ -89,6 +91,24 @@ class Main2Activity : AppBaseActivity() {
             }
 
         }
+    }
 
+
+    override fun onConnectivityChange() {
+        super.onConnectivityChange()
+
+        if (NetworkUtil.isNetworkActive(this)) {
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }
