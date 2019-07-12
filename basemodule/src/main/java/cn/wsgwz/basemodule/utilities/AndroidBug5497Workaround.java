@@ -11,16 +11,17 @@ import android.widget.FrameLayout;
  * Created by admin on 2017/11/9 0009.
  */
 
+
 public class AndroidBug5497Workaround {
 
+    private static final String TAG = AndroidBug5497Workaround.class.getSimpleName();
     // For more information, see https://code.google.com/p/android/issues/detail?id=5497
     // To use this class, simply invoke assistActivity() on an Activity that already has its content view set.
 
     public static void assistActivity(Activity activity) {
         new AndroidBug5497Workaround(activity);
     }
-
-    public static void assistActivity(Activity activity, boolean isTranslucentStatus) {
+    public static void assistActivity(Activity activity,boolean isTranslucentStatus) {
         AndroidBug5497Workaround androidBug5497Workaround = new AndroidBug5497Workaround(activity);
         androidBug5497Workaround.isTranslucentStatus = isTranslucentStatus;
     }
@@ -29,7 +30,7 @@ public class AndroidBug5497Workaround {
     private int usableHeightPrevious;
     private FrameLayout.LayoutParams frameLayoutParams;
 
-    private boolean isTranslucentStatus = false;
+    private boolean isTranslucentStatus = true;
     private Activity activity;
 
     private AndroidBug5497Workaround(final Activity activity) {
@@ -45,6 +46,7 @@ public class AndroidBug5497Workaround {
 
         frameLayoutParams = (FrameLayout.LayoutParams) mChildOfContent.getLayoutParams();
     }
+
 
 
     private void possiblyResizeChildOfContent() {
@@ -74,3 +76,4 @@ public class AndroidBug5497Workaround {
     }
 
 }
+

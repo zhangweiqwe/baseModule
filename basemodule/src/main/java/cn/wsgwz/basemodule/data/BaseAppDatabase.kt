@@ -20,15 +20,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
+import cn.wsgwz.basemodule.widgets.suspension.bean.SuspensionWindowBean
+import cn.wsgwz.basemodule.widgets.suspension.bean.SuspensionWindowDao
 
 /**
  * The Room database for this app
  */
-@Database(entities = [ User::class,SuspensionWindow::class], version = 1, exportSchema = false)
+@Database(entities = [ User::class, SuspensionWindowBean::class], version = 3, exportSchema = false)
 //@TypeConverters(Converters::class)
 abstract class BaseAppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao

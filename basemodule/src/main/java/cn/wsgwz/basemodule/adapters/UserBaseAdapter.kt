@@ -15,13 +15,18 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class UserBaseAdapter(context: Context, private val onUserSelectListener: OnUserSelectListener) :
-    BaseAdapter(), Filterable, View.OnClickListener {
+        BaseAdapter(), Filterable, View.OnClickListener {
+
+
+    interface OnUserSelectListener {
+        fun onSelect(user: User)
+    }
 
     private var isSelect = false
 
     private val layoutInflater = LayoutInflater.from(context)
     private val userRepository = InjectorUtils.provideUserRepository(context)
-    private var users:MutableList<User> = runBlocking {
+    private var users: MutableList<User> = runBlocking {
         userRepository.getUsers().toMutableList()
     }
 
@@ -31,9 +36,9 @@ class UserBaseAdapter(context: Context, private val onUserSelectListener: OnUser
         if (view == null) {
             view = layoutInflater.inflate(R.layout.list_item_user, parent, false)
             ViewHolder(
-                view.findViewById(R.id.parent_cl),
-                view.findViewById(R.id.user_name_tv),
-                view.findViewById(R.id.delete_iv)
+                    view.findViewById(R.id.parent_cl),
+                    view.findViewById(R.id.user_name_tv),
+                    view.findViewById(R.id.delete_iv)
             ).apply {
                 view?.tag = this
             }
@@ -41,13 +46,11 @@ class UserBaseAdapter(context: Context, private val onUserSelectListener: OnUser
             view.tag as ViewHolder
         }.apply {
 
-            val user = runBlocking {
-                userRepository.getUsers()[position]
-            }
+            val user = users[position]
             parent_cl.also {
                 it.setOnClickListener(this@UserBaseAdapter)
             }
-            user_name_tv.text = user.id
+            user_name_tv.text = user.phone
             delete_iv.also {
                 it.tag = user
                 it.setOnClickListener(this@UserBaseAdapter)
@@ -67,7 +70,6 @@ class UserBaseAdapter(context: Context, private val onUserSelectListener: OnUser
     }
 
     override fun getCount(): Int {
-
         return users.size
     }
 
@@ -86,8 +88,10 @@ class UserBaseAdapter(context: Context, private val onUserSelectListener: OnUser
                         if (!TextUtils.isEmpty(constraint)) {
                             ArrayList<User>().also { list ->
                                 for (i in runBlocking { userRepository.getUsers() }) {
-                                    if (i.id.contains(constraint)) {
-                                        list.add(i)
+                                    i.phone?.also { phone ->
+                                        if (phone.contains(constraint)) {
+                                            list.add(i)
+                                        }
                                     }
                                 }
 
@@ -106,11 +110,7 @@ class UserBaseAdapter(context: Context, private val onUserSelectListener: OnUser
                     users = (it as List<User>).toMutableList()
                 }
 
-                if (results.count > 0) {
-                    notifyDataSetChanged()
-                } else {
-                    notifyDataSetInvalidated()
-                }
+                notifyDataSetChanged()
             }
 
         }
@@ -140,4 +140,8 @@ class UserBaseAdapter(context: Context, private val onUserSelectListener: OnUser
 
     class ViewHolder(val parent_cl: ConstraintLayout, val user_name_tv: TextView, val delete_iv: ImageView)
 
+
+    companion object {
+        private const val TAG = "UserBaseAdapter"
+    }
 }

@@ -16,11 +16,11 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import cn.wsgwz.basemodule.interfaces.BaseJsInterface
+import cn.wsgwz.basemodule.utilities.LLog
 import cn.wsgwz.basemodule.utilities.manager.UserManager
 import cn.wsgwz.basemodule.utilities.WindowUtil
 import cn.wsgwz.basemodule.widgets.ScrollWebView
 import cn.wsgwz.basemodule.widgets.progress.ProgressConstraintLayout
-import com.orhanobut.logger.Logger
 import java.util.HashMap
 
 open class BaseWebViewActivity : BaseNetworkActivity() {
@@ -80,7 +80,7 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
             override fun onShowCustomView(view: View?, callback: CustomViewCallback?) {
                 super.onShowCustomView(view, callback)
 
-                Logger.t(TAG).d("onShowCustomView")
+                LLog.d(TAG,"onShowCustomView")
                 progress_layout.visibility = View.INVISIBLE
                 supportActionBar?.hide()
                 window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -123,18 +123,18 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
                 //progress_layout.showContent()
-                Logger.t(TAG).d("onPageFinished")
+                LLog.d(TAG,"onPageFinished")
             }
 
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                 progress_layout.showContent()
-                Logger.t(TAG).d("shouldOverrideUrlLoading")
+                LLog.d(TAG,"shouldOverrideUrlLoading")
                 return super.shouldOverrideUrlLoading(view, request)
             }
 
             override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
                 super.onReceivedError(view, request, error)
-                Logger.t(TAG).d("onReceivedError")
+                LLog.d(TAG,"onReceivedError")
                 showError()
             }
 
@@ -150,7 +150,7 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
 
 
         val paramsMap = HashMap<String, String>()
-        UserManager.getInstance().getCurrentUser()?.token?.also {
+        UserManager.getCurrentUser()?.token?.also {
             paramsMap["token"] = it
         }
         paramsMap["app-user-agent"] = "android"
@@ -162,7 +162,7 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
         }
 
         web_view.loadUrl(builder.build().toString().also {
-            Logger.t(TAG).d(it)
+            LLog.d(TAG,it)
         }, paramsMap)
 
 
@@ -192,9 +192,6 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
 
     }
 
-    override fun needRefresh(): Boolean {
-        return progress_layout.isErrorCurrentState
-    }
 
     override fun onRefresh() {
         super.onRefresh()

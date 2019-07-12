@@ -4,16 +4,13 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import cn.wsgwz.basemodule.data.RequestData
-import cn.wsgwz.basemodule.data.ResponseData
-import cn.wsgwz.basemodule.utilities.manager.NetworkDataManager
+import cn.wsgwz.baselibrary.retrofit.bean.RequestData
+import cn.wsgwz.baselibrary.retrofit.bean.ResponseData
+import cn.wsgwz.basemodule.widgets.suspension.NetworkDataManager
 import cn.wsgwz.basemodule.utilities.GsonUtil
 import cn.wsgwz.basemodule.utilities.OkHttpUtil
 import kotlinx.android.synthetic.main.activity_network_data.*
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.Request
-import okhttp3.Response
+import okhttp3.*
 import java.io.IOException
 import java.lang.Exception
 
@@ -23,7 +20,7 @@ class NetworkDataActivity : BaseActivity(), NetworkDataManager.OnResponseItemDat
     private val networkDataManager = NetworkDataManager.getInstance()
     private lateinit var requestData: RequestData
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.BaseAppTheme)
+        //setTheme(R.style.BaseAppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_network_data)
         requestData = intent.getParcelableExtra<RequestData>("requestData").also {
@@ -55,26 +52,37 @@ class NetworkDataActivity : BaseActivity(), NetworkDataManager.OnResponseItemDat
 
     private fun reSend() {
         progress_bar.visibility = View.VISIBLE
-        BaseConst.OK_HTTP_CLIENT.newCall(Request.Builder().tag(this).url(requestData.uri.toString()).build())
-            .enqueue(object : Callback {
-                override fun onFailure(call: Call, e: IOException) {
-                    progress_bar.post {
-                        progress_bar.visibility = View.GONE
-                        response_data_et.setText(e.message)
-                        supportActionBar?.title = null
+        val uri = requestData.uri
+        BaseConst.OK_HTTP_CLIENT.newCall(Request.Builder().tag(this).url(uri.toString()).apply {
+            if (requestData.method.toLowerCase() == "post") {
+                post(FormBody.Builder().also {
+                    uri.queryParameterNames.forEach { queryParameterName ->
+                        it.add(queryParameterName, uri.getQueryParameter(queryParameterName))
+
                     }
-                }
+                }.build())
+            }
 
-                override fun onResponse(call: Call, response: Response) {
-
-                    val responseData = ResponseData(requestData.id, response.body()?.bytes(), response.code())
-
-                    progress_bar.post {
-                        initContent(responseData)
+        }.build())
+                .enqueue(object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        progress_bar.post {
+                            progress_bar.visibility = View.GONE
+                            response_data_et.setText(e.message)
+                            supportActionBar?.title = null
+                        }
                     }
-                }
 
-            })
+                    override fun onResponse(call: Call, response: Response) {
+
+                        val responseData = ResponseData(requestData.id, response.body()?.bytes(), response.code(),response.isSuccessful)
+
+                        progress_bar.post {
+                            initContent(responseData)
+                        }
+                    }
+
+                })
     }
 
     override fun onResponseItemDataChange(id: String) {

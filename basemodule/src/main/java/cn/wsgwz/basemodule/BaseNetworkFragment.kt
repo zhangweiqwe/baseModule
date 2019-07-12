@@ -5,19 +5,17 @@ import android.view.View
 import cn.wsgwz.basemodule.widgets.dialog.LoadingDialogFragment
 import cn.wsgwz.basemodule.interfaces.BaseNetworkWindowInterface
 import cn.wsgwz.basemodule.interfaces.listeners.OnConnectivityChangeListener
-import cn.wsgwz.basemodule.interfaces.listeners.OnUserStateChangeListener
 import cn.wsgwz.basemodule.utilities.manager.ConnectivityChangeListenerManager
 import io.reactivex.disposables.CompositeDisposable
 
-open class BaseNetworkFragment : BaseFragment(), BaseNetworkWindowInterface, OnConnectivityChangeListener,
-
-    OnUserStateChangeListener {
-    override val compositeDisposable = CompositeDisposable()
+open class BaseNetworkFragment : BaseFragment(), BaseNetworkWindowInterface, OnConnectivityChangeListener{
+    override lateinit var compositeDisposable:CompositeDisposable
     private var loadingDialogFragment: LoadingDialogFragment? = null
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        compositeDisposable = CompositeDisposable()
         ConnectivityChangeListenerManager.getInstance().register(this)
     }
 
@@ -45,10 +43,5 @@ open class BaseNetworkFragment : BaseFragment(), BaseNetworkWindowInterface, OnC
         }
     }
 
-    override fun onConnectivityChange() {
-        if (needRefresh()) {
-            onRefresh()
-        }
-    }
 
 }

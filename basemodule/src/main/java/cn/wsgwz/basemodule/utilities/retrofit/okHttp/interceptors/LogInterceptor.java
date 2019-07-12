@@ -18,17 +18,21 @@ package cn.wsgwz.basemodule.utilities.retrofit.okHttp.interceptors;
 
 import android.net.Uri;
 
-import cn.wsgwz.basemodule.data.RequestData;
-import cn.wsgwz.basemodule.data.ResponseData;
-import cn.wsgwz.basemodule.utilities.manager.NetworkDataManager;
-import com.orhanobut.logger.Logger;
+import cn.wsgwz.baselibrary.retrofit.bean.RequestData;
+import cn.wsgwz.baselibrary.retrofit.bean.ResponseData;
+import cn.wsgwz.basemodule.utilities.LLog;
+import cn.wsgwz.basemodule.utilities.manager.UserManager;
+import cn.wsgwz.basemodule.widgets.suspension.NetworkDataManager;
+
 import okhttp3.*;
+import okio.Buffer;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 
 public class LogInterceptor
-        implements okhttp3.Interceptor {
+        implements Interceptor {
     private static final String TAG = "LogInterceptor";
 
     private NetworkDataManager networkDataManager = NetworkDataManager.Companion.getInstance();
@@ -42,40 +46,67 @@ public class LogInterceptor
 
         RequestBody requestBody = request.body();
 
+
         Uri uri = Uri.parse(request.url().toString());
         Uri.Builder builder = uri.buildUpon();
-        /*StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(request.url());*/
-        if (requestBody instanceof FormBody) {
-            /*stringBuilder.append("?");
-            FormBody formBody = (FormBody) requestBody;
-            for (int i = 0; i < formBody.size(); i++) {
-                if (i != 0) {
-                    stringBuilder.append("&");
-                }
-                stringBuilder.append(formBody.encodedName(i) + "=" + formBody.encodedValue(i));
-            }*/
-            FormBody formBody = (FormBody) requestBody;
-            for (int i = 0; i < formBody.size(); i++) {
-                builder.appendQueryParameter(formBody.encodedName(i),  formBody.encodedValue(i));
-            }
-        }
 
-        RequestData requestData = new RequestData(id, builder.build());
+
+        StringBuilder stringBuilder = new StringBuilder(id + "-->" + uri.toString());
+
+        String token = UserManager.getCurrentUserToken();
+        if (token == null) {
+            token = "";
+        }
+        if (requestBody != null) {
+
+
+            builder.appendQueryParameter("token", token);
+            if (requestBody instanceof FormBody) {
+                FormBody formBody = (FormBody) requestBody;
+                for (int i = 0; i < formBody.size(); i++) {
+                    builder.appendQueryParameter(formBody.encodedName(i), formBody.encodedValue(i));
+                }
+            }
+
+
+            String bufferStr = requestBody.contentLength() + "";
+            if (requestBody.contentLength() <= 1024) {
+                Buffer buffer = new Buffer();
+                requestBody.writeTo(buffer);
+                bufferStr = buffer.readString(Charset.forName("UTF-8"));
+            }
+
+            stringBuilder.append("\t\t" + bufferStr + "\t\t\t" + "token=" + token);
+        }
+        LLog.d(TAG, stringBuilder.toString());
+
+        //Logger.t(TAG).d(URLDecoder.decode(stringBuilder.toString(),"utf-8"));
+
+
+        RequestData requestData = new RequestData(id, builder.build(), request.method());
         networkDataManager.addRequestData(requestData);
-        Logger.t(TAG).d(requestData.getId() + "-->" + requestData.getUri().toString());
+
+        /*try {
+            if (requestBody.contentLength() > 0) {
+                requestBody.writeTo(buffer);
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }*/
 
 
         Response response = chain.proceed(request);
         ResponseBody responseBody = response.body();
-        ResponseData responseData = new ResponseData(id, responseBody.bytes(), response.code());
+        ResponseData responseData = new ResponseData(id, responseBody.bytes(), response.code(), response.isSuccessful());
         networkDataManager.addResponseData(responseData);
         networkDataManager.notifyOnResponseItemDataChange(id);
         if (responseData.getByteArray() != null) {
-            Logger.t(TAG).d(id + "<---" + responseData.getCode() + "--" + new String(responseData.getByteArray()));
+            LLog.d(TAG, id + "<---" + responseData.getCode() + "--" + new String(responseData.getByteArray()));
         }
 
         return response.newBuilder().body(ResponseBody.create(responseBody.contentType(), responseData.getByteArray())).build();
-
     }
+
+
 }
+

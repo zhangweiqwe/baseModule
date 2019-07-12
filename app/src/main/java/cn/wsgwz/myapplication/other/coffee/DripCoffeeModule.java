@@ -15,7 +15,7 @@ public class DripCoffeeModule {
     @Singleton
     Heater provideHeater() {
 
-       // Log.d(CoffeeApp.TAG,"provideHeater");
+       // LLog.d(CoffeeApp.TAG,"provideHeater");
 
         return new ElectricHeater();
     }

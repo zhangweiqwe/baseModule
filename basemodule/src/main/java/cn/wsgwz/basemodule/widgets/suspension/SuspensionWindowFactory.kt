@@ -1,6 +1,7 @@
-package cn.wsgwz.basemodule.widgets.suspension
+package cn.wsgwz.baselibrary.widgets.suspension
 
 import cn.wsgwz.basemodule.BaseApplication
+
 
 object SuspensionWindowFactory {
 

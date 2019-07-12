@@ -1,8 +1,10 @@
-package cn.wsgwz.basemodule.widgets.suspension
+package cn.wsgwz.baselibrary.widgets.suspension
+
 
 import android.content.Context
 import android.content.Intent
 import cn.wsgwz.basemodule.BaseApplication
+import cn.wsgwz.basemodule.widgets.suspension.SuspensionWindowActivity
 
 private const val TAG = "SuspensionWindowManager"
 

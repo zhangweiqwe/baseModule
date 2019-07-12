@@ -4,11 +4,11 @@ import androidx.room.*
 
 @Dao
 interface UserDao {
-    @Query("SELECT * FROM users ORDER BY id")
+    @Query("SELECT * FROM users ORDER BY phone")
     fun getUsers(): List<User>
 
-    @Query("SELECT * FROM users WHERE id=:id")
-    fun getUser(id: String): User?
+    @Query("SELECT * FROM users WHERE token=:token")
+    fun getUser(token: String): User?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(user: User)

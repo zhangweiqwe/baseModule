@@ -17,9 +17,10 @@
 package cn.wsgwz.basemodule.utilities.retrofit.okHttp.interceptors;
 
 import android.text.TextUtils;
+
 import cn.wsgwz.basemodule.data.User;
+import cn.wsgwz.basemodule.utilities.LLog;
 import cn.wsgwz.basemodule.utilities.manager.UserManager;
-import com.orhanobut.logger.Logger;
 import okhttp3.*;
 
 import java.io.IOException;
@@ -28,23 +29,19 @@ public class HeaderInterceptor
         implements Interceptor {
     private static final String TAG = "HeaderInterceptor";
 
-    private UserManager userManager = UserManager.Companion.getInstance();
+
+
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        User user = userManager.getCurrentUser();
+        String token = UserManager.getCurrentUserToken();
+        LLog.d(TAG, "token=" + token);
+
         Request request;
-        if (user == null) {
+        if (token == null) {
             request = chain.request();
         } else {
-            String token = user.getToken();
-            Logger.t(TAG).v("token=" + token);
-            if (!TextUtils.isEmpty(token)) {
-                request = chain.request().newBuilder().addHeader("token", token).build();
-            } else {
-                request = chain.request();
-            }
-
+            request = chain.request().newBuilder().addHeader("token", token).build();
         }
         return chain.proceed(request);
 

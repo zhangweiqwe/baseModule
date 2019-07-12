@@ -39,15 +39,15 @@ public class CoffeeApp {
         CoffeeMaker coffeeMaker = coffeeShop.maker();
 
 
-        Log.d(TAG,coffeeMaker.hashCode()+"");
-        Log.d(TAG,coffeeMaker.hashCode()+"");*/
+        LLog.d(TAG,coffeeMaker.hashCode()+"");
+        LLog.d(TAG,coffeeMaker.hashCode()+"");*/
 
 
 
         /*CoffeeShop coffeeShop2 = DaggerCoffeeApp_CoffeeShop.builder().build();
 
-        Log.d(TAG,coffeeShop.hashCode()+"");
-        Log.d(TAG,coffeeShop2.hashCode()+"");*/
+        LLog.d(TAG,coffeeShop.hashCode()+"");
+        LLog.d(TAG,coffeeShop2.hashCode()+"");*/
 
 
     }

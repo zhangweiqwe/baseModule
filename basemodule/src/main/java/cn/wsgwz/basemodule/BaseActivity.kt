@@ -1,14 +1,10 @@
 package cn.wsgwz.basemodule
 
 import android.os.Bundle
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import cn.wsgwz.basemodule.data.SuspensionWindowRepository
 import cn.wsgwz.basemodule.widgets.dialog.LoadingDialogFragment
 import cn.wsgwz.basemodule.interfaces.BaseWindowInterface
-import cn.wsgwz.basemodule.utilities.AndroidBug5497Workaround
 import cn.wsgwz.basemodule.utilities.WindowUtil
 
 

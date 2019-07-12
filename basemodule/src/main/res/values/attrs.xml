@@ -4,4 +4,13 @@
     <!--<declare-styleable name="ProgressActivity">-->
        <!---->
     <!--</declare-styleable>-->
+
+
+    <!--支持圆角的TextView-->
+    <declare-styleable name="RoundTextView">
+        <attr name="rtvBgColor" format="color"/>
+        <attr name="rtvBorderWidth" format="dimension"/>
+        <attr name="rtvBorderColor" format="color"/>
+        <attr name="rtvRadius" format="dimension"/>
+    </declare-styleable>
 </resources>

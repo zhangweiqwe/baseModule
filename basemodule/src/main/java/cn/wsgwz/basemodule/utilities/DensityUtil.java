@@ -1,6 +1,5 @@
 package cn.wsgwz.basemodule.utilities;
 
-import android.content.Context;
 import android.content.res.Resources;
 import android.util.TypedValue;
 

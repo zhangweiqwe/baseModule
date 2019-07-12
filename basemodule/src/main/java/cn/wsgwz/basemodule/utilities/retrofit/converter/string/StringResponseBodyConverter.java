@@ -2,7 +2,7 @@ package cn.wsgwz.basemodule.utilities.retrofit.converter.string;
 
 import java.io.IOException;
 
-import com.orhanobut.logger.Logger;
+import cn.wsgwz.basemodule.utilities.LLog;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
 
@@ -22,7 +22,7 @@ final class StringResponseBodyConverter<T> implements Converter<ResponseBody, T>
         //return (T) response;
         try {
             T t = (T) value.string();
-            Logger.t(TAG).i( "convert: " + t.getClass());
+            LLog.d(TAG, "convert: " + t.getClass());
             return t;
         }finally {
             value.close();

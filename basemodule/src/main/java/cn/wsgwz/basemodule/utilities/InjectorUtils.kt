@@ -18,8 +18,8 @@ package cn.wsgwz.basemodule.utilities
 
 import android.content.Context
 import cn.wsgwz.basemodule.data.BaseAppDatabase
-import cn.wsgwz.basemodule.data.SuspensionWindowRepository
 import cn.wsgwz.basemodule.data.UserRepository
+import cn.wsgwz.basemodule.widgets.suspension.bean.SuspensionWindowRepository
 
 /**
  * Static methods used to inject classes needed for various Activities and Fragments.

@@ -1,22 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/parent_fl"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/suspension_window_bg">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent_fl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/suspension_window_bg">
 
-    <androidx.recyclerview.widget.RecyclerView
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/data_rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+            android:minWidth="800dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </HorizontalScrollView>
+
 
     <View
-            android:id="@+id/drag_v"
-            android:clickable="true"
-            android:layout_width="53.333dp"
-            android:layout_height="30dp"
-            android:layout_gravity="bottom"
-            android:background="#44282727"/>
+        android:id="@+id/drag_v"
+        android:layout_width="72dp"
+        android:layout_height="44.496dp"
+        android:layout_gravity="bottom"
+        android:background="#22ffffff"
+        android:clickable="true" />
+
+    <ImageView
+        android:id="@+id/dismiss_iv"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_gravity="right"
+        android:backgroundTint="@android:color/holo_red_light"
+        android:clickable="true"
+        android:paddingTop="2dp"
+        android:paddingRight="2dp"
+        android:background="@drawable/ic_clear_black_24dp" />
 
 </FrameLayout>

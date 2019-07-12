@@ -42,8 +42,8 @@ public class CrashHandler implements UncaughtExceptionHandler {
         // LLog.Companion.d(LOG_TAG, ex + "   " + ex.getMessage());
         if (mDefaultCrashHandler != null) {
             if (ex != null) {
-                String logStr = new SimpleDateFormat(BaseConst.SIMPLE_DATA_FORMAT).format(new Date()) + "\n" + collectExceptionInfo(ex) + "\n\n\n#########################\n\n\n\n\n\n\n";
-                FileManager.Companion.getInstance().saveLog(logStr, true);
+                String logStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()) + "\n" + collectExceptionInfo(ex) + "\n\n\n#########################\n\n\n\n\n\n\n";
+                FileManager.getInstance().saveLog(logStr, true);
             }
 
             try {

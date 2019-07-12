@@ -1,4 +1,6 @@
 package cn.wsgwz.basemodule.adapters;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -11,9 +13,14 @@ public class BaseFragmentPagerAdapter extends FragmentPagerAdapter {
     private List<Fragment> fragments = new ArrayList<>();
     private List<CharSequence> titles = new ArrayList<>();
 
-    public BaseFragmentPagerAdapter(FragmentManager fm) {
+    public BaseFragmentPagerAdapter(@NonNull FragmentManager fm) {
         super(fm);
     }
+
+    public BaseFragmentPagerAdapter(@NonNull FragmentManager fm, int behavior) {
+        super(fm, behavior);
+    }
+
 
     public void addFragment(Fragment fragment, CharSequence title) {
         fragments.add(fragment);

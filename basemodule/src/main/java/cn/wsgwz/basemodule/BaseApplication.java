@@ -9,14 +9,14 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+
 import androidx.core.app.NotificationCompat;
 import androidx.multidex.MultiDex;
+
 import cn.wsgwz.basemodule.receivers.ConnectivityChangeBroadcastReceiver;
 import cn.wsgwz.basemodule.utilities.CrashHandler;
-import com.orhanobut.logger.AndroidLogAdapter;
-import com.orhanobut.logger.FormatStrategy;
-import com.orhanobut.logger.Logger;
-import com.orhanobut.logger.PrettyFormatStrategy;
+import cn.wsgwz.basemodule.utilities.LLog;
+import cn.wsgwz.basemodule.utilities.manager.UserManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +45,10 @@ public class BaseApplication extends Application {
         } else {
             action.run();
         }
+    }
+
+    public void login() {
+
     }
 
     public static SharedPreferences getPreferences() {
@@ -83,8 +87,7 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        initLogger();
-        Logger.t(TAG).d(getCurrentProcessName());
+        LLog.d(TAG, getCurrentProcessName());
 
         mInstance = this;
         mUiThread = Thread.currentThread();
@@ -92,6 +95,9 @@ public class BaseApplication extends Application {
         mPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         CrashHandler.getInstance().init(this);
+
+
+        UserManager.init();
 
         if (getCurrentProcessName().equals(getPackageName())) {
             initNotificationChannel();
@@ -109,24 +115,6 @@ public class BaseApplication extends Application {
 
 
     }
-
-    public void initLogger() {
-        FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
-                .showThreadInfo(true)  // (Optional) Whether to show thread info or not. Default true
-                //.methodCount(0)         // (Optional) How many method line to show. Default 2
-                //.methodOffset(7)        // (Optional) Hides internal method calls up to offset. Default 5
-                // .logStrategy(customLog) // (Optional) Changes the log strategy to print out. Default LogCat
-                //.tag("CustomLog")   // (Optional) Global tag for every log. Default PRETTY_LOGGER
-                .build();
-
-        Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy) {
-            @Override
-            public boolean isLoggable(int priority, String tag) {
-                return true;
-            }
-        });
-    }
-
 
     protected String getCurrentProcessName() {
         int pid = android.os.Process.myPid();

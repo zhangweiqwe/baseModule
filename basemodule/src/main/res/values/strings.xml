@@ -20,17 +20,43 @@
     <string name="reload">重新加载</string>
     <string name="network_error_hint">网络错误</string>
     <string name="data_error_hint">数据异常</string>
+    <string name="illegal_argument_hint">非法参数</string>
+    <string name="unknown_exception_hint">未知异常</string>
+    <string name="operation_failed">操作失败</string>
+
+
+    <!--权限相关-->
     <string name="permission_denied">权限不足</string>
-    <string name="permission_denied_format">没有%s权限</string>
+    <string name="permission_denied_format">没有%s权限！</string>
+    <string-array name="permission_description">
+        <item>读写日历</item>
+        <item>相机</item>
+        <item>读写联系人</item>
+        <item>读位置信息</item>
+        <item>使用麦克风</item>
+        <item>读电话状态、打电话、读写电话记录</item>
+        <item>传感器</item>
+        <item>读写短信、收发短信</item>
+        <item>读写存储卡</item>
+        <item>安装应用</item>
+    </string-array>
 
     <!--下载文件-->
+    <string name="download">下载</string>
     <string name="whether_to_cancel">是否取消？</string>
     <string name="downloading">下载中</string>
     <string name="download_error">下载失败</string>
     <string name="waiting_for_download">等待下载</string>
     <string name="download_success">下载成功</string>
     <string name="user_canceled">用户取消</string>
+
+    <!--App更新-->
+    <string name="update">更新</string>
+    <string name="update_prompt">更新提示！</string>
     <string name="install">安装</string>
+
+    <!--文件上传-->
+    <string name="uploading">上传中</string>
 
     <!--progressLayout-->
     <string name="progress_layout_empty_button">@string/refresh</string>

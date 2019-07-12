@@ -1,4 +1,5 @@
-package cn.wsgwz.basemodule.widgets.suspension
+package cn.wsgwz.baselibrary.widgets.suspension
+
 
 enum class SuspensionWindowType
     //:Parcelable

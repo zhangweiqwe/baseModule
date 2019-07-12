@@ -3,7 +3,7 @@ package cn.wsgwz.myapplication
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.orhanobut.logger.Logger
+import cn.wsgwz.basemodule.utilities.LLog
 
 class BlankFragmentBViewModel : ViewModel() {
     // TODO: Implement the ViewModel
@@ -14,7 +14,6 @@ class BlankFragmentBViewModel : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        Logger.t(TAG).d('a')
     }
 
     companion object {

@@ -1,11 +1,12 @@
 package cn.wsgwz.basemodule.interfaces;
 
-import android.app.Activity;
 import android.content.Context;
 import android.webkit.JavascriptInterface;
+import android.widget.Toast;
+
+import cn.wsgwz.basemodule.BaseApplication;
 import cn.wsgwz.basemodule.data.User;
 import cn.wsgwz.basemodule.utilities.manager.UserManager;
-import cn.wsgwz.basemodule.utilities.AndroidBug5497Workaround;
 import cn.wsgwz.basemodule.utilities.NetworkUtil;
 
 public class BaseJsInterface {
@@ -25,21 +26,12 @@ public class BaseJsInterface {
 
     @JavascriptInterface
     public String getToken() {
-        User user = UserManager.Companion.getInstance().getCurrentUser();
-
-        if (user == null) {
-            return null;
-        } else {
-            return user.getToken();
-        }
+        return UserManager.getCurrentUserToken();
     }
 
     @JavascriptInterface
     public void login() {
-        if (context instanceof BaseWindowInterface) {
-            BaseWindowInterface baseWindowInterface = (BaseWindowInterface) context;
-            baseWindowInterface.login();
-        }
+        BaseApplication.getInstance().login();
     }
 
     @JavascriptInterface
@@ -49,10 +41,7 @@ public class BaseJsInterface {
 
     @JavascriptInterface
     public void toast(String msg) {
-        if (context instanceof BaseWindowInterface) {
-            BaseWindowInterface baseWindowInterface = (BaseWindowInterface) context;
-            baseWindowInterface.toast(msg);
-        }
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
     @JavascriptInterface

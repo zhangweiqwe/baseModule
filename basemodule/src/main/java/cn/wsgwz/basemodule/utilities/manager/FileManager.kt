@@ -24,9 +24,9 @@ class FileManager private constructor() {
     }
 
     fun saveFile(
-        inputStream: InputStream,
-        outputFile: File,
-        append: Boolean = false
+            inputStream: InputStream,
+            outputFile: File,
+            append: Boolean = false
     ) {
         val buffer = ByteArray(1024)
         var len: Int
@@ -55,8 +55,8 @@ class FileManager private constructor() {
 
     companion object {
         val ERROR_LOG_FILE = File(
-            BaseApplication.getInstance().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),
-              "errorLog.txt"
+                BaseApplication.getInstance().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),
+                "errorLog.txt"
         )
 
         const val UPDATE_FILE_NAME = "update.apk"
@@ -66,9 +66,10 @@ class FileManager private constructor() {
         @Volatile
         private var instance: FileManager? = null
 
+        @JvmStatic
         fun getInstance() =
-            instance ?: synchronized(this) {
-                instance ?: FileManager().also { instance = it }
-            }
+                instance ?: synchronized(this) {
+                    instance ?: FileManager().also { instance = it }
+                }
     }
 }

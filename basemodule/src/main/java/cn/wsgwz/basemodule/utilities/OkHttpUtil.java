@@ -1,12 +1,12 @@
 package cn.wsgwz.basemodule.utilities;
 
 import cn.wsgwz.basemodule.BaseApplication;
-import com.orhanobut.logger.Logger;
 import okhttp3.Call;
 import okhttp3.Dispatcher;
 import okhttp3.OkHttpClient;
 
 import javax.net.ssl.*;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.GeneralSecurityException;
@@ -38,7 +38,7 @@ public class OkHttpUtil {
         builder.sslSocketFactory(sslSocketFactory, trustManager);
     }
 
-    public static void assist(OkHttpClient.Builder builder){
+    public static void assist(OkHttpClient.Builder builder) {
         new OkHttpUtil(builder);
     }
 
@@ -102,7 +102,7 @@ public class OkHttpUtil {
             if (tag.equals(call.request().tag())) {
                 call.cancel();
             }
-            Logger.t(TAG).d( call.request().tag() + "====dispatcher.queuedCalls()" );
+            LLog.d(TAG, call.request().tag() + "====dispatcher.queuedCalls()");
 
         }
         for (Call call : dispatcher.runningCalls()) {
@@ -110,7 +110,7 @@ public class OkHttpUtil {
                 call.cancel();
             }
 
-            Logger.t(TAG).d(  call.request().tag() + "====dispatcher.runningCalls()");
+            LLog.d(TAG, call.request().tag() + "====dispatcher.runningCalls()");
 
         }
     }

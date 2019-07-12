@@ -1,4 +1,5 @@
-package cn.wsgwz.basemodule.widgets.suspension;
+package cn.wsgwz.baselibrary.widgets.suspension
+
 
 import android.content.Context
 import android.graphics.Color
@@ -14,10 +15,12 @@ import android.widget.FrameLayout
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import cn.wsgwz.basemodule.BaseApplication
 import cn.wsgwz.basemodule.R
-import cn.wsgwz.basemodule.adapters.NetworkDataAdapter
-import cn.wsgwz.basemodule.utilities.manager.NetworkDataManager
 import cn.wsgwz.basemodule.utilities.DensityUtil
+import cn.wsgwz.basemodule.widgets.suspension.NetworkDataManager
+import cn.wsgwz.basemodule.widgets.suspension.NetworkDataAdapter
+import cn.wsgwz.basemodule.widgets.suspension.bean.SuspensionWindowBean
 import kotlinx.coroutines.runBlocking
 
 
@@ -27,7 +30,31 @@ import kotlinx.coroutines.runBlocking
 private const val TAG = "LogSuspensionWindow"
 
 class LogSuspensionWindow private constructor(private val context: Context) : SuspensionWindow(context),
-    View.OnTouchListener {
+        View.OnTouchListener, View.OnClickListener, View.OnLongClickListener {
+
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.dismiss_iv -> {
+                BaseApplication.getPreferences().edit().putBoolean("is_show_network_data_suspension_window", false).apply()
+                SuspensionWindowManager.getInstance().hide(SuspensionWindowType.LOG)
+            }
+        }
+    }
+
+    override fun onLongClick(v: View): Boolean {
+        return when (v.id) {
+            R.id.dismiss_iv -> {
+                networkDataManager.clearAll()
+                true
+            }
+            else -> {
+                false
+            }
+        }
+
+
+    }
+
 
     private val wmLayoutParams: WindowManager.LayoutParams
     private val windowManager: WindowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
@@ -52,13 +79,13 @@ class LogSuspensionWindow private constructor(private val context: Context) : Su
 
     init {
         wmLayoutParams = WindowManager.LayoutParams().apply {
-            width = DensityUtil.dp2px( 120f).toInt().apply {
+            width = DensityUtil.dp2px(140.286f).toInt().apply {
                 wWidth = this
             }
-            height = DensityUtil.dp2px( 213.333f).toInt().apply {
+            height = DensityUtil.dp2px(227f).toInt().apply {
                 wHeight = this
             }
-            //windowAnimations = R.style.Zoom
+            windowAnimations = R.style.Zoom
 
             type = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {//8.0新特性
                 WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
@@ -75,6 +102,10 @@ class LogSuspensionWindow private constructor(private val context: Context) : Su
 
 
         LayoutInflater.from(context).inflate(R.layout.view_suspension_window, null).also { parentView ->
+            parentView.findViewById<View>(R.id.dismiss_iv).apply {
+                setOnClickListener(this@LogSuspensionWindow)
+                setOnLongClickListener(this@LogSuspensionWindow)
+            }
 
             parent_fl = parentView.findViewById(R.id.parent_fl)
             data_rv = parentView.findViewById(R.id.data_rv)
@@ -87,13 +118,12 @@ class LogSuspensionWindow private constructor(private val context: Context) : Su
                 it.layoutManager = LinearLayoutManager(context).also { layoutManager ->
                     layoutManager.reverseLayout = true
                 }
-                /*it.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL).apply {
+                it.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL).apply {
                     setDrawable(ShapeDrawable().apply {
                         paint.color = Color.WHITE
-                        paint.isAntiAlias = true
-                        intrinsicHeight = DensityUtil.dp2px(context,0.6f).toInt()
+                        intrinsicHeight = DensityUtil.dp2px(0.2f).toInt()
                     })
-                })*/
+                })
             }
 
             drag_v = parentView.findViewById(R.id.drag_v)
@@ -129,7 +159,7 @@ class LogSuspensionWindow private constructor(private val context: Context) : Su
 
                     runBlocking {
                         suspensionWindowRepository.update(
-                            cn.wsgwz.basemodule.data.SuspensionWindow(TAG, it.x, it.y)
+                                SuspensionWindowBean(TAG, it.x, it.y)
                         )
                     }
                 }
@@ -154,20 +184,19 @@ class LogSuspensionWindow private constructor(private val context: Context) : Su
         if (parent_fl.parent == null) {
 
             runBlocking {
-                suspensionWindowRepository.getSuspensionWindow(TAG).also { suspensionWindow ->
-                    if (suspensionWindow == null) {
-                        val insertSuspensionWindow = cn.wsgwz.basemodule.data.SuspensionWindow(
+                val suspensionWindow = suspensionWindowRepository.getSuspensionWindow(TAG)
+                if (suspensionWindow == null) {
+                    val insertSuspensionWindow = SuspensionWindowBean(
                             TAG,
-                            DensityUtil.dp2px( 138f).toInt(),
-                            DensityUtil.dp2px( 22f).toInt()
-                        )
-                        wmLayoutParams.x = insertSuspensionWindow.x
-                        wmLayoutParams.y = insertSuspensionWindow.y
-                        suspensionWindowRepository.insert(insertSuspensionWindow)
-                    } else {
-                        wmLayoutParams.x = suspensionWindow.x
-                        wmLayoutParams.y = suspensionWindow.y
-                    }
+                            DensityUtil.dp2px(138f).toInt(),
+                            DensityUtil.dp2px(85.284f).toInt()
+                    )
+                    wmLayoutParams.x = insertSuspensionWindow.x
+                    wmLayoutParams.y = insertSuspensionWindow.y
+                    suspensionWindowRepository.insert(insertSuspensionWindow)
+                } else {
+                    wmLayoutParams.x = suspensionWindow.x
+                    wmLayoutParams.y = suspensionWindow.y
                 }
             }
 

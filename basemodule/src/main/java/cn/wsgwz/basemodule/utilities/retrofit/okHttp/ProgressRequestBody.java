@@ -16,6 +16,7 @@
 package cn.wsgwz.basemodule.utilities.retrofit.okHttp;
 
 
+import cn.wsgwz.basemodule.data.ProgressInfo;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okio.*;
@@ -25,7 +26,7 @@ import java.io.IOException;
 /**
  * 包装的请求体，处理进度
  */
-public  class ProgressRequestBody extends RequestBody {
+public class ProgressRequestBody extends RequestBody {
     //实际的待包装请求体
     private final RequestBody requestBody;
     //进度回调接口
@@ -35,7 +36,8 @@ public  class ProgressRequestBody extends RequestBody {
 
     /**
      * 构造函数，赋值
-     * @param requestBody 待包装的请求体
+     *
+     * @param requestBody      待包装的请求体
      * @param progressListener 回调接口
      */
     public ProgressRequestBody(RequestBody requestBody, ProgressListener progressListener) {
@@ -45,6 +47,7 @@ public  class ProgressRequestBody extends RequestBody {
 
     /**
      * 重写调用实际的响应体的contentType
+     *
      * @return MediaType
      */
     @Override
@@ -54,6 +57,7 @@ public  class ProgressRequestBody extends RequestBody {
 
     /**
      * 重写调用实际的响应体的contentLength
+     *
      * @return contentLength
      * @throws IOException 异常
      */
@@ -64,6 +68,7 @@ public  class ProgressRequestBody extends RequestBody {
 
     /**
      * 重写进行写入
+     *
      * @param sink BufferedSink
      * @throws IOException 异常
      */
@@ -82,6 +87,7 @@ public  class ProgressRequestBody extends RequestBody {
 
     /**
      * 写入，回调进度接口
+     *
      * @param sink Sink
      * @return Sink
      */
@@ -103,16 +109,15 @@ public  class ProgressRequestBody extends RequestBody {
                 //增加当前写入的字节数
                 bytesWritten += byteCount;
                 /*try {
-                    Thread.sleep(500);
+                    Thread.sleep(200);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }*/
 
 
-
                 //回调
-                if (progressListener!=null) {
-                    progressListener.update(bytesWritten, contentLength, bytesWritten == contentLength);
+                if (progressListener != null) {
+                    progressListener.update(new ProgressInfo(bytesWritten, contentLength));
                 }
             }
         };

@@ -3,7 +3,7 @@ package cn.wsgwz.basemodule.utilities.retrofit.converter.string;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
-import com.orhanobut.logger.Logger;
+import cn.wsgwz.basemodule.utilities.LLog;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
@@ -28,7 +28,7 @@ public final class StringConverterFactory extends Converter.Factory {
 
     @Override
     public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
-        Logger.t(TAG).i( "responseBodyConverter: ");
+        LLog.d(TAG, "responseBodyConverter: ");
 
         if(String.class.equals(type))
         return new StringResponseBodyConverter<Object>();
@@ -38,7 +38,7 @@ public final class StringConverterFactory extends Converter.Factory {
     @Override
     public Converter<?, RequestBody> requestBodyConverter(Type type, Annotation[] parameterAnnotations,
                                                           Annotation[] methodAnnotations, Retrofit retrofit) {
-        Logger.t(TAG).d( "requestBodyConverter: ");
+        LLog.d(TAG,"requestBodyConverter: ");
         return new StringRequestBodyConverter<RequestBody>();
     }
 }

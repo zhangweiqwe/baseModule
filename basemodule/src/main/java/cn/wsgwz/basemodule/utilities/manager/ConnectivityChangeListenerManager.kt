@@ -22,6 +22,7 @@ class ConnectivityChangeListenerManager private constructor() {
         @Volatile
         private var instance: ConnectivityChangeListenerManager? = null
 
+        @JvmStatic
         fun getInstance() =
             instance ?: synchronized(this) {
                 instance ?: ConnectivityChangeListenerManager().also { instance = it }

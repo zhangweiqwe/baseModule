@@ -13,9 +13,9 @@ class UserRepository private constructor(
         }
     }
 
-    suspend fun getUser(id:String): User? {
+    suspend fun getUser(token:String): User? {
         return withContext(IO) {
-            userDao.getUser(id)
+            userDao.getUser(token)
         }
     }
 

@@ -1,68 +1,36 @@
 package cn.wsgwz.basemodule.utilities.manager
 
+import android.content.Intent
 import android.text.TextUtils
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import cn.wsgwz.basemodule.BaseApplication
+import cn.wsgwz.basemodule.BaseConst
 import cn.wsgwz.basemodule.data.User
-import cn.wsgwz.basemodule.interfaces.listeners.OnUserStateChangeListener
 import cn.wsgwz.basemodule.utilities.InjectorUtils
-import com.orhanobut.logger.Logger
+import cn.wsgwz.basemodule.utilities.LLog
+import cn.wsgwz.basemodule.utilities.retrofit.okHttp.interceptors.HeaderInterceptor
 import kotlinx.coroutines.*
 
 class UserManager private constructor() {
 
+    enum class State {
+        LOGIN_SUCCESS, LOGOUT_SUCCESS
+    }
 
     //private val coroutineScope = CoroutineScope(Dispatchers.Main + Job())
 
     private val userRepository = InjectorUtils.provideUserRepository(BaseApplication.getInstance())
-    private val onUserStateChangeListeners = ArrayList<OnUserStateChangeListener>()
 
     private var currentUser: User? = null
 
 
     init {
-        BaseApplication.getPreferences().getString("current_user_id", null).also {
-            if (!TextUtils.isEmpty(it)) {
-                runBlocking {
-                    currentUser = userRepository.getUser(it)
-                    Logger.t(TAG).v("userRepository.getUser(it)=$currentUser ${Thread.currentThread()}")
-                }
-
-            }
-        }
-    }
-
-    fun getCurrentUser(): User? {
-        return currentUser?.clone()
-    }
-
-    fun login(id: String, password: String? = null, token: String? = null) {
-        login(id, null, password, token)
-    }
-
-    private fun login(id: String, name: String? = null, password: String? = null, token: String? = null) {
-        currentUser = User(id, name, password, token).apply {
+        BaseApplication.getPreferences().getString(BaseConst.PrefKey.CURRENT_USER_ID, null)?.also {
             runBlocking {
-                //launch {
-                    userRepository.insert(this@apply)
-               // }
+                currentUser = userRepository.getUser(it)
+                LLog.d(TAG, "userRepository.getUser(it)=$currentUser ${Thread.currentThread()}")
             }
-            /*coroutineScope.launch {
-                userRepository.insert(this@apply)
-            }*/
-            BaseApplication.getPreferences().edit().putString("current_user_id", id).apply()
-        }
 
-        onUserStateChangeListeners.forEach {
-            it.onLoginSuccess()
-        }
-
-
-    }
-
-    fun logout() {
-        currentUser = null
-        onUserStateChangeListeners.forEach {
-            it.onLogoutSuccess()
         }
     }
 
@@ -75,9 +43,53 @@ class UserManager private constructor() {
         @Volatile
         private var instance: UserManager? = null
 
-        fun getInstance() =
-            instance ?: synchronized(this) {
-                instance ?: UserManager().also { instance = it }
+        @JvmStatic
+        private fun getInstance() =
+                instance ?: synchronized(this) {
+                    instance ?: UserManager().also { instance = it }
+                }
+
+        @JvmStatic
+        fun init() {
+            getInstance()
+        }
+
+
+        @JvmStatic
+        fun getCurrentUser(): User? {
+            getInstance().currentUser?.also {
+                synchronized(it) {
+                    return it.clone()
+                }
             }
+            return null
+        }
+
+        @JvmStatic
+        fun getCurrentUserToken(): String? {
+            return getCurrentUser()?.token
+        }
+
+        @JvmStatic
+        fun logout() {
+            getInstance().currentUser = null
+            BaseApplication.getPreferences().edit().putString(BaseConst.PrefKey.CURRENT_USER_ID, null).apply()
+            LocalBroadcastManager.getInstance(BaseApplication.getInstance()).sendBroadcast(Intent(BaseConst.Action.USER_STATE_CHANGE).putExtra("state", State.LOGOUT_SUCCESS))
+        }
+
+
+        @JvmStatic
+        fun login(token: String, phone: String? = null, password: String? = null) {
+            if (getCurrentUser() == null) {
+                getInstance().currentUser = User(token, phone, password).apply {
+                    runBlocking {
+                        getInstance().userRepository.insert(this@apply)
+                    }
+                }
+                BaseApplication.getPreferences().edit().putString(BaseConst.PrefKey.CURRENT_USER_ID, getCurrentUser()?.token).apply()
+                LocalBroadcastManager.getInstance(BaseApplication.getInstance()).sendBroadcast(Intent(BaseConst.Action.USER_STATE_CHANGE).putExtra("state", State.LOGIN_SUCCESS))
+            }
+
+        }
     }
 }

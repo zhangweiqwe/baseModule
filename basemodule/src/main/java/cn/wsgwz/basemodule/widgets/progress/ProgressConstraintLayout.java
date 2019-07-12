@@ -237,7 +237,7 @@ public class ProgressConstraintLayout extends ConstraintLayout implements Progre
     }
 
     private void restoreDefaultBackground() {
-        this.setBackgroundDrawable(defaultBackground);
+        this.setBackground(defaultBackground);
     }
 
     private void setContentVisibility(boolean visible, List<Integer> skipIds) {

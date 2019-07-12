@@ -7,7 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/windowsBackground</item>
-        <item name="toolbarStyle">@style/BaseToolbarStyle</item>
+        <!--<item name="toolbarStyle">@style/BaseToolbarStyle</item>-->
 
         <item name="android:statusBarColor">@color/colorPrimary</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>

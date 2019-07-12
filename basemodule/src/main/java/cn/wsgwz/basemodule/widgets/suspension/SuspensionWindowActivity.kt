@@ -1,5 +1,6 @@
 package cn.wsgwz.basemodule.widgets.suspension
 
+
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -7,6 +8,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.provider.Settings
 import android.view.KeyEvent
+import cn.wsgwz.baselibrary.widgets.suspension.SuspensionWindowManager
+import cn.wsgwz.baselibrary.widgets.suspension.SuspensionWindowType
 import cn.wsgwz.basemodule.BaseActivity
 
 private const val REQUEST_CODE_OVERLAY_PERMISSION = 1000
@@ -14,7 +17,7 @@ private const val REQUEST_CODE_OVERLAY_PERMISSION = 1000
 class SuspensionWindowActivity : BaseActivity() {
 
     private val suspensionWindowManager = SuspensionWindowManager.getInstance()
-    private lateinit var suspensionWindowType:SuspensionWindowType
+    private lateinit var suspensionWindowType: SuspensionWindowType
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

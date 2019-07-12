@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.preference.*
-import cn.wsgwz.basemodule.widgets.suspension.SuspensionWindowManager
-import cn.wsgwz.basemodule.widgets.suspension.SuspensionWindowType
+import cn.wsgwz.baselibrary.widgets.suspension.SuspensionWindowManager
+import cn.wsgwz.baselibrary.widgets.suspension.SuspensionWindowType
 
 class TestToolSettingPreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener {
 

@@ -6,15 +6,15 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "users"
+        tableName = "users"
 )
 data class User(
-    @PrimaryKey @ColumnInfo(name = "id") val id: String,
-    @ColumnInfo(name = "name") val name: String? = null,
-    @ColumnInfo(name = "password") var password: String? = null,
-    @ColumnInfo(name = "token") var token: String? = null
+        @PrimaryKey @ColumnInfo(name = "token") var token: String,
+        @ColumnInfo(name = "phone") val phone: String? = null,
+        @ColumnInfo(name = "password") var password: String? = null
 
 ) : Cloneable {
+
 
     public override fun clone(): User {
         return super.clone() as User
@@ -24,7 +24,7 @@ data class User(
         return if (user == this) {
             true
         } else {
-            user?.id.equals(this.id)
+            user?.token.equals(this.token)
         }
     }
 }

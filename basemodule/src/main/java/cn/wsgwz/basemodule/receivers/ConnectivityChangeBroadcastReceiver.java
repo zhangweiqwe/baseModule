@@ -4,19 +4,21 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import cn.wsgwz.basemodule.utilities.LLog;
 import cn.wsgwz.basemodule.utilities.manager.ConnectivityChangeListenerManager;
-import com.orhanobut.logger.Logger;
 
 
 public class ConnectivityChangeBroadcastReceiver extends BroadcastReceiver {
+
+    public static final String TAG = "ConnectivityChangeBroadcastReceiver";
     @Override
     public void onReceive(Context context, Intent intent) {
 
 
-        Logger.d("onReceive");
+        LLog.d(TAG,"onReceive");
 
 
-        ConnectivityChangeListenerManager.Companion.getInstance().notifyConnectivityChange();
+        ConnectivityChangeListenerManager.getInstance().notifyConnectivityChange();
 
 
 

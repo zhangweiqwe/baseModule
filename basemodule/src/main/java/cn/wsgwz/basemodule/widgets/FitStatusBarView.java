@@ -6,6 +6,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import androidx.annotation.Nullable;
 
+import cn.wsgwz.basemodule.utilities.WindowUtil;
+
 
 public class FitStatusBarView extends View{
     private final float mDensity;
@@ -65,7 +67,7 @@ public class FitStatusBarView extends View{
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int statusBarHeight = getStatusBarHeight(getContext());
+        int statusBarHeight = WindowUtil.getStatusBarHeight(getContext());
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT || isInEditMode()){
             setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), isInEditMode() ? (int) (20 * mDensity) : statusBarHeight);
         }else{
@@ -74,17 +76,5 @@ public class FitStatusBarView extends View{
     }
 
 
-    /**
-     * 获取状态栏的高度
-     *
-     * @return
-     */
-    private int getStatusBarHeight(Context context) {
-        int result = 0;
-        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = (int) context.getResources().getDimension(resourceId);
-        }
-        return result;
-    }
+
 }

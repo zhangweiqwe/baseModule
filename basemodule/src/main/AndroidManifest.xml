@@ -16,15 +16,17 @@
         <activity android:name=".TestToolSettingActivity"
                   android:launchMode="singleTask"
                   android:label="@string/test_tool"></activity>
-        <activity android:name=".NetworkDataActivity">
+        <activity android:name=".NetworkDataActivity"
+            android:theme="@style/BaseAppTheme"
+            >
         </activity>
         <activity
                 android:name=".BaseWebViewActivity"
                 android:configChanges="orientation|keyboardHidden">
         </activity>
-        <activity
-                android:name=".widgets.suspension.SuspensionWindowActivity"
-                android:theme="@style/BaseAppTheme.Transparent"/>
+
+        <activity android:name=".widgets.suspension.SuspensionWindowActivity"  android:theme="@style/BaseAppTheme.Transparent" />
+
 
         <provider
                 android:name="androidx.core.content.FileProvider"

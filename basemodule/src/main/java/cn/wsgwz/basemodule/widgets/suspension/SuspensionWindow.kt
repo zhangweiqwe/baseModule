@@ -1,4 +1,5 @@
-package cn.wsgwz.basemodule.widgets.suspension
+package cn.wsgwz.baselibrary.widgets.suspension
+
 
 import android.content.Context
 import cn.wsgwz.basemodule.utilities.InjectorUtils
