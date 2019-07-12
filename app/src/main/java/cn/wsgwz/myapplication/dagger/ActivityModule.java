@@ -10,6 +10,8 @@ public abstract class ActivityModule {
     @ContributesAndroidInjector
     abstract Main2Activity main2Activity();  // 绑定 MainActivity
 
+
+
     /*@ContributesAndroidInjector
     abstract BlankFragment blankFragment();  // 绑定 BlankFragment*/
 }
