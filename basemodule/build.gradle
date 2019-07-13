@@ -73,8 +73,6 @@ dependencies {
     testImplementation "junit:junit:$rootProject.junitVersion"
 
 
-
-
     implementation "com.android.support:multidex:$rootProject.multidexVersion"
     implementation "com.android.support:preference-v7:$rootProject.appCompatVersion"
     implementation "com.android.support:preference-v14:$rootProject.appCompatVersion"
@@ -103,6 +101,15 @@ dependencies {
 
     // https://mvnrepository.com/artifact/commons-codec/commons-codec
     api group: 'commons-codec', name: 'commons-codec', version: "$rootProject.commonsCodecVersion"
+
+
+    //https://dagger.dev/android
+    //https://stackoverflow.com/questions/52679385/dagger2-with-androidx-supportfragmentinjector-issue
+    kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger-android:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
 
 
 }

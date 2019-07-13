@@ -1,4 +1,4 @@
-package cn.wsgwz.myapplication.dagger;
+package cn.wsgwz.basemodule.dagger;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

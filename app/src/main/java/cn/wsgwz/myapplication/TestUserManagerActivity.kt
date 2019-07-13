@@ -6,8 +6,14 @@ import cn.wsgwz.basemodule.adapters.UserBaseAdapter
 import cn.wsgwz.basemodule.data.User
 import cn.wsgwz.basemodule.utilities.manager.UserManager
 import kotlinx.android.synthetic.main.activity_test_user_manager.*
+import javax.inject.Inject
 
 class TestUserManagerActivity : AppBaseActivity() {
+
+
+    @Inject
+    internal lateinit var userManager: UserManager
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,9 +21,9 @@ class TestUserManagerActivity : AppBaseActivity() {
 
 
         //for(i in 0..10)
-        UserManager.login("${Math.random()}", StringBuilder().apply {
+        userManager.login("${Math.random()}", StringBuilder().apply {
             append(1)
-            for (i in 1..9) {
+            for (i in 0..9) {
                 append((Math.random() * 10).toInt())
             }
         }.toString(), "${Math.random()}")

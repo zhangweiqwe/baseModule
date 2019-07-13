@@ -18,6 +18,7 @@ public class CommonModule {
 
 
 
+/*
 
     @Provides
     String provideStr00() {
@@ -35,5 +36,6 @@ public class CommonModule {
     String provideStr1() {
         return "str1";
     }
+*/
 
 }

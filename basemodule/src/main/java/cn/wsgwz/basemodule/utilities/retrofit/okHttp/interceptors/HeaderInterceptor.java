@@ -31,10 +31,10 @@ public class HeaderInterceptor
 
 
 
-
+    private UserManager userManager = UserManager.getInstance();
     @Override
     public Response intercept(Chain chain) throws IOException {
-        String token = UserManager.getCurrentUserToken();
+        String token = userManager.getCurrentUserToken();
         LLog.d(TAG, "token=" + token);
 
         Request request;

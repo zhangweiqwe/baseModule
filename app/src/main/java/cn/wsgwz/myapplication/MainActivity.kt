@@ -75,24 +75,6 @@ class MainActivity : AppBaseActivity() {
     }
 
 
-    override fun onConnectivityChange() {
-        super.onConnectivityChange()
-
-        if (NetworkUtil.isNetworkActive(this)) {
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item?.itemId) {
-            android.R.id.home -> {
-                finish()
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
     /*override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.simple_menu, menu)
         return true

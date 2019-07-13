@@ -13,7 +13,7 @@ import kotlinx.coroutines.*
 
 class UserManager private constructor() {
 
-    enum class State {
+    enum class UserState {
         LOGIN_SUCCESS, LOGOUT_SUCCESS
     }
 
@@ -35,61 +35,56 @@ class UserManager private constructor() {
     }
 
 
+    fun getCurrentUser(): User? = currentUser ?: synchronized(this) {
+            currentUser?.clone()
+        }
+
+
+    fun getCurrentUserToken(): String? {
+        return getCurrentUser()?.token
+    }
+
+
+    fun logout() {
+        currentUser = null
+        BaseApplication.getPreferences().edit().putString(BaseConst.PrefKey.CURRENT_USER_ID, null).apply()
+        LocalBroadcastManager.getInstance(BaseApplication.getInstance()).sendBroadcast(Intent(BaseConst.Action.USER_STATE_CHANGE).putExtra(USER_SATE_KEY, UserState.LOGOUT_SUCCESS))
+    }
+
+
+    fun login(token: String, phone: String? = null, password: String? = null) {
+        currentUser = User(token, phone, password).apply {
+            runBlocking {
+                userRepository.insert(this@apply)
+            }
+        }
+        BaseApplication.getPreferences().edit().putString(BaseConst.PrefKey.CURRENT_USER_ID, getCurrentUser()?.token).apply()
+        LocalBroadcastManager.getInstance(BaseApplication.getInstance()).sendBroadcast(Intent(BaseConst.Action.USER_STATE_CHANGE).putExtra(USER_SATE_KEY, UserState.LOGIN_SUCCESS))
+    }
+
+    fun update(user: User) {
+        currentUser = user.clone()
+        runBlocking {
+            userRepository.insert(user)
+        }
+    }
+
+
     companion object {
 
-
         private const val TAG = "UserManager"
+        const val USER_SATE_KEY = "state"
+
         // For Singleton instantiation
         @Volatile
         private var instance: UserManager? = null
 
         @JvmStatic
-        private fun getInstance() =
+        fun getInstance() =
                 instance ?: synchronized(this) {
                     instance ?: UserManager().also { instance = it }
                 }
 
-        @JvmStatic
-        fun init() {
-            getInstance()
-        }
 
-
-        @JvmStatic
-        fun getCurrentUser(): User? {
-            getInstance().currentUser?.also {
-                synchronized(it) {
-                    return it.clone()
-                }
-            }
-            return null
-        }
-
-        @JvmStatic
-        fun getCurrentUserToken(): String? {
-            return getCurrentUser()?.token
-        }
-
-        @JvmStatic
-        fun logout() {
-            getInstance().currentUser = null
-            BaseApplication.getPreferences().edit().putString(BaseConst.PrefKey.CURRENT_USER_ID, null).apply()
-            LocalBroadcastManager.getInstance(BaseApplication.getInstance()).sendBroadcast(Intent(BaseConst.Action.USER_STATE_CHANGE).putExtra("state", State.LOGOUT_SUCCESS))
-        }
-
-
-        @JvmStatic
-        fun login(token: String, phone: String? = null, password: String? = null) {
-            if (getCurrentUser() == null) {
-                getInstance().currentUser = User(token, phone, password).apply {
-                    runBlocking {
-                        getInstance().userRepository.insert(this@apply)
-                    }
-                }
-                BaseApplication.getPreferences().edit().putString(BaseConst.PrefKey.CURRENT_USER_ID, getCurrentUser()?.token).apply()
-                LocalBroadcastManager.getInstance(BaseApplication.getInstance()).sendBroadcast(Intent(BaseConst.Action.USER_STATE_CHANGE).putExtra("state", State.LOGIN_SUCCESS))
-            }
-
-        }
     }
 }

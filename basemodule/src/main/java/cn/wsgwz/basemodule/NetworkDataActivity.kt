@@ -8,7 +8,7 @@ import cn.wsgwz.baselibrary.retrofit.bean.RequestData
 import cn.wsgwz.baselibrary.retrofit.bean.ResponseData
 import cn.wsgwz.basemodule.widgets.suspension.NetworkDataManager
 import cn.wsgwz.basemodule.utilities.GsonUtil
-import cn.wsgwz.basemodule.utilities.OkHttpUtil
+import cn.wsgwz.basemodule.utilities.retrofit.okHttp.OkHttpUtil
 import kotlinx.android.synthetic.main.activity_network_data.*
 import okhttp3.*
 import java.io.IOException

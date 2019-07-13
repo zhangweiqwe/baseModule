@@ -22,6 +22,7 @@ import cn.wsgwz.basemodule.utilities.WindowUtil
 import cn.wsgwz.basemodule.widgets.ScrollWebView
 import cn.wsgwz.basemodule.widgets.progress.ProgressConstraintLayout
 import java.util.HashMap
+import javax.inject.Inject
 
 open class BaseWebViewActivity : BaseNetworkActivity() {
 
@@ -38,6 +39,9 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
     private lateinit var web_view: ScrollWebView
     private lateinit var video_container_fl: FrameLayout
     private lateinit var progress_bar: ProgressBar
+
+
+    @Inject lateinit var userManager: UserManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -150,7 +154,7 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
 
 
         val paramsMap = HashMap<String, String>()
-        UserManager.getCurrentUser()?.token?.also {
+        userManager.getCurrentUser()?.token?.also {
             paramsMap["token"] = it
         }
         paramsMap["app-user-agent"] = "android"

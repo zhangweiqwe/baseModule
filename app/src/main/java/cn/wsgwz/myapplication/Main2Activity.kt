@@ -26,9 +26,6 @@ class Main2Activity : AppBaseActivity() {
         private const val TAG = "Main2Activity"
     }
 
-    @Inject
-    @Named("str0")
-    internal lateinit var s:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +36,7 @@ class Main2Activity : AppBaseActivity() {
         ToolbarManager.get().into(this).title("测试")
 
 
-        LLog.d(TAG,s)
-
+        //LLog.d(TAG,s)
 
         class TestItem(val name: String?, val onClickListener: View.OnClickListener?)
 
@@ -80,6 +76,13 @@ class Main2Activity : AppBaseActivity() {
                 startActivity(Intent(this@Main2Activity, TestUserManagerActivity::class.java))
             }))
 
+            add(TestItem("数据加载中测试1", View.OnClickListener {
+                showLoading(true)
+                it.postDelayed({
+                    dismissLoading()
+                },10*1000)
+            }))
+
         }
         content_rv.layoutManager = LinearLayoutManager(this)
         content_rv.adapter = object : RecyclerView.Adapter<SimpleViewHolder>() {
@@ -102,17 +105,11 @@ class Main2Activity : AppBaseActivity() {
     }
 
 
-    override fun onConnectivityChange() {
-        super.onConnectivityChange()
 
-        if (NetworkUtil.isNetworkActive(this)) {
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
             android.R.id.home -> {
-                finish()
+                //finish()
                 true
             }
 

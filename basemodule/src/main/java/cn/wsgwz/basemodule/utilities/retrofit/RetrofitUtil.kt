@@ -12,7 +12,7 @@ import java.lang.NumberFormatException
 object RetrofitUtil {
     private const val TAG = "RetrofitUtil"
     private fun getHint(throwable: Throwable): String {
-        LLog.d(TAG,throwable::class.java.canonicalName)
+        LLog.d(TAG, throwable::class.java.canonicalName)
         return when (throwable) {
             is IOException, is retrofit2.HttpException -> {
                 BaseApplication.getInstance().getString(R.string.network_error_hint)
@@ -42,7 +42,7 @@ object RetrofitUtil {
 
     fun checkLogin(code: Int) {
         if (code == Code.NO_LOGIN.code) {
-            UserManager.logout()
+            UserManager.getInstance().logout()
             (BaseApplication.getInstance() as BaseApplication).login()
         }
     }

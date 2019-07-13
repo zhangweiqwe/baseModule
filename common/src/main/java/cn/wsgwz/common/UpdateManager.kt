@@ -1,4 +1,4 @@
-package cn.wsgwz.basemodule.widgets.suspension
+package cn.wsgwz.common
 
 import cn.wsgwz.basemodule.BaseConst
 
@@ -12,9 +12,9 @@ class UpdateManager private constructor() {
         private var instance: UpdateManager? = null
 
         fun getInstance() =
-            instance ?: synchronized(this) {
-                instance
-                        ?: UpdateManager().also { instance = it }
-            }
+                instance ?: synchronized(this) {
+                    instance
+                            ?: UpdateManager().also { instance = it }
+                }
     }
 }

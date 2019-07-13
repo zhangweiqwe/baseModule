@@ -26,9 +26,9 @@ class LoadingDialogFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        constraintLayout.postDelayed({
+        parent_cl.postDelayed({
             if (isAdded || isVisible) {
-                constraintLayout.visibility = View.VISIBLE
+                parent_cl.visibility = View.VISIBLE
             }
         }, 800)
     }

@@ -12,6 +12,7 @@ import cn.wsgwz.basemodule.utilities.NetworkUtil;
 public class BaseJsInterface {
     public Context context;
 
+    private UserManager userManager = UserManager.getInstance();
     public BaseJsInterface(Context context) {
         this.context = context;
     }
@@ -26,7 +27,7 @@ public class BaseJsInterface {
 
     @JavascriptInterface
     public String getToken() {
-        return UserManager.getCurrentUserToken();
+        return userManager.getCurrentUserToken();
     }
 
     @JavascriptInterface

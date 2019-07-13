@@ -13,17 +13,20 @@ import android.preference.PreferenceManager;
 import androidx.core.app.NotificationCompat;
 import androidx.multidex.MultiDex;
 
-import cn.wsgwz.basemodule.receivers.ConnectivityChangeBroadcastReceiver;
+import cn.wsgwz.basemodule.dagger.DaggerBaseAppComponent;
 import cn.wsgwz.basemodule.utilities.CrashHandler;
 import cn.wsgwz.basemodule.utilities.LLog;
-import cn.wsgwz.basemodule.utilities.manager.UserManager;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasAndroidInjector;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
 
 
-public class BaseApplication extends Application  {
+public class BaseApplication extends Application  implements HasAndroidInjector {
 
     private static final String TAG = BaseApplication.class.getSimpleName();
 
@@ -35,8 +38,12 @@ public class BaseApplication extends Application  {
 
     private static final List<Activity> activities = new ArrayList<>();
 
-
-
+    @Inject
+    DispatchingAndroidInjector<Object> dispatchingAndroidInjector;
+    @Override
+    public AndroidInjector<Object> androidInjector() {
+        return dispatchingAndroidInjector;
+    }
 
     public static BaseApplication getInstance() {
         return mInstance;
@@ -91,8 +98,8 @@ public class BaseApplication extends Application  {
         super.onCreate();
 
         LLog.d(TAG, getCurrentProcessName());
-        /*DaggerAppComponent.create()
-                .inject(this);*/
+        DaggerBaseAppComponent.create()
+                .inject(this);
         mInstance = this;
         mUiThread = Thread.currentThread();
         mMainHandler = new Handler();
@@ -101,18 +108,12 @@ public class BaseApplication extends Application  {
         CrashHandler.getInstance().init(this);
 
 
-        UserManager.init();
 
         if (getCurrentProcessName().equals(getPackageName())) {
             initNotificationChannel();
             if (BuildConfig.DEBUG) {
                 initDebugNotification();
             }
-
-            IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-            ConnectivityChangeBroadcastReceiver connectivityChangeBroadcastReceiver = new ConnectivityChangeBroadcastReceiver();
-            registerReceiver(connectivityChangeBroadcastReceiver, intentFilter);
         } else {
 
         }

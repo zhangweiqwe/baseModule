@@ -1,6 +1,7 @@
-package cn.wsgwz.basemodule.utilities;
+package cn.wsgwz.basemodule.utilities.retrofit.okHttp;
 
 import cn.wsgwz.basemodule.BaseApplication;
+import cn.wsgwz.basemodule.utilities.LLog;
 import okhttp3.Call;
 import okhttp3.Dispatcher;
 import okhttp3.OkHttpClient;

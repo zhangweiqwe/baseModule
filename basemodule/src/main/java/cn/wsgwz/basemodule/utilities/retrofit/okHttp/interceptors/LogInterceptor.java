@@ -34,8 +34,8 @@ import java.nio.charset.Charset;
 public class LogInterceptor
         implements Interceptor {
     private static final String TAG = "LogInterceptor";
-
-    private NetworkDataManager networkDataManager = NetworkDataManager.Companion.getInstance();
+    private UserManager userManager = UserManager.getInstance();
+    private NetworkDataManager networkDataManager = NetworkDataManager.getInstance();
 
     @Override
     public Response intercept(Chain chain) throws IOException {
@@ -53,7 +53,7 @@ public class LogInterceptor
 
         StringBuilder stringBuilder = new StringBuilder(id + "-->" + uri.toString());
 
-        String token = UserManager.getCurrentUserToken();
+        String token = userManager.getCurrentUserToken();
         if (token == null) {
             token = "";
         }

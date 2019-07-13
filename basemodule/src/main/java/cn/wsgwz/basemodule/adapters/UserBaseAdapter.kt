@@ -10,12 +10,15 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import cn.wsgwz.basemodule.R
 import cn.wsgwz.basemodule.data.User
 import cn.wsgwz.basemodule.utilities.InjectorUtils
+import cn.wsgwz.basemodule.utilities.LLog
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class UserBaseAdapter(context: Context, private val onUserSelectListener: OnUserSelectListener) :
         BaseAdapter(), Filterable, View.OnClickListener {
-
+    companion object {
+        private const val TAG = "UserBaseAdapter"
+    }
 
     interface OnUserSelectListener {
         fun onSelect(user: User)
@@ -26,7 +29,12 @@ class UserBaseAdapter(context: Context, private val onUserSelectListener: OnUser
     private val layoutInflater = LayoutInflater.from(context)
     private val userRepository = InjectorUtils.provideUserRepository(context)
     private var users: MutableList<User> = runBlocking {
-        userRepository.getUsers().toMutableList()
+
+
+        userRepository.getUsers().toMutableList().apply {
+            LLog.d(TAG, size.toString())
+        }
+
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
@@ -105,8 +113,12 @@ class UserBaseAdapter(context: Context, private val onUserSelectListener: OnUser
             override fun publishResults(constraint: CharSequence?, results: FilterResults) {
 
 
-                results.values?.also {
-                    users = (it as List<User>).toMutableList()
+                results.values.also {
+                    if (it != null) {
+                        users = (it as List<User>).toMutableList()
+                    } else {
+                        users.clear()
+                    }
                 }
 
                 notifyDataSetChanged()
@@ -140,7 +152,4 @@ class UserBaseAdapter(context: Context, private val onUserSelectListener: OnUser
     class ViewHolder(val parent_cl: ConstraintLayout, val user_name_tv: TextView, val delete_iv: ImageView)
 
 
-    companion object {
-        private const val TAG = "UserBaseAdapter"
-    }
 }
