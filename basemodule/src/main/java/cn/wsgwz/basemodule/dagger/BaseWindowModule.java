@@ -1,27 +1,25 @@
 package cn.wsgwz.basemodule.dagger;
 
 
-import android.annotation.TargetApi;
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkRequest;
-import android.os.Build;
-
-import javax.inject.Named;
-
-import cn.wsgwz.basemodule.BaseApplication;
 import cn.wsgwz.basemodule.utilities.manager.UserManager;
 import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class BaseCommonModule {
+public class BaseWindowModule {
+
+    private final BaseWindowDelegate baseWindowDelegate;
+
+    public BaseWindowModule(BaseWindowDelegate baseWindowDelegate) {
+        this.baseWindowDelegate = baseWindowDelegate;
+    }
 
 
     @Provides
-    UserManager provideUserManager() {
-        return UserManager.getInstance();
+    public String provideString() {
+        return "provideString";
     }
+
 
     /*@Provides
     ConnectivityManager provideConnectivityManager(){

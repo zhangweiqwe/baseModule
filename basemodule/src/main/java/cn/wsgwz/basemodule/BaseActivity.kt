@@ -3,8 +3,11 @@ package cn.wsgwz.basemodule
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
+import cn.wsgwz.basemodule.dagger.DaggerBaseAppComponent
 import cn.wsgwz.basemodule.widgets.dialog.LoadingDialogFragment
 import cn.wsgwz.basemodule.interfaces.BaseWindowInterface
+import cn.wsgwz.basemodule.utilities.LLog
 import cn.wsgwz.basemodule.utilities.WindowUtil
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
@@ -14,10 +17,16 @@ import javax.inject.Inject
 
 
 open class BaseActivity : AppCompatActivity(), BaseWindowInterface, HasAndroidInjector {
+    companion object {
+        private const val TAG = "BaseActivity"
+    }
+
+
     private var loadingDialogFragment: LoadingDialogFragment? = null
 
     @Inject
     internal lateinit var androidInjector: DispatchingAndroidInjector<Any>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)

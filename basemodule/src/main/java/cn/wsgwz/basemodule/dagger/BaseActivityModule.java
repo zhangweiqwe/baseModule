@@ -1,5 +1,6 @@
 package cn.wsgwz.basemodule.dagger;
 
+import cn.wsgwz.basemodule.BaseActivity;
 import cn.wsgwz.basemodule.BaseWebViewActivity;
 import cn.wsgwz.basemodule.NetworkDataActivity;
 import cn.wsgwz.basemodule.TestToolSettingActivity;
@@ -21,6 +22,10 @@ public abstract class BaseActivityModule {
 
     @ContributesAndroidInjector
     abstract SuspensionWindowActivity suspensionWindowActivity();
+
+
+    @ContributesAndroidInjector
+    abstract BaseActivity baseActivity();
 
 
 
