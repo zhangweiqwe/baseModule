@@ -5,7 +5,7 @@ import android.view.*
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import cn.wsgwz.basemodule.R
-import kotlinx.android.synthetic.main.dialog_fragment_loading.*
+import kotlinx.android.synthetic.main.fragment_dialog_loading.*
 import java.lang.Exception
 
 
@@ -20,7 +20,7 @@ class LoadingDialogFragment : DialogFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.dialog_fragment_loading, container)
+        return inflater.inflate(R.layout.fragment_dialog_loading, container)
     }
 
 

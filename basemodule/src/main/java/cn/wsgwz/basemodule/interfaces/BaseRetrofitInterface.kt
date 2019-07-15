@@ -4,6 +4,8 @@ import android.app.Person
 import android.content.ComponentName
 import android.content.Context
 import cn.wsgwz.basemodule.BaseConst
+import cn.wsgwz.basemodule.BaseNetworkActivity
+import cn.wsgwz.basemodule.BaseNetworkFragment
 import cn.wsgwz.basemodule.utilities.retrofit.BaseResult
 import cn.wsgwz.basemodule.utilities.retrofit.ResponseTransformer
 import cn.wsgwz.basemodule.utilities.retrofit.RxSchedulers
@@ -21,7 +23,7 @@ interface BaseRetrofitInterface {
     }
 
 
-    var compositeDisposable: CompositeDisposable
+
 
 
     fun <T> create(service: Class<T>): T {
@@ -34,18 +36,22 @@ interface BaseRetrofitInterface {
             InitType.NO_HINT -> {
                 isToastHint = false
             }
-    }
+        }
         return compose(RxSchedulers.applySchedulers()).compose(ResponseTransformer.handleResult(isToastHint))
     }
 
 
-    fun  Disposable.add(): Disposable {
+    /*fun Disposable.add(): Disposable {
         compositeDisposable.add(this)
         return this
-    }
+    }*/
 
     private inline fun <T, R> T.lett(block: (T) -> R): R {
 
         return block(this)
     }
+
+
+
+
 }

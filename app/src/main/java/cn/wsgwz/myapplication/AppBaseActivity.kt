@@ -16,5 +16,6 @@ open class AppBaseActivity : BaseNetworkActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 }

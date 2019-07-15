@@ -3,13 +3,15 @@ package cn.wsgwz.basemodule.interfaces
 import android.net.Network
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import cn.wsgwz.basemodule.BaseNetworkActivity
+import cn.wsgwz.basemodule.BaseNetworkFragment
 import cn.wsgwz.basemodule.widgets.dialog.LoadingDialogFragment
 
 
 interface BaseNetworkWindowInterface : BaseWindowInterface, BaseRetrofitInterface {
 
 
-    val loadingDialogFragment: LoadingDialogFragment
+    // val loadingDialogFragment: LoadingDialogFragment
 
     fun onRefresh() {}
 
@@ -23,23 +25,7 @@ interface BaseNetworkWindowInterface : BaseWindowInterface, BaseRetrofitInterfac
 
 
 
-    fun AppCompatActivity.showLoading(isCancellable: Boolean = false) {
-        loadingDialogFragment.isCancelable = isCancellable
-        loadingDialogFragment.show(supportFragmentManager)
-    }
 
-    fun AppCompatActivity.dismissLoading() {
-        loadingDialogFragment.dismiss()
-    }
-
-    fun Fragment.showLoading(isCancellable: Boolean = false) {
-        loadingDialogFragment.isCancelable = isCancellable
-        loadingDialogFragment.show(fragmentManager!!)
-    }
-
-    fun Fragment.dismissLoading() {
-        loadingDialogFragment.dismiss()
-    }
 
 
 }

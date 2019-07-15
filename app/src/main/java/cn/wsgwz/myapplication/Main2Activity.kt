@@ -80,7 +80,11 @@ class Main2Activity : AppBaseActivity() {
                 showLoading(true)
                 it.postDelayed({
                     dismissLoading()
-                },10*1000)
+                }, 10 * 1000)
+            }))
+
+            add(TestItem("ProgressLayout", View.OnClickListener {
+                startActivity(Intent(this@Main2Activity,TestProgressLayoutActivity::class.java))
             }))
 
         }
@@ -103,7 +107,6 @@ class Main2Activity : AppBaseActivity() {
 
         }
     }
-
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

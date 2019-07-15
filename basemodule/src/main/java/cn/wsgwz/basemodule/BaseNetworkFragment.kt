@@ -16,6 +16,7 @@ import cn.wsgwz.basemodule.utilities.LLog
 import cn.wsgwz.basemodule.utilities.NetworkUtil
 import cn.wsgwz.basemodule.utilities.manager.UserManager
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 open class BaseNetworkFragment : BaseFragment(), BaseNetworkWindowInterface {
@@ -23,8 +24,8 @@ open class BaseNetworkFragment : BaseFragment(), BaseNetworkWindowInterface {
         private const val TAG = "BaseNetworkFragment"
     }
 
-    override lateinit var compositeDisposable: CompositeDisposable
-    override val loadingDialogFragment by lazy {
+    private lateinit var compositeDisposable: CompositeDisposable
+    private val loadingDialogFragment by lazy {
         LoadingDialogFragment()
     }
 
@@ -48,11 +49,10 @@ open class BaseNetworkFragment : BaseFragment(), BaseNetworkWindowInterface {
     }
 
 
-    @Inject
-    internal lateinit var connectivityManager: ConnectivityManager
+    private val connectivityManager by lazy {
+        context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    }
 
-    @Inject
-    internal lateinit var networkRequest: NetworkRequest
 
     private val cmNetworkCallback =
             object : ConnectivityManager.NetworkCallback() {
@@ -70,7 +70,7 @@ open class BaseNetworkFragment : BaseFragment(), BaseNetworkWindowInterface {
         LocalBroadcastManager.getInstance(context!!).registerReceiver(broadcastReceiver, IntentFilter().apply {
             addAction(BaseConst.Action.USER_STATE_CHANGE)
         })
-        connectivityManager.requestNetwork(networkRequest, cmNetworkCallback)
+        connectivityManager.requestNetwork(NetworkRequest.Builder().build(), cmNetworkCallback)
     }
 
     override fun onDestroyView() {
@@ -78,6 +78,21 @@ open class BaseNetworkFragment : BaseFragment(), BaseNetworkWindowInterface {
         compositeDisposable.dispose()
         LocalBroadcastManager.getInstance(context!!).unregisterReceiver(broadcastReceiver)
         connectivityManager.unregisterNetworkCallback(cmNetworkCallback)
+    }
+
+    fun Disposable.add(): Disposable {
+        compositeDisposable.add(this)
+        return this
+    }
+
+
+    fun showLoading(isCancellable: Boolean = false) {
+        loadingDialogFragment.isCancelable = isCancellable
+        loadingDialogFragment.show(fragmentManager!!)
+    }
+
+    fun dismissLoading() {
+        loadingDialogFragment.dismiss()
     }
 
 

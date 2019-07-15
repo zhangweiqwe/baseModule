@@ -21,7 +21,7 @@ public class BaseCommonModule {
         return UserManager.getInstance();
     }
 
-    @Provides
+    /*@Provides
     ConnectivityManager provideConnectivityManager(){
         return (ConnectivityManager) BaseApplication.getInstance().getSystemService(Context.CONNECTIVITY_SERVICE);
     }
@@ -30,5 +30,5 @@ public class BaseCommonModule {
     @Provides
     NetworkRequest provideNetworkRequest(){
         return new NetworkRequest.Builder().build();
-    }
+    }*/
 }

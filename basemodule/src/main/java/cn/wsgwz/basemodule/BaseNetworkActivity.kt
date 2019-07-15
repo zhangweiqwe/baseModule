@@ -13,6 +13,7 @@ import io.reactivex.disposables.CompositeDisposable
 import cn.wsgwz.basemodule.utilities.LLog
 import cn.wsgwz.basemodule.utilities.NetworkUtil
 import cn.wsgwz.basemodule.utilities.manager.UserManager
+import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 
@@ -21,8 +22,8 @@ open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
         private const val TAG = "BaseNetworkActivity"
     }
 
-    override lateinit var compositeDisposable: CompositeDisposable
-    override val loadingDialogFragment by lazy {
+    private lateinit var compositeDisposable: CompositeDisposable
+    private val loadingDialogFragment by lazy {
         LoadingDialogFragment()
     }
 
@@ -46,11 +47,9 @@ open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
     }
 
 
-    @Inject
-    internal lateinit var connectivityManager: ConnectivityManager
-
-    @Inject
-    internal lateinit var networkRequest: NetworkRequest
+    private val connectivityManager by lazy {
+        getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    }
 
     private val cmNetworkCallback =
             object : ConnectivityManager.NetworkCallback() {
@@ -67,7 +66,7 @@ open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, IntentFilter().apply {
             addAction(BaseConst.Action.USER_STATE_CHANGE)
         })
-        connectivityManager.requestNetwork(networkRequest, cmNetworkCallback)
+        connectivityManager.requestNetwork(NetworkRequest.Builder().build(), cmNetworkCallback)
 
 
     }
@@ -79,5 +78,18 @@ open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
         connectivityManager.unregisterNetworkCallback(cmNetworkCallback)
     }
 
+    fun Disposable.add(): Disposable {
+        compositeDisposable.add(this)
+        return this
+    }
 
+
+    fun showLoading(isCancellable: Boolean = false) {
+        loadingDialogFragment.isCancelable = isCancellable
+        loadingDialogFragment.show(supportFragmentManager)
+    }
+
+    fun dismissLoading() {
+        loadingDialogFragment.dismiss()
+    }
 }

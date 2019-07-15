@@ -9,7 +9,7 @@
 
 
 
-    <cn.wsgwz.basemodule.widgets.progress.ProgressConstraintLayout
+    <cn.wsgwz.basemodule.widgets.progressActivity.ProgressConstraintLayout
             android:id="@+id/progress_layout"
             app:layout_constraintTop_toBottomOf="@+id/toolbar_parent_cl"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -25,9 +25,9 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:progressDrawable="@drawable/progressbar_bg"
+                android:progressDrawable="@drawable/bg_progressbar"
                 android:max="100"/>
-    </cn.wsgwz.basemodule.widgets.progress.ProgressConstraintLayout>
+    </cn.wsgwz.basemodule.widgets.progressActivity.ProgressConstraintLayout>
 
     <include
              app:layout_constraintTop_toTopOf="parent"

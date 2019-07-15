@@ -20,9 +20,8 @@ import cn.wsgwz.basemodule.utilities.LLog
 import cn.wsgwz.basemodule.utilities.manager.UserManager
 import cn.wsgwz.basemodule.utilities.WindowUtil
 import cn.wsgwz.basemodule.widgets.ScrollWebView
-import cn.wsgwz.basemodule.widgets.progress.ProgressConstraintLayout
+import cn.wsgwz.basemodule.widgets.progressActivity.ProgressConstraintLayout
 import java.util.HashMap
-import javax.inject.Inject
 
 open class BaseWebViewActivity : BaseNetworkActivity() {
 
@@ -41,7 +40,9 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
     private lateinit var progress_bar: ProgressBar
 
 
-    @Inject lateinit var userManager: UserManager
+    private val userManager by lazy {
+        UserManager.getInstance()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -84,7 +85,7 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
             override fun onShowCustomView(view: View?, callback: CustomViewCallback?) {
                 super.onShowCustomView(view, callback)
 
-                LLog.d(TAG,"onShowCustomView")
+                LLog.d(TAG, "onShowCustomView")
                 progress_layout.visibility = View.INVISIBLE
                 supportActionBar?.hide()
                 window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -127,18 +128,18 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
                 //progress_layout.showContent()
-                LLog.d(TAG,"onPageFinished")
+                LLog.d(TAG, "onPageFinished")
             }
 
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                 progress_layout.showContent()
-                LLog.d(TAG,"shouldOverrideUrlLoading")
+                LLog.d(TAG, "shouldOverrideUrlLoading")
                 return super.shouldOverrideUrlLoading(view, request)
             }
 
             override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
                 super.onReceivedError(view, request, error)
-                LLog.d(TAG,"onReceivedError")
+                LLog.d(TAG, "onReceivedError")
                 showError()
             }
 
@@ -166,7 +167,7 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
         }
 
         web_view.loadUrl(builder.build().toString().also {
-            LLog.d(TAG,it)
+            LLog.d(TAG, it)
         }, paramsMap)
 
 
@@ -204,9 +205,9 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
     }
 
     private fun showError() {
-        progress_layout.showError {
+        progress_layout.showError(View.OnClickListener {
             onRefresh()
-        }
+        })
     }
 
     fun onInitActionBar() {
