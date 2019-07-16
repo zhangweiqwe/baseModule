@@ -3,11 +3,7 @@ package cn.wsgwz.basemodule
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
-import cn.wsgwz.basemodule.dagger.DaggerBaseAppComponent
-import cn.wsgwz.basemodule.widgets.dialog.LoadingDialogFragment
 import cn.wsgwz.basemodule.interfaces.BaseWindowInterface
-import cn.wsgwz.basemodule.utilities.LLog
 import cn.wsgwz.basemodule.utilities.WindowUtil
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
@@ -22,10 +18,11 @@ open class BaseActivity : AppCompatActivity(), BaseWindowInterface, HasAndroidIn
     }
 
 
-    private var loadingDialogFragment: LoadingDialogFragment? = null
 
     @Inject
     internal lateinit var androidInjector: DispatchingAndroidInjector<Any>
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +30,7 @@ open class BaseActivity : AppCompatActivity(), BaseWindowInterface, HasAndroidIn
         super.onCreate(savedInstanceState)
         BaseApplication.addActivity(this)
         WindowUtil.setStatusBarTransparent(this)
+
     }
 
     override fun onDestroy() {

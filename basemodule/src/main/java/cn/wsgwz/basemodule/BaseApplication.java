@@ -3,7 +3,6 @@ package cn.wsgwz.basemodule;
 import android.app.*;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -96,7 +95,6 @@ public class BaseApplication extends Application  implements HasAndroidInjector 
     @Override
     public void onCreate() {
         super.onCreate();
-
         LLog.d(TAG, getCurrentProcessName());
         DaggerBaseAppComponent.create()
                 .inject(this);
