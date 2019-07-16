@@ -57,17 +57,20 @@ open class BaseActivity : AppCompatActivity(), BaseWindowInterface, HasAndroidIn
 
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-        if (!BuildConfig.DEBUG) {
-            return super.dispatchTouchEvent(event)
-        }
-
-        if (event.action === MotionEvent.ACTION_DOWN) {
-            lastActionDownTime = System.currentTimeMillis()
-        } else if (event.action == MotionEvent.ACTION_UP) {
-            if ((System.currentTimeMillis() - lastActionDownTime) < 800 && event.rawX - locationPoint.x > 50 && locationPoint.x < proportionX) {
-                finish()
+        if (BuildConfig.DEBUG) {
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    lastActionDownTime = System.currentTimeMillis()
+                }
+                MotionEvent.ACTION_UP -> {
+                    if ((System.currentTimeMillis() - lastActionDownTime) < 800 && event.rawX - locationPoint.x > 50 && locationPoint.x < proportionX) {
+                        finish()
+                    }
+                }
             }
         }
+
+
         return super.dispatchTouchEvent(event)
     }
 }
