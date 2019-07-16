@@ -11,14 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import cn.wsgwz.baselibrary.permission.PermissionV2
 import cn.wsgwz.baselibrary.widgets.suspension.SuspensionWindowManager
 import cn.wsgwz.basemodule.other.SimpleViewHolder
-import cn.wsgwz.basemodule.utilities.LLog
-import cn.wsgwz.basemodule.utilities.NetworkUtil
-import cn.wsgwz.common.ToolbarManager
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_main2.*
 import kotlinx.android.synthetic.main.list_item_test.view.*
-import javax.inject.Inject
-import javax.inject.Named
 
 class Main2Activity : AppBaseActivity() {
 
@@ -31,9 +26,11 @@ class Main2Activity : AppBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
 
-        SuspensionWindowManager.getInstance().init(this)
+        if (BuildConfig.DEBUG) {
+            SuspensionWindowManager.init(this)
+        }
 
-        ToolbarManager.with(this).title("测试")
+        toolbar.title("测试")
 
 
         //LLog.d(TAG,s)

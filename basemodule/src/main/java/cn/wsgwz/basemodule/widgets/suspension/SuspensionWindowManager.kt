@@ -30,11 +30,7 @@ class SuspensionWindowManager private constructor() {
         }
     }
 
-    fun init(context: Context) {
-        if (BaseApplication.getPreferences().getBoolean("is_show_network_data_suspension_window", false)) {
-            showWithRequestPermission(context, SuspensionWindowType.LOG)
-        }
-    }
+
 
     fun showWithRequestPermission(context: Context, suspensionWindowType: SuspensionWindowType) {
         context.startActivity(Intent(context, SuspensionWindowActivity::class.java).apply {
@@ -49,10 +45,20 @@ class SuspensionWindowManager private constructor() {
         @Volatile
         private var instance: SuspensionWindowManager? = null
 
+
+        @JvmStatic
         fun getInstance() =
             instance ?: synchronized(this) {
                 instance
                     ?: SuspensionWindowManager().also { instance = it }
             }
+
+
+        @JvmStatic
+        fun init(context: Context) {
+            if (BaseApplication.getPreferences().getBoolean("is_show_network_data_suspension_window", false)) {
+                getInstance().showWithRequestPermission(context, SuspensionWindowType.LOG)
+            }
+        }
     }
 }
