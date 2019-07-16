@@ -6,6 +6,7 @@ import android.view.MotionEvent
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import cn.wsgwz.basemodule.interfaces.BaseWindowInterface
+import cn.wsgwz.basemodule.utilities.DensityUtil
 import cn.wsgwz.basemodule.utilities.WindowUtil
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
@@ -22,7 +23,9 @@ open class BaseActivity : AppCompatActivity(), BaseWindowInterface, HasAndroidIn
     private val locationPoint by lazy {
         Point()
     }
-    private var proportionX = 0
+    private val proportionX by lazy {
+        resources.displayMetrics.widthPixels / 30
+    }
     private var lastActionDownTime = 0L
 
     @Inject
@@ -60,10 +63,12 @@ open class BaseActivity : AppCompatActivity(), BaseWindowInterface, HasAndroidIn
         if (BuildConfig.DEBUG) {
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
+                    locationPoint.x = event.rawX.toInt()
+                    locationPoint.y = event.rawY.toInt()
                     lastActionDownTime = System.currentTimeMillis()
                 }
                 MotionEvent.ACTION_UP -> {
-                    if ((System.currentTimeMillis() - lastActionDownTime) < 800 && event.rawX - locationPoint.x > 50 && locationPoint.x < proportionX) {
+                    if ((System.currentTimeMillis() - lastActionDownTime) < 800 && event.rawX - locationPoint.x > DensityUtil.dp2px(50f) && locationPoint.x < proportionX&&event.rawY-locationPoint.y<DensityUtil.dp2px(100f)) {
                         finish()
                     }
                 }
