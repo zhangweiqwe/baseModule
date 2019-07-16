@@ -33,7 +33,7 @@ class Main2Activity : AppBaseActivity() {
 
         SuspensionWindowManager.getInstance().init(this)
 
-        ToolbarManager.get().into(this).title("测试")
+        ToolbarManager.with(this).title("测试")
 
 
         //LLog.d(TAG,s)
@@ -57,6 +57,7 @@ class Main2Activity : AppBaseActivity() {
 
 
             }))
+
 
 
             add(TestItem("上传文件", View.OnClickListener {
@@ -84,7 +85,7 @@ class Main2Activity : AppBaseActivity() {
             }))
 
             add(TestItem("ProgressLayout", View.OnClickListener {
-                startActivity(Intent(this@Main2Activity,TestProgressLayoutActivity::class.java))
+                startActivity(Intent(this@Main2Activity, TestProgressLayoutActivity::class.java))
             }))
 
         }

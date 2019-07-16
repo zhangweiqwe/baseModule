@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.*
 import android.os.Bundle
+import android.view.View
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import cn.wsgwz.basemodule.widgets.dialog.LoadingDialogFragment
 import cn.wsgwz.basemodule.interfaces.BaseNetworkWindowInterface
@@ -13,13 +14,20 @@ import io.reactivex.disposables.CompositeDisposable
 import cn.wsgwz.basemodule.utilities.LLog
 import cn.wsgwz.basemodule.utilities.NetworkUtil
 import cn.wsgwz.basemodule.utilities.manager.UserManager
+import cn.wsgwz.basemodule.widgets.progressActivity.ProgressConstraintLayout
+import cn.wsgwz.basemodule.widgets.progressActivity.ProgressLayout
 import io.reactivex.disposables.Disposable
+import kotlinx.android.synthetic.main.activity_base_network.*
 import javax.inject.Inject
 
 
 open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
     companion object {
         private const val TAG = "BaseNetworkActivity"
+    }
+
+    val progressLayout by lazy {
+        progress_layout
     }
 
     private lateinit var compositeDisposable: CompositeDisposable
@@ -91,5 +99,16 @@ open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
 
     fun dismissLoading() {
         loadingDialogFragment.dismiss()
+    }
+
+
+    fun setCustomContentView(layoutResID: Int) {
+        setContentView(R.layout.activity_base_network)
+        layoutInflater.inflate(layoutResID, progressLayout, true)
+    }
+
+    fun setCustomContentView(view: View) {
+        setContentView(R.layout.activity_base_network)
+        progressLayout.addView(view)
     }
 }

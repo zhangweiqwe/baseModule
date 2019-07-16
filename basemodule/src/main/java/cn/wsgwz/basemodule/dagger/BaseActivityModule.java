@@ -10,7 +10,7 @@ import dagger.android.ContributesAndroidInjector;
 
 // 注意这里用的是抽象类和抽象方法
 @Module
-public abstract class BaseActivityModule {
+abstract class BaseActivityModule {
     @ContributesAndroidInjector
     abstract TestToolSettingActivity testToolSettingActivity();
 

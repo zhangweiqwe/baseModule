@@ -18,33 +18,37 @@ import cn.wsgwz.basemodule.utilities.ToolbarUtil
 class ToolbarManager private constructor() {
     companion object {
 
-        @Volatile
+        /*@Volatile
         private var instance: ToolbarManager? = null
 
 
         @JvmStatic
-        fun get() = instance ?: synchronized(this) {
+        private fun get() = instance ?: synchronized(this) {
             instance ?: ToolbarManager().also { instance = it }
+        }*/
+
+
+        @JvmStatic
+        fun with(appCompatActivity: AppCompatActivity): Toolbar {
+
+            ToolbarUtil.setCustomView(appCompatActivity, R.layout.custom_toolbar)
+            return Toolbar(
+                    appCompatActivity.findViewById(R.id.toolbar_parent_cl),
+                    appCompatActivity,
+                    appCompatActivity
+            )
         }
-    }
 
 
-    fun into(appCompatActivity: AppCompatActivity): Toolbar {
+        @JvmStatic
+        fun with(toolbarView: View): Toolbar {
+            ToolbarUtil.setCustomView(toolbarView.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar), R.layout.custom_toolbar)
+            return Toolbar(toolbarView)
 
-        ToolbarUtil.setCustomView(appCompatActivity, R.layout.custom_toolbar)
-        return Toolbar(
-                appCompatActivity.findViewById(R.id.toolbar_parent_cl),
-                appCompatActivity,
-                appCompatActivity
-        )
-    }
-
-
-    fun into(toolbarView: View): Toolbar {
-        ToolbarUtil.setCustomView(toolbarView.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar), R.layout.custom_toolbar)
-        return Toolbar(toolbarView)
+        }
 
     }
+
 
     class Toolbar(
             private val toolbarView: View,
