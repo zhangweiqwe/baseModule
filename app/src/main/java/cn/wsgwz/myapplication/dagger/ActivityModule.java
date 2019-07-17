@@ -1,6 +1,5 @@
 package cn.wsgwz.myapplication.dagger;
 
-import cn.wsgwz.basemodule.TestToolSettingActivity;
 import cn.wsgwz.myapplication.MainActivity;
 import cn.wsgwz.myapplication.TestDownloadActivity;
 import cn.wsgwz.myapplication.TestUploadActivity;
