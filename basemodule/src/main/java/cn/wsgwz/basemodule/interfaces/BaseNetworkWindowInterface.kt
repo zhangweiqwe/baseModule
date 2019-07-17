@@ -13,6 +13,7 @@ interface BaseNetworkWindowInterface : BaseWindowInterface, BaseRetrofitInterfac
 
     // val loadingDialogFragment: LoadingDialogFragment
 
+
     fun onRefresh() {}
 
 
@@ -21,11 +22,6 @@ interface BaseNetworkWindowInterface : BaseWindowInterface, BaseRetrofitInterfac
     fun onLoginSuccess() {}
 
     fun onLogoutSuccess() {}
-
-
-
-
-
 
 
 }

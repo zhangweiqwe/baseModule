@@ -30,17 +30,19 @@ open class BaseNetworkFragment : BaseFragment(), BaseNetworkWindowInterface {
     }
 
 
-    private val broadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            LLog.d(TAG, "${hashCode()}" + intent.action)
-            when (intent.action) {
-                BaseConst.Action.USER_STATE_CHANGE -> {
-                    when (intent.getSerializableExtra(UserManager.USER_SATE_KEY) as UserManager.UserState) {
-                        UserManager.UserState.LOGIN_SUCCESS -> {
-                            onLoginSuccess()
-                        }
-                        UserManager.UserState.LOGOUT_SUCCESS -> {
-                            onLogoutSuccess()
+    private val broadcastReceiver by lazy {
+        object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                LLog.d(TAG, "${hashCode()}" + intent.action)
+                when (intent.action) {
+                    BaseConst.Action.USER_STATE_CHANGE -> {
+                        when (intent.getSerializableExtra(UserManager.USER_SATE_KEY) as UserManager.UserState) {
+                            UserManager.UserState.LOGIN_SUCCESS -> {
+                                onLoginSuccess()
+                            }
+                            UserManager.UserState.LOGOUT_SUCCESS -> {
+                                onLogoutSuccess()
+                            }
                         }
                     }
                 }
@@ -53,15 +55,15 @@ open class BaseNetworkFragment : BaseFragment(), BaseNetworkWindowInterface {
         context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     }
 
-
-    private val cmNetworkCallback =
-            object : ConnectivityManager.NetworkCallback() {
-                override fun onAvailable(network: Network) {
-                    super.onAvailable(network)
-                    this@BaseNetworkFragment.onAvailable(network)
-                    LLog.d(TAG, "onAvailable ${NetworkUtil.isConnected(context)} ")
-                }
+    private val cmNetworkCallback by lazy {
+        object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                super.onAvailable(network)
+                this@BaseNetworkFragment.onAvailable(network)
+                LLog.d(TAG, "onAvailable ${NetworkUtil.isConnected(context)} ")
             }
+        }
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
