@@ -1,5 +1,6 @@
 package cn.wsgwz.myapplication.dagger;
 
+import cn.wsgwz.basemodule.TestToolSettingActivity;
 import cn.wsgwz.myapplication.Main2Activity;
 import cn.wsgwz.myapplication.TestDownloadActivity;
 import cn.wsgwz.myapplication.TestUploadActivity;
@@ -22,6 +23,7 @@ public abstract class ActivityModule {
 
     @ContributesAndroidInjector
     abstract TestUserManagerActivity testUserManagerActivity();
+
 
     /*@ContributesAndroidInjector
     abstract BlankFragment blankFragment();  // 绑定 BlankFragment*/

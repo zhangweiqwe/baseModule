@@ -20,7 +20,7 @@
         <activity
             android:name=".TestToolSettingActivity"
             android:label="@string/test_tool"
-            android:launchMode="singleTask"></activity>
+            android:launchMode="singleTop"></activity>
         <activity
             android:name=".NetworkDataActivity"
             android:theme="@style/BaseAppTheme"></activity>

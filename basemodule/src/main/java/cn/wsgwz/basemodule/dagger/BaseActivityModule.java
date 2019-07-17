@@ -1,6 +1,7 @@
 package cn.wsgwz.basemodule.dagger;
 
 import cn.wsgwz.basemodule.BaseActivity;
+import cn.wsgwz.basemodule.BaseNetworkActivity;
 import cn.wsgwz.basemodule.BaseWebViewActivity;
 import cn.wsgwz.basemodule.NetworkDataActivity;
 import cn.wsgwz.basemodule.TestToolSettingActivity;
@@ -10,7 +11,7 @@ import dagger.android.ContributesAndroidInjector;
 
 // 注意这里用的是抽象类和抽象方法
 @Module
-abstract class BaseActivityModule {
+public abstract class BaseActivityModule {
     @ContributesAndroidInjector
     abstract TestToolSettingActivity testToolSettingActivity();
 
@@ -23,6 +24,8 @@ abstract class BaseActivityModule {
     @ContributesAndroidInjector
     abstract SuspensionWindowActivity suspensionWindowActivity();
 
+    @ContributesAndroidInjector
+    abstract BaseNetworkActivity baseNetworkActivity();
 
     @ContributesAndroidInjector
     abstract BaseActivity baseActivity();

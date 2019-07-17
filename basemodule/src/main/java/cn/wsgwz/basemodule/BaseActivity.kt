@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import cn.wsgwz.basemodule.interfaces.BaseWindowInterface
 import cn.wsgwz.basemodule.utilities.DensityUtil
+import cn.wsgwz.basemodule.utilities.LLog
 import cn.wsgwz.basemodule.utilities.WindowUtil
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
@@ -38,6 +39,7 @@ open class BaseActivity : AppCompatActivity(), BaseWindowInterface, HasAndroidIn
         BaseApplication.addActivity(this)
         WindowUtil.setStatusBarTransparent(this)
 
+        LLog.d(TAG,"${androidInjector}")
     }
 
     override fun onDestroy() {

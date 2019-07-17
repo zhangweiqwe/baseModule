@@ -29,7 +29,7 @@ open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
         private const val TAG = "BaseNetworkActivity"
     }
 
-    val progressLayout by lazy {
+    val progressLayout: ProgressConstraintLayout by lazy {
         progress_layout
     }
 

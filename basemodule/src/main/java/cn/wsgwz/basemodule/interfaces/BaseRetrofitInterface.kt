@@ -18,7 +18,7 @@ interface BaseRetrofitInterface {
     val requestCompositeDisposable: CompositeDisposable
 
 
-    fun <T> BaseRetrofitInterface.create(service: Class<T>): T {
+    fun <T> create(service: Class<T>): T {
         return BaseConst.RETROFIT.create(service)
     }
 

@@ -23,20 +23,20 @@ interface BaseNetworkWindowInterface : BaseWindowInterface, BaseRetrofitInterfac
     fun onLogoutSuccess() {}
 
 
-    fun BaseNetworkWindowInterface.showLoading(isCancellable: Boolean = false) {
+    fun showLoading(isCancellable: Boolean = false) {
         loadingDialogFragment.isCancelable = isCancellable
         when (this) {
-            is BaseNetworkActivity -> {
+            is AppCompatActivity -> {
                 loadingDialogFragment.show(supportFragmentManager)
             }
-            is BaseFragment -> {
+            is Fragment -> {
                 loadingDialogFragment.show(fragmentManager!!)
             }
         }
     }
 
 
-    fun BaseNetworkWindowInterface.dismissLoading() {
+    fun dismissLoading() {
         loadingDialogFragment.dismiss()
     }
 
