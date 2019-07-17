@@ -31,20 +31,14 @@ android {
         release {
             shrinkResources true
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
             shrinkResources true
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
-            android.applicationVariants.all { variant ->
-                variant.outputs.all {
-                    //outputFileName = "${defaultConfig.applicationId} versionCode_${defaultConfig.versionCode} releaseTime_${releaseTime()}.apk"
-                    //outputFileName = "user${defaultConfig.versionName} ${releaseTime()}.apk"
-                    outputFileName = "${applicationId}.apk"
-                }
-            }
+
         }
     }
     compileOptions {
@@ -54,6 +48,12 @@ android {
     // work-runtime-ktx 2.1.0 and above now requires Java 8
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+}
+
+android.applicationVariants.all { variant ->
+    variant.outputs.all {
+        outputFileName = "${applicationId}_${releaseTime()}.apk"
     }
 }
 
@@ -73,7 +73,7 @@ easylauncher {
 }
 
 def releaseTime() {
-    return new Date().format("yyyyMMddHHmmss")
+    return new Date().format("yyyy-MM-dd_HH-mm")
 }
 
 dependencies {
