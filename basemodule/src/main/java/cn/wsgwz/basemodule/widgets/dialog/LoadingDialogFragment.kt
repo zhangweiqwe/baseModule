@@ -5,6 +5,7 @@ import android.view.*
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import cn.wsgwz.basemodule.R
+import cn.wsgwz.basemodule.utilities.LLog
 import kotlinx.android.synthetic.main.fragment_dialog_loading.*
 import java.lang.Exception
 
@@ -12,6 +13,12 @@ import java.lang.Exception
 class LoadingDialogFragment : DialogFragment() {
     companion object {
         private const val TAG = "LoadingDialogFragment"
+    }
+
+
+    init {
+        LLog.d(TAG,"init")
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

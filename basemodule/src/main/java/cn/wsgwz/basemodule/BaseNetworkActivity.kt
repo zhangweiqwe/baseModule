@@ -7,6 +7,8 @@ import android.content.IntentFilter
 import android.net.*
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.fragment.app.FragmentManager
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import cn.wsgwz.basemodule.widgets.dialog.LoadingDialogFragment
 import cn.wsgwz.basemodule.interfaces.BaseNetworkWindowInterface
@@ -19,43 +21,27 @@ import cn.wsgwz.basemodule.widgets.progressActivity.ProgressLayout
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_base_network.*
 import javax.inject.Inject
+import kotlin.reflect.KProperty
 
 
 open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
     companion object {
         private const val TAG = "BaseNetworkActivity"
     }
-
     val progressLayout by lazy {
         progress_layout
     }
 
-    private lateinit var compositeDisposable: CompositeDisposable
-    private val loadingDialogFragment by lazy {
+    private lateinit var mCompositeDisposable: CompositeDisposable
+    override val compositeDisposable: CompositeDisposable
+        get() = mCompositeDisposable
+
+    override val loadingDialogFragment by lazy {
         LoadingDialogFragment()
     }
 
 
-    private val broadcastReceiver by lazy {
-        object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
-                LLog.d(TAG, "${hashCode()}" + intent.action)
-                when (intent.action) {
-                    BaseConst.Action.USER_STATE_CHANGE -> {
-                        when (intent.getSerializableExtra(UserManager.USER_SATE_KEY) as UserManager.UserState) {
-                            UserManager.UserState.LOGIN_SUCCESS -> {
-                                onLoginSuccess()
-                            }
-                            UserManager.UserState.LOGOUT_SUCCESS -> {
-                                onLogoutSuccess()
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
+    private val broadcastReceiver by BaseWindowBroadcastReceiverDelegate()
 
     private val connectivityManager by lazy {
         getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -71,38 +57,32 @@ open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
         }
     }
 
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        compositeDisposable = CompositeDisposable()
+        mCompositeDisposable = CompositeDisposable()
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, IntentFilter().apply {
             addAction(BaseConst.Action.USER_STATE_CHANGE)
         })
         connectivityManager.requestNetwork(NetworkRequest.Builder().build(), cmNetworkCallback)
 
-
+        LLog.d(TAG,"${hashCode()} ${broadcastReceiver} onCreate")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        compositeDisposable.dispose()
+        mCompositeDisposable.dispose()
         LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver)
         connectivityManager.unregisterNetworkCallback(cmNetworkCallback)
-    }
-
-    fun Disposable.add(): Disposable {
-        compositeDisposable.add(this)
-        return this
+        LLog.d(TAG,"${hashCode()} ${broadcastReceiver} onDestroy")
     }
 
 
-    fun showLoading(isCancellable: Boolean = false) {
-        loadingDialogFragment.isCancelable = isCancellable
-        loadingDialogFragment.show(supportFragmentManager)
-    }
 
-    fun dismissLoading() {
-        loadingDialogFragment.dismiss()
-    }
+
+
 
 
     fun setCustomContentView(layoutResID: Int) {
@@ -115,3 +95,5 @@ open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
         progressLayout.addView(view)
     }
 }
+
+

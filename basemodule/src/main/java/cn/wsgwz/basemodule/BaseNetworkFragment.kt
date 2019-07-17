@@ -24,31 +24,16 @@ open class BaseNetworkFragment : BaseFragment(), BaseNetworkWindowInterface {
         private const val TAG = "BaseNetworkFragment"
     }
 
-    private lateinit var compositeDisposable: CompositeDisposable
-    private val loadingDialogFragment by lazy {
+    private lateinit var mCompositeDisposable: CompositeDisposable
+    override val compositeDisposable: CompositeDisposable
+        get() = mCompositeDisposable
+
+    override val loadingDialogFragment by lazy {
         LoadingDialogFragment()
     }
 
 
-    private val broadcastReceiver by lazy {
-        object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
-                LLog.d(TAG, "${hashCode()}" + intent.action)
-                when (intent.action) {
-                    BaseConst.Action.USER_STATE_CHANGE -> {
-                        when (intent.getSerializableExtra(UserManager.USER_SATE_KEY) as UserManager.UserState) {
-                            UserManager.UserState.LOGIN_SUCCESS -> {
-                                onLoginSuccess()
-                            }
-                            UserManager.UserState.LOGOUT_SUCCESS -> {
-                                onLogoutSuccess()
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+    private val broadcastReceiver by BaseWindowBroadcastReceiverDelegate()
 
 
     private val connectivityManager by lazy {
@@ -68,33 +53,19 @@ open class BaseNetworkFragment : BaseFragment(), BaseNetworkWindowInterface {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        compositeDisposable = CompositeDisposable()
+        mCompositeDisposable = CompositeDisposable()
         LocalBroadcastManager.getInstance(context!!).registerReceiver(broadcastReceiver, IntentFilter().apply {
             addAction(BaseConst.Action.USER_STATE_CHANGE)
         })
         connectivityManager.requestNetwork(NetworkRequest.Builder().build(), cmNetworkCallback)
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        compositeDisposable.dispose()
+        mCompositeDisposable.dispose()
         LocalBroadcastManager.getInstance(context!!).unregisterReceiver(broadcastReceiver)
         connectivityManager.unregisterNetworkCallback(cmNetworkCallback)
-    }
-
-    fun Disposable.add(): Disposable {
-        compositeDisposable.add(this)
-        return this
-    }
-
-
-    fun showLoading(isCancellable: Boolean = false) {
-        loadingDialogFragment.isCancelable = isCancellable
-        loadingDialogFragment.show(fragmentManager!!)
-    }
-
-    fun dismissLoading() {
-        loadingDialogFragment.dismiss()
     }
 
 

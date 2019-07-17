@@ -23,10 +23,10 @@ interface BaseRetrofitInterface {
     }
 
 
+    val compositeDisposable: CompositeDisposable
 
 
-
-    fun <T> create(service: Class<T>): T {
+    fun <T> BaseRetrofitInterface.create(service: Class<T>): T {
         return BaseConst.RETROFIT.create(service)
     }
 
@@ -41,10 +41,10 @@ interface BaseRetrofitInterface {
     }
 
 
-    /*fun Disposable.add(): Disposable {
+    fun Disposable.add(): Disposable {
         compositeDisposable.add(this)
         return this
-    }*/
+    }
 
     private inline fun <T, R> T.lett(block: (T) -> R): R {
 

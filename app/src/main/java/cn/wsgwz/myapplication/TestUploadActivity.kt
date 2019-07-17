@@ -3,7 +3,6 @@ package cn.wsgwz.myapplication
 import android.app.AlertDialog
 import android.os.Bundle
 import android.widget.FrameLayout
-import cn.wsgwz.basemodule.BaseConst
 import cn.wsgwz.basemodule.utilities.DensityUtil
 import cn.wsgwz.basemodule.utilities.retrofit.okHttp.ProgressListener
 import cn.wsgwz.basemodule.utilities.retrofit.okHttp.ProgressRequestBody
@@ -59,7 +58,7 @@ class TestUploadActivity : AppBaseActivity() {
 
 
 
-        BaseConst.RETROFIT.create(CommonService::class.java).upload("https://china185.com/uploadService/uploadFile", "1142271925825835010", ProgressRequestBody(multipartBodyBuilder.build(), ProgressListener {
+        create(CommonService::class.java).upload("https://china185.com/uploadService/uploadFile", "1142271925825835010", ProgressRequestBody(multipartBodyBuilder.build(), ProgressListener {
             progressView.post{
                 progressView.updateProgress(it)
             }
