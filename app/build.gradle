@@ -27,13 +27,35 @@ android {
         //renderscriptSupportModeEnabled true
         multiDexEnabled true
     }
+
+
+    signingConfigs {
+
+        release {
+            storeFile file("simple.jks")
+            storePassword "123456"
+            keyAlias "wsgwz"
+            keyPassword "123456"
+        }
+
+        debug {
+            storeFile file("simple.jks")
+            storePassword "123456"
+            keyAlias "wsgwz"
+            keyPassword "123456"
+        }
+
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             shrinkResources true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
+            signingConfig signingConfigs.debug
             shrinkResources true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -53,7 +75,8 @@ android {
 
 android.applicationVariants.all { variant ->
     variant.outputs.all {
-        outputFileName = "${applicationId}_${releaseTime()}.apk"
+        outputFileName = "${applicationId}.apk"
+        //outputFileName = "${applicationId}_${releaseTime()}.apk"
     }
 }
 
@@ -73,7 +96,7 @@ easylauncher {
 }
 
 def releaseTime() {
-    return new Date().format("yyyy-MM-dd_HH-mm")
+    return new Date().format("yyyyMMddHHmm")
 }
 
 dependencies {
@@ -132,6 +155,6 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
 
 
-    implementation   project(':basemodule')
+    implementation project(':basemodule')
 
 }
