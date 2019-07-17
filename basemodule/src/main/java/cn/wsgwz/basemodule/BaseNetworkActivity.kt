@@ -44,7 +44,7 @@ open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
             override fun onAvailable(network: Network) {
                 super.onAvailable(network)
                 this@BaseNetworkActivity.onAvailable(network)
-                LLog.d(TAG, "onAvailable  ${NetworkUtil.isConnected(this@BaseNetworkActivity)} ")
+                LLog.d(TAG, "onAvailable ${NetworkUtil.isConnected(this@BaseNetworkActivity)} ")
             }
         }
     }
