@@ -13,10 +13,6 @@ import kotlinx.coroutines.*
 
 class UserManager private constructor() {
 
-    enum class UserState {
-        LOGIN_SUCCESS, LOGOUT_SUCCESS
-    }
-
     //private val coroutineScope = CoroutineScope(Dispatchers.Main + Job())
 
     private val userRepository = InjectorUtils.provideUserRepository(BaseApplication.getInstance())
@@ -48,7 +44,7 @@ class UserManager private constructor() {
     fun logout() {
         currentUser = null
         BaseApplication.getPreferences().edit().putString(BaseConst.PrefKey.CURRENT_USER_ID, null).apply()
-        LocalBroadcastManager.getInstance(BaseApplication.getInstance()).sendBroadcast(Intent(BaseConst.Action.USER_STATE_CHANGE).putExtra(USER_SATE_KEY, UserState.LOGOUT_SUCCESS))
+        LocalBroadcastManager.getInstance(BaseApplication.getInstance()).sendBroadcast(Intent(BaseConst.Action.USER_STATE_CHANGE).putExtra(USER_SATE_KEY, LOGOUT_SUCCESS))
     }
 
 
@@ -59,7 +55,7 @@ class UserManager private constructor() {
             }
         }
         BaseApplication.getPreferences().edit().putString(BaseConst.PrefKey.CURRENT_USER_ID, getCurrentUser()?.token).apply()
-        LocalBroadcastManager.getInstance(BaseApplication.getInstance()).sendBroadcast(Intent(BaseConst.Action.USER_STATE_CHANGE).putExtra(USER_SATE_KEY, UserState.LOGIN_SUCCESS))
+        LocalBroadcastManager.getInstance(BaseApplication.getInstance()).sendBroadcast(Intent(BaseConst.Action.USER_STATE_CHANGE).putExtra(USER_SATE_KEY, LOGIN_SUCCESS))
     }
 
     fun update(user: User) {
@@ -74,6 +70,9 @@ class UserManager private constructor() {
 
         private const val TAG = "UserManager"
         const val USER_SATE_KEY = "state"
+
+        const val LOGIN_SUCCESS = 1
+        const val LOGOUT_SUCCESS = 2
 
         // For Singleton instantiation
         @Volatile

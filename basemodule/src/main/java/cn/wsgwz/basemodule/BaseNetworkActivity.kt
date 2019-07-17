@@ -28,13 +28,14 @@ open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
     companion object {
         private const val TAG = "BaseNetworkActivity"
     }
+
     val progressLayout by lazy {
         progress_layout
     }
 
-    private lateinit var mCompositeDisposable: CompositeDisposable
-    override val compositeDisposable: CompositeDisposable
-        get() = mCompositeDisposable
+    private lateinit var mRequestCompositeDisposable: CompositeDisposable
+    override val requestCompositeDisposable: CompositeDisposable
+        get() = mRequestCompositeDisposable
 
     override val loadingDialogFragment by lazy {
         LoadingDialogFragment()
@@ -58,31 +59,24 @@ open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
     }
 
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mCompositeDisposable = CompositeDisposable()
+        mRequestCompositeDisposable = CompositeDisposable()
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, IntentFilter().apply {
             addAction(BaseConst.Action.USER_STATE_CHANGE)
         })
         connectivityManager.requestNetwork(NetworkRequest.Builder().build(), cmNetworkCallback)
 
-        LLog.d(TAG,"${hashCode()} ${broadcastReceiver} onCreate")
+        LLog.d(TAG, "${hashCode()} ${broadcastReceiver} onCreate")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mCompositeDisposable.dispose()
+        mRequestCompositeDisposable.dispose()
         LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver)
         connectivityManager.unregisterNetworkCallback(cmNetworkCallback)
-        LLog.d(TAG,"${hashCode()} ${broadcastReceiver} onDestroy")
+        LLog.d(TAG, "${hashCode()} ${broadcastReceiver} onDestroy")
     }
-
-
-
-
-
 
 
     fun setCustomContentView(layoutResID: Int) {

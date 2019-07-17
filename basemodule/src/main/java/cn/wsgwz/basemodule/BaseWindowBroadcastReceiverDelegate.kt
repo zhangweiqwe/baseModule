@@ -25,11 +25,11 @@ internal class BaseWindowBroadcastReceiverDelegate {
                     LLog.d(TAG, "${hashCode()}" + intent.action)
                     when (intent.action) {
                         BaseConst.Action.USER_STATE_CHANGE -> {
-                            when (intent.getSerializableExtra(UserManager.USER_SATE_KEY) as UserManager.UserState) {
-                                UserManager.UserState.LOGIN_SUCCESS -> {
+                            when (intent.getIntExtra(UserManager.USER_SATE_KEY,0)) {
+                                UserManager.LOGIN_SUCCESS -> {
                                     baseNetworkWindowInterface.onLoginSuccess()
                                 }
-                                UserManager.UserState.LOGOUT_SUCCESS -> {
+                                UserManager.LOGOUT_SUCCESS -> {
                                     baseNetworkWindowInterface.onLogoutSuccess()
                                 }
                             }
