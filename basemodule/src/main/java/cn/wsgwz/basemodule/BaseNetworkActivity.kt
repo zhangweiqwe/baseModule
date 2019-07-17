@@ -1,27 +1,18 @@
 package cn.wsgwz.basemodule
 
-import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Intent
 import android.content.IntentFilter
 import android.net.*
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.fragment.app.FragmentManager
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import cn.wsgwz.basemodule.widgets.dialog.LoadingDialogFragment
 import cn.wsgwz.basemodule.interfaces.BaseNetworkWindowInterface
 import io.reactivex.disposables.CompositeDisposable
 import cn.wsgwz.basemodule.utilities.LLog
 import cn.wsgwz.basemodule.utilities.NetworkUtil
-import cn.wsgwz.basemodule.utilities.manager.UserManager
 import cn.wsgwz.basemodule.widgets.progressActivity.ProgressConstraintLayout
-import cn.wsgwz.basemodule.widgets.progressActivity.ProgressLayout
-import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_base_network.*
-import javax.inject.Inject
-import kotlin.reflect.KProperty
 
 
 open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
