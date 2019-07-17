@@ -1,7 +1,7 @@
 package cn.wsgwz.myapplication.dagger;
 
 import cn.wsgwz.basemodule.TestToolSettingActivity;
-import cn.wsgwz.myapplication.Main2Activity;
+import cn.wsgwz.myapplication.MainActivity;
 import cn.wsgwz.myapplication.TestDownloadActivity;
 import cn.wsgwz.myapplication.TestUploadActivity;
 import cn.wsgwz.myapplication.TestUserManagerActivity;
@@ -12,7 +12,7 @@ import dagger.android.ContributesAndroidInjector;
 @Module
 public abstract class ActivityModule {
     @ContributesAndroidInjector
-    abstract Main2Activity main2Activity();
+    abstract MainActivity mainActivity();
 
     @ContributesAndroidInjector
     abstract TestDownloadActivity testDownloadActivity();

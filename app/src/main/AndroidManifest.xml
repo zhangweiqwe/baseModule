@@ -15,8 +15,8 @@
         <activity android:name=".TestProgressLayoutActivity"></activity>
         <activity android:name=".TestUserManagerActivity" />
         <activity android:name=".TestUploadActivity" />
-        <activity android:name=".TestDownloadActivity" /> <!-- <activity android:name=".Main2Activity"></activity> -->
-        <activity android:name=".Main2Activity">
+        <activity android:name=".TestDownloadActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
