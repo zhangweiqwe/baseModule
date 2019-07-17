@@ -88,6 +88,10 @@ open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
         setContentView(R.layout.activity_base_network)
         progressLayout.addView(view)
     }
+
+    fun initCustomContentView() {
+        setContentView(R.layout.activity_base_network)
+    }
 }
 
 
