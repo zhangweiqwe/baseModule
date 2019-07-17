@@ -1,14 +1,10 @@
 package cn.wsgwz.myapplication
 
 import android.os.Bundle
-import android.view.View
 import cn.wsgwz.basemodule.BaseNetworkActivity
-import cn.wsgwz.basemodule.R
-import cn.wsgwz.basemodule.widgets.progressActivity.ProgressLayout
 import cn.wsgwz.common.ToolbarManager
 
 open class AppBaseActivity : BaseNetworkActivity() {
-
 
     val toolbar by lazy {
         ToolbarManager.with(this)
