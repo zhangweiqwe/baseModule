@@ -20,7 +20,6 @@ class TestProgressLayoutActivity : AppBaseActivity() {
 
         progressLayout.apply {
             showLoading()
-
             other_text.postDelayed({
                 showEmpty {
                     showError {
