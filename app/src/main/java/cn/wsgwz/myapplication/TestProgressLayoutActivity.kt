@@ -24,7 +24,6 @@ class TestProgressLayoutActivity : AppBaseActivity() {
                 showEmpty {
                     showError {
                         showContent()
-                        progressLayout.showLoading()
                     }
                 }
 
