@@ -18,25 +18,10 @@ import cn.wsgwz.basemodule.utilities.ToolbarUtil
 class ToolbarManager private constructor() {
     companion object {
 
-        /*@Volatile
-        private var instance: ToolbarManager? = null
-
-
-        @JvmStatic
-        private fun get() = instance ?: synchronized(this) {
-            instance ?: ToolbarManager().also { instance = it }
-        }*/
-
-
         @JvmStatic
         fun with(appCompatActivity: AppCompatActivity): Toolbar {
-
             ToolbarUtil.setCustomView(appCompatActivity, R.layout.custom_toolbar)
-            return Toolbar(
-                    appCompatActivity.findViewById(R.id.toolbar_parent_cl),
-                    appCompatActivity,
-                    appCompatActivity
-            )
+            return Toolbar(appCompatActivity)
         }
 
 
@@ -44,31 +29,25 @@ class ToolbarManager private constructor() {
         fun with(toolbarView: View): Toolbar {
             ToolbarUtil.setCustomView(toolbarView.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar), R.layout.custom_toolbar)
             return Toolbar(toolbarView)
-
         }
 
     }
 
 
-    class Toolbar(
-            private val toolbarView: View,
-            private val context: Context = toolbarView.context,
-            private val appCompatActivity: AppCompatActivity? = null
-    ) {
+    class Toolbar(private val toolbarView: View) {
 
-
-        init {
-            appCompatActivity?.also { appCompatActivity ->
-                toolbarView.apply {
-                    if (findViewById<View>(R.id.toolbar_back_cl) == null) {
-                        findViewById<ViewStub>(R.id.toolbar_back_vs).inflate()
-                    }
-                    findViewById<ConstraintLayout>(R.id.toolbar_back_cl).apply {
-                        setOnClickListener { appCompatActivity.finish() }
-                    }
+        constructor(appCompatActivity: AppCompatActivity) : this(appCompatActivity.findViewById<View>(R.id.toolbar_parent_cl)) {
+            toolbarView.apply {
+                if (findViewById<View>(R.id.toolbar_back_cl) == null) {
+                    findViewById<ViewStub>(R.id.toolbar_back_vs).inflate()
+                }
+                findViewById<ConstraintLayout>(R.id.toolbar_back_cl).apply {
+                    setOnClickListener { appCompatActivity.finish() }
                 }
             }
         }
+
+        private val context: Context = toolbarView.context
 
 
         fun title(text: CharSequence?): Toolbar {
