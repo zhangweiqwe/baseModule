@@ -15,7 +15,6 @@ class TestProgressLayoutActivity : AppBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setCustomContentView(R.layout.activity_test_progress_layout)
-        toolbar.title("test ProgressLayout")
 
 
         progressLayout.apply {

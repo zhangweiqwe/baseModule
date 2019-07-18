@@ -53,7 +53,7 @@ class ToolbarManager private constructor() {
     class Toolbar(
             private val toolbarView: View,
             private val context: Context = toolbarView.context,
-            appCompatActivity: AppCompatActivity? = null
+            private val appCompatActivity: AppCompatActivity? = null
     ) {
 
 
@@ -68,9 +68,8 @@ class ToolbarManager private constructor() {
                     }
                 }
             }
-
-
         }
+
 
         fun title(text: CharSequence?): Toolbar {
             toolbarView.apply {

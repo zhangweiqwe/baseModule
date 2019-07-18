@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cn.wsgwz.baselibrary.permission.PermissionV2
 import cn.wsgwz.baselibrary.widgets.suspension.SuspensionWindowManager
 import cn.wsgwz.basemodule.BaseWebViewActivity
 import cn.wsgwz.basemodule.other.SimpleViewHolder
+import cn.wsgwz.basemodule.utilities.LLog
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.list_item_test.view.*
@@ -31,8 +33,7 @@ class MainActivity : AppBaseActivity() {
             SuspensionWindowManager.init(this)
         }
 
-        toolbar.title("测试")
-
+        toolbar.title("测试").addMenu(TextView(this).apply { text = getString(R.string.app_name) })
 
         //LLog.d(TAG,s)
 
@@ -88,8 +89,8 @@ class MainActivity : AppBaseActivity() {
 
             add(TestItem("网页", View.OnClickListener {
                 startActivity(Intent(this@MainActivity, BaseWebViewActivity::class.java).apply {
-                    putExtra("title","爱奇艺")
-                    putExtra("url","http://www.iqiyi.com/")
+                    putExtra("title", "爱奇艺")
+                    putExtra("url", "http://www.iqiyi.com/")
                     //putExtra("windowTranslucentStatus",true)
                 })
             }))
