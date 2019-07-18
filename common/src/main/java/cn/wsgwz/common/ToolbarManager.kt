@@ -45,6 +45,7 @@ class ToolbarManager private constructor() {
 
 
     class Toolbar(private val toolbarView: View) {
+        private val context: Context = toolbarView.context
 
         constructor(appCompatActivity: AppCompatActivity) : this(appCompatActivity.findViewById<View>(R.id.toolbar_parent_cl)) {
             toolbarView.apply {
@@ -56,8 +57,6 @@ class ToolbarManager private constructor() {
                 }
             }
         }
-
-        private val context: Context = toolbarView.context
 
 
         fun title(text: CharSequence?): Toolbar {
