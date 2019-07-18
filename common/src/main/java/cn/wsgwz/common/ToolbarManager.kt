@@ -18,6 +18,16 @@ import cn.wsgwz.basemodule.utilities.ToolbarUtil
 class ToolbarManager private constructor() {
     companion object {
 
+        /*@Volatile
+        private var instance: ToolbarManager? = null
+
+
+        @JvmStatic
+        private fun get() = instance ?: synchronized(this) {
+            instance ?: ToolbarManager().also { instance = it }
+        }*/
+
+
         @JvmStatic
         fun with(appCompatActivity: AppCompatActivity): Toolbar {
             ToolbarUtil.setCustomView(appCompatActivity, R.layout.custom_toolbar)
