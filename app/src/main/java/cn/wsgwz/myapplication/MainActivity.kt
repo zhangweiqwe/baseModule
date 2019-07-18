@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cn.wsgwz.baselibrary.permission.PermissionV2
 import cn.wsgwz.baselibrary.widgets.suspension.SuspensionWindowManager
+import cn.wsgwz.basemodule.BaseWebViewActivity
 import cn.wsgwz.basemodule.other.SimpleViewHolder
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_main.*
@@ -83,6 +84,14 @@ class MainActivity : AppBaseActivity() {
 
             add(TestItem("ProgressLayout", View.OnClickListener {
                 startActivity(Intent(this@MainActivity, TestProgressLayoutActivity::class.java))
+            }))
+
+            add(TestItem("网页", View.OnClickListener {
+                startActivity(Intent(this@MainActivity, BaseWebViewActivity::class.java).apply {
+                    putExtra("title","爱奇艺")
+                    putExtra("url","http://www.iqiyi.com/")
+                    //putExtra("windowTranslucentStatus",true)
+                })
             }))
 
         }
