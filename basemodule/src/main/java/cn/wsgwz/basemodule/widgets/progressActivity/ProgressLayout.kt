@@ -1,40 +1,84 @@
 package cn.wsgwz.basemodule.widgets.progressActivity
 
 import android.view.View
+import cn.wsgwz.basemodule.BaseApplication
+import cn.wsgwz.basemodule.R
 
 interface ProgressLayout {
-    enum class CurrentState {
-        CONTENT, LOADING, EMPTY, ERROR
+
+
+    companion object {
+        private const val TAG = "ProgressLayout"
+
+        const val STATE_CONTENT = 1000
+        const val STATE_LOADING = 1001
+        const val STATE_EMPTY = 1002
+        const val STATE_ERROR = 1003
     }
 
-    fun showContent()
-    fun showContent(skipIds: List<Int>)
 
+    class Config private constructor(builder: Builder) {
+
+        internal var description: CharSequence? = null
+        internal var skipIds: List<Int>? = null
+        internal var buttonClickListener: View.OnClickListener? = null
+
+        init {
+            description = builder.description
+            skipIds = builder.skipIds
+            buttonClickListener = builder.buttonClickListener
+        }
+
+        class Builder {
+            internal var description: CharSequence? = null
+            internal var skipIds: List<Int>? = null
+            internal var buttonClickListener: View.OnClickListener? = null
+
+
+            fun description(description: CharSequence?): Builder {
+                this.description = description
+                return this
+            }
+
+
+            fun skipIds(skipIds: List<Int>?): Builder {
+                this.skipIds = skipIds
+                return this
+            }
+
+
+            fun buttonClickListener(buttonClickListener: View.OnClickListener?): Builder {
+                this.buttonClickListener = buttonClickListener
+                return this
+            }
+
+            fun build() = Config(this)
+
+
+        }
+    }
+
+
+    fun showContent()
 
     fun showLoading()
-    fun showLoading(skipIds: List<Int>)
 
+    fun showEmpty(config: Config)
+    fun showEmpty(l: (View) -> Unit) = showEmpty(ProgressLayout.Config.Builder().buttonClickListener(View.OnClickListener {
+        l(it)
+    }).description(BaseApplication.getInstance().getString(R.string.progress_layout_empty_description)).build())
 
-    fun showEmpty()
-    fun showEmpty(skipIds: List<Int>)
-    fun showEmpty(buttonClickListener: View.OnClickListener)
-    fun showEmpty(buttonClickListener: View.OnClickListener, skipIds: List<Int>)
-    fun showEmpty(description: CharSequence?, buttonClickListener: View.OnClickListener, skipIds: List<Int>)
+    fun showError(config: Config)
+    fun showError(l: (View) -> Unit) = showError(ProgressLayout.Config.Builder().buttonClickListener(View.OnClickListener {
+        l(it)
+    }).description(BaseApplication.getInstance().getString(R.string.progress_layout_error_description)).build())
 
+    fun getCurrentState(): Int
 
-    fun showError()
-    fun showError(skipIds: List<Int>)
-    fun showError(buttonClickListener: View.OnClickListener)
-    fun showError(buttonClickListener: View.OnClickListener, skipIds: List<Int>)
-    fun showError(description: CharSequence?, buttonClickListener: View.OnClickListener, skipIds: List<Int>)
-
-
-    fun getCurrentState(): CurrentState
-
-    fun isContentCurrentState(): Boolean
-    fun isLoadingCurrentState(): Boolean
-    fun isEmptyCurrentState(): Boolean
-    fun isErrorCurrentState(): Boolean
+    fun isContentCurrentState() = getCurrentState() == STATE_CONTENT
+    fun isLoadingCurrentState() = getCurrentState() == STATE_LOADING
+    fun isEmptyCurrentState() = getCurrentState() == STATE_EMPTY
+    fun isErrorCurrentState() = getCurrentState() == STATE_ERROR
 
 
     fun setLayoutDelegate(layoutDelegate: LayoutDelegate)

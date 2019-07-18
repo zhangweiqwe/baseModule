@@ -6,12 +6,34 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import cn.wsgwz.basemodule.utilities.LLog
+import cn.wsgwz.basemodule.widgets.progressActivity.ProgressLayout.Companion.STATE_CONTENT
+import cn.wsgwz.basemodule.widgets.progressActivity.ProgressLayout.Companion.STATE_EMPTY
+import cn.wsgwz.basemodule.widgets.progressActivity.ProgressLayout.Companion.STATE_ERROR
+import cn.wsgwz.basemodule.widgets.progressActivity.ProgressLayout.Companion.STATE_LOADING
 import java.util.ArrayList
 
 open class ProgressConstraintLayout @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr), ProgressLayout {
+    override fun showContent() {
+        switchState(STATE_CONTENT, null, null, null)
+    }
+
+    override fun showLoading() {
+        switchState(STATE_LOADING, null, null, null)
+    }
+
+    override fun showEmpty(config: ProgressLayout.Config) {
+        switchState(STATE_EMPTY, config.description, config.buttonClickListener, config.skipIds)
+    }
+
+    override fun showError(config: ProgressLayout.Config) {
+        switchState(STATE_ERROR, config.description, config.buttonClickListener, config.skipIds)
+    }
+
     companion object {
+
+
         private const val TAG = "ProgressConstraintLayout"
         private var layoutDelegate: LayoutDelegate? = null
 
@@ -22,7 +44,7 @@ open class ProgressConstraintLayout @JvmOverloads constructor(
         }
     }
 
-    private var mCurrentState = ProgressLayout.CurrentState.CONTENT
+    private var mCurrentState = STATE_CONTENT
     private val contentViews = ArrayList<View>()
     private var layoutDelegate: LayoutDelegate
 
@@ -45,74 +67,7 @@ open class ProgressConstraintLayout @JvmOverloads constructor(
     }
 
 
-    override fun showContent() {
-        switchState(ProgressLayout.CurrentState.CONTENT, null, null, null)
-    }
-
-    override fun showContent(skipIds: List<Int>) {
-        switchState(ProgressLayout.CurrentState.CONTENT, null, null, skipIds)
-    }
-
-    override fun showLoading() {
-        switchState(ProgressLayout.CurrentState.LOADING, null, null, null)
-    }
-
-    override fun showLoading(skipIds: List<Int>) {
-        switchState(ProgressLayout.CurrentState.LOADING, null, null, skipIds)
-    }
-
-    override fun showEmpty() {
-        switchState(ProgressLayout.CurrentState.EMPTY, null, null, null)
-    }
-
-    override fun showEmpty(skipIds: List<Int>) {
-        switchState(ProgressLayout.CurrentState.EMPTY, null, null, skipIds)
-    }
-
-    override fun showEmpty(buttonClickListener: OnClickListener) {
-        switchState(ProgressLayout.CurrentState.EMPTY, null, buttonClickListener, null)
-    }
-
-    override fun showEmpty(buttonClickListener: OnClickListener, skipIds: List<Int>) {
-        switchState(ProgressLayout.CurrentState.EMPTY, null, buttonClickListener, skipIds)
-    }
-
-    override fun showEmpty(description: CharSequence?, buttonClickListener: OnClickListener, skipIds: List<Int>) {
-        switchState(ProgressLayout.CurrentState.EMPTY, description, buttonClickListener, skipIds)
-    }
-
-    override fun showError() {
-        switchState(ProgressLayout.CurrentState.ERROR, null, null, null)
-    }
-
-    override fun showError(skipIds: List<Int>) {
-        switchState(ProgressLayout.CurrentState.ERROR, null, null, skipIds)
-    }
-
-    override fun showError(buttonClickListener: OnClickListener) {
-        switchState(ProgressLayout.CurrentState.ERROR, null, buttonClickListener, null)
-
-    }
-
-    override fun showError(buttonClickListener: OnClickListener, skipIds: List<Int>) {
-        switchState(ProgressLayout.CurrentState.ERROR, null, buttonClickListener, skipIds)
-
-    }
-
-    override fun showError(description: CharSequence?, buttonClickListener: OnClickListener, skipIds: List<Int>) {
-        switchState(ProgressLayout.CurrentState.ERROR, description, buttonClickListener, skipIds)
-    }
-
-    override fun getCurrentState(): ProgressLayout.CurrentState = mCurrentState
-
-    override fun isContentCurrentState(): Boolean = mCurrentState == ProgressLayout.CurrentState.CONTENT
-
-    override fun isLoadingCurrentState(): Boolean = mCurrentState == ProgressLayout.CurrentState.LOADING
-
-    override fun isEmptyCurrentState(): Boolean = mCurrentState == ProgressLayout.CurrentState.EMPTY
-
-    override fun isErrorCurrentState(): Boolean = mCurrentState == ProgressLayout.CurrentState.ERROR
-
+    override fun getCurrentState() = mCurrentState
 
     private fun hideAllStates() {
         for ((index, v) in layoutDelegate.getStateViews().withIndex()) {
@@ -152,22 +107,22 @@ open class ProgressConstraintLayout @JvmOverloads constructor(
 
     }
 
-    private fun switchState(currentState: ProgressLayout.CurrentState, description: CharSequence? = null, buttonClickListener: OnClickListener? = null, skipIds: List<Int>? = null) {
+    private fun switchState(currentState: Int, description: CharSequence? = null, buttonClickListener: OnClickListener? = null, skipIds: List<Int>? = null) {
         mCurrentState = currentState
         hideAllStates()
         when (currentState) {
-            ProgressLayout.CurrentState.CONTENT -> {
+            STATE_CONTENT -> {
                 setContentVisibility(true, skipIds)
             }
-            ProgressLayout.CurrentState.LOADING -> {
+            STATE_LOADING -> {
                 setContentVisibility(false, skipIds)
                 layoutDelegate.initView(currentState, context, this, description, buttonClickListener, skipIds)
             }
-            ProgressLayout.CurrentState.EMPTY -> {
+            STATE_EMPTY -> {
                 setContentVisibility(false, skipIds)
                 layoutDelegate.initView(currentState, context, this, description, buttonClickListener, skipIds)
             }
-            ProgressLayout.CurrentState.ERROR -> {
+            STATE_ERROR -> {
                 setContentVisibility(false, skipIds)
                 layoutDelegate.initView(currentState, context, this, description, buttonClickListener, skipIds)
             }

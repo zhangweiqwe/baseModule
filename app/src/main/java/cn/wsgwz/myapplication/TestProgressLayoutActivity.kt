@@ -1,22 +1,37 @@
 package cn.wsgwz.myapplication
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import cn.wsgwz.basemodule.widgets.progressActivity.ProgressConstraintLayout
+import cn.wsgwz.basemodule.widgets.progressActivity.ProgressLayout
 import kotlinx.android.synthetic.main.activity_test_progress_layout.*
 
-class TestProgressLayoutActivity : AppCompatActivity() {
+class TestProgressLayoutActivity : AppBaseActivity() {
+
+    override val progressLayout: ProgressLayout  by lazy {
+        findViewById<ProgressConstraintLayout>(R.id.progress_layout_2)
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_test_progress_layout)
+        setCustomContentView(R.layout.activity_test_progress_layout)
+        toolbar.title("test ProgressLayout")
 
-        progress_layout.showLoading()
-        progress_layout.postDelayed({
-            progress_layout.showEmpty(View.OnClickListener {
-                progress_layout.showContent()
-            })
-        }, 800)
+
+        progressLayout.apply {
+            showLoading()
+
+            other_text.postDelayed({
+                showEmpty {
+                    showError {
+                        showContent()
+                        progressLayout.showLoading()
+                    }
+                }
+
+            }, 2000)
+
+        }
 
     }
 }

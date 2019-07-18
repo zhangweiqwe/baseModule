@@ -8,6 +8,6 @@ interface LayoutDelegate {
 
     fun getStateViews():Array<View?>
 
-    fun initView(currentState: ProgressLayout.CurrentState, context: Context, parentView: ViewGroup, description: CharSequence? = null, buttonClickListener: View.OnClickListener? = null, skipIds: List<Int>? = null)
+    fun initView(currentState: Int, context: Context, parentView: ViewGroup, description: CharSequence? = null, buttonClickListener: View.OnClickListener? = null, skipIds: List<Int>? = null)
 
 }

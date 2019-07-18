@@ -75,9 +75,9 @@ class MainActivity : AppBaseActivity() {
             }))
 
             add(TestItem("数据加载中测试1", View.OnClickListener {
-                showLoading(true)
+                showLoadingDialog(true)
                 it.postDelayed({
-                    dismissLoading()
+                    dismissLoadingDialog()
                 }, 10 * 1000)
             }))
 

@@ -23,7 +23,7 @@ interface BaseNetworkWindowInterface : BaseWindowInterface, BaseRetrofitInterfac
     fun onLogoutSuccess() {}
 
 
-    fun showLoading(isCancellable: Boolean = false) {
+    fun showLoadingDialog(isCancellable: Boolean = false) {
         loadingDialogFragment.isCancelable = isCancellable
         when (this) {
             is AppCompatActivity -> {
@@ -36,7 +36,7 @@ interface BaseNetworkWindowInterface : BaseWindowInterface, BaseRetrofitInterfac
     }
 
 
-    fun dismissLoading() {
+    fun dismissLoadingDialog() {
         loadingDialogFragment.dismiss()
     }
 

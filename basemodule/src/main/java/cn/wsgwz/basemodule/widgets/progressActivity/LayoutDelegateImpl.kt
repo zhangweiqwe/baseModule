@@ -15,8 +15,9 @@ internal class LayoutDelegateImpl : LayoutDelegate {
     companion object {
         private const val TAG = "LayoutDelegateImpl"
     }
+
     init {
-        LLog.d(TAG,"init")
+        LLog.d(TAG, "init")
     }
 
     private var loadingState: View? = null
@@ -57,22 +58,22 @@ internal class LayoutDelegateImpl : LayoutDelegate {
 
     override fun getStateViews(): Array<View?> = arrayOf(loadingState, emptyState, errorState)
 
-    override fun initView(currentState: ProgressLayout.CurrentState, context: Context, parentView: ViewGroup, description: CharSequence?, buttonClickListener: View.OnClickListener?, skipIds: List<Int>?) {
+    override fun initView(currentState: Int, context: Context, parentView: ViewGroup, description: CharSequence?, buttonClickListener: View.OnClickListener?, skipIds: List<Int>?) {
 
-        LLog.d(TAG, currentState.name)
+        LLog.d(TAG, currentState.toString())
 
         when (currentState) {
-            ProgressLayout.CurrentState.LOADING -> {
+            ProgressLayout.STATE_LOADING -> {
                 inflateLoadingView(context, parentView)
             }
-            ProgressLayout.CurrentState.EMPTY -> {
+            ProgressLayout.STATE_EMPTY -> {
                 inflateEmptyView(context, parentView)
                 emptyState?.apply {
                     empty_state_text.text = description
                     empty_state_bn.setOnClickListener(buttonClickListener)
                 }
             }
-            ProgressLayout.CurrentState.ERROR -> {
+            ProgressLayout.STATE_ERROR -> {
                 inflateErrorView(context, parentView)
                 errorState?.apply {
                     error_state_text.text = description

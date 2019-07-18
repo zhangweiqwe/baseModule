@@ -21,6 +21,7 @@ import cn.wsgwz.basemodule.utilities.manager.UserManager
 import cn.wsgwz.basemodule.utilities.WindowUtil
 import cn.wsgwz.basemodule.widgets.ScrollWebView
 import cn.wsgwz.basemodule.widgets.progressActivity.ProgressConstraintLayout
+import cn.wsgwz.basemodule.widgets.progressActivity.ProgressLayout
 import java.util.HashMap
 
 open class BaseWebViewActivity : BaseNetworkActivity() {
@@ -205,12 +206,10 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
     }
 
     private fun showError() {
-        progress_layout.showError(View.OnClickListener {
-            onRefresh()
-        })
+        progress_layout.showError { onRefresh() }
     }
 
-    fun onInitActionBar() {
+    open fun onInitActionBar() {
         setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.also {
             //it.setHomeButtonEnabled(true)
