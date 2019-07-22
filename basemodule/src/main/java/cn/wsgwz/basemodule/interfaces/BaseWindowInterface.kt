@@ -9,7 +9,7 @@ interface BaseWindowInterface {
     fun toast(@StringRes resId: Int)
 
     fun log(msg: String?) {
-        LLog.d(this::class.java.canonicalName, msg)
+        LLog.d(this::class.java.simpleName, msg)
     }
 
 

@@ -1,5 +1,6 @@
 package cn.wsgwz.basemodule
 
+import android.app.Activity
 import android.graphics.Point
 import android.os.Bundle
 import android.view.MotionEvent
@@ -39,7 +40,9 @@ open class BaseActivity : AppCompatActivity(), BaseWindowInterface, HasAndroidIn
         BaseApplication.addActivity(this)
         WindowUtil.setStatusBarTransparent(this)
 
-        LLog.d(TAG,"${androidInjector}")
+        //DaggerBaseActivityComponent.builder().baseCommonModule2(BaseCommonModule2(this)).build().inject(this)
+
+        LLog.d(TAG, "${androidInjector}")
     }
 
     override fun onDestroy() {
@@ -70,7 +73,7 @@ open class BaseActivity : AppCompatActivity(), BaseWindowInterface, HasAndroidIn
                     lastActionDownTime = System.currentTimeMillis()
                 }
                 MotionEvent.ACTION_UP -> {
-                    if ((System.currentTimeMillis() - lastActionDownTime) < 800 && event.rawX - locationPoint.x > DensityUtil.dp2px(50f) && locationPoint.x < proportionX&&event.rawY-locationPoint.y<DensityUtil.dp2px(100f)) {
+                    if ((System.currentTimeMillis() - lastActionDownTime) < 800 && event.rawX - locationPoint.x > DensityUtil.dp2px(50f) && locationPoint.x < proportionX && event.rawY - locationPoint.y < DensityUtil.dp2px(100f)) {
                         finish()
                     }
                 }

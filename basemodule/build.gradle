@@ -80,10 +80,6 @@ dependencies {
     testImplementation "junit:junit:$rootProject.junitVersion"
 
 
-
-
-
-
     implementation "com.android.support:multidex:$rootProject.multidexVersion"
     implementation "com.android.support:preference-v7:$rootProject.appCompatVersion"
     implementation "com.android.support:preference-v14:$rootProject.appCompatVersion"
