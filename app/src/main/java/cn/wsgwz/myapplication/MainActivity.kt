@@ -95,6 +95,23 @@ class MainActivity : AppBaseActivity() {
                 })
             }))
 
+            add(TestItem("网页windowTranslucentStatus", View.OnClickListener {
+                startActivity(Intent(this@MainActivity, BaseWebViewActivity::class.java).apply {
+                    putExtra("title", "爱奇艺")
+                    putExtra("url", "http://www.iqiyi.com/")
+                    putExtra("windowTranslucentStatus", true)
+                })
+            }))
+
+
+            add(TestItem("退出Activity", View.OnClickListener {
+                startActivity(Intent(this@MainActivity, TestExitActivity::class.java))
+            }))
+
+            add(TestItem("触控事件传递", View.OnClickListener {
+                startActivity(Intent(this@MainActivity, TestTouchActivity::class.java))
+            }))
+
         }
         content_rv.layoutManager = LinearLayoutManager(this)
         content_rv.adapter = object : RecyclerView.Adapter<SimpleViewHolder>() {

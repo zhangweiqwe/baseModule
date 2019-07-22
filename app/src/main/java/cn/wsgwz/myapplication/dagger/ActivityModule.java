@@ -2,7 +2,9 @@ package cn.wsgwz.myapplication.dagger;
 
 import cn.wsgwz.myapplication.MainActivity;
 import cn.wsgwz.myapplication.TestDownloadActivity;
+import cn.wsgwz.myapplication.TestExitActivity;
 import cn.wsgwz.myapplication.TestProgressLayoutActivity;
+import cn.wsgwz.myapplication.TestTouchActivity;
 import cn.wsgwz.myapplication.TestUploadActivity;
 import cn.wsgwz.myapplication.TestUserManagerActivity;
 import dagger.Module;
@@ -27,6 +29,13 @@ public abstract class ActivityModule {
     @ContributesAndroidInjector
     abstract TestUserManagerActivity testUserManagerActivity();
 
+
+    @ContributesAndroidInjector
+    abstract TestExitActivity testExitActivity();
+
+
+    @ContributesAndroidInjector
+    abstract TestTouchActivity testTouchActivity();
 
     /*@ContributesAndroidInjector
     abstract BlankFragment blankFragment();  // 绑定 BlankFragment*/
