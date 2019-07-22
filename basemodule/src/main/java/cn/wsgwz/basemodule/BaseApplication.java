@@ -25,7 +25,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 
-public class BaseApplication extends Application  implements HasAndroidInjector {
+public class BaseApplication extends Application implements HasAndroidInjector {
 
     private static final String TAG = BaseApplication.class.getSimpleName();
 
@@ -39,6 +39,7 @@ public class BaseApplication extends Application  implements HasAndroidInjector 
 
     @Inject
     DispatchingAndroidInjector<Object> dispatchingAndroidInjector;
+
     @Override
     public AndroidInjector<Object> androidInjector() {
         return dispatchingAndroidInjector;
@@ -106,7 +107,6 @@ public class BaseApplication extends Application  implements HasAndroidInjector 
         CrashHandler.getInstance().init(this);
 
 
-
         if (getCurrentProcessName().equals(getPackageName())) {
             initNotificationChannel();
             if (BuildConfig.DEBUG) {
@@ -145,7 +145,7 @@ public class BaseApplication extends Application  implements HasAndroidInjector 
                 .setContentIntent(pendingIntent)//设置意图
                 .build();//创建通知对象完成
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(notification.hashCode(), notification);//显示通知
+        manager.notify(0, notification);//显示通知
     }
 
     private void initNotificationChannel() {
@@ -169,5 +169,15 @@ public class BaseApplication extends Application  implements HasAndroidInjector 
         }
     }
 
+    @Override
+    public void onLowMemory() {
+        LLog.d(TAG, "onLowMemory");
+        super.onLowMemory();
+    }
 
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        LLog.d(TAG, "onTerminate");
+    }
 }
