@@ -24,13 +24,10 @@ open class BaseNetworkFragment : BaseFragment(), BaseNetworkWindowInterface {
         private const val TAG = "BaseNetworkFragment"
     }
 
-    private lateinit var mRequestCompositeDisposable: CompositeDisposable
-    override val requestCompositeDisposable: CompositeDisposable
-        get() = mRequestCompositeDisposable
+    final override lateinit var requestCompositeDisposable: CompositeDisposable
+        private set
 
-    override val loadingDialogFragment by lazy {
-        LoadingDialogFragment()
-    }
+
 
 
     private val broadcastReceiver by BaseWindowBroadcastReceiverDelegate()
@@ -53,7 +50,7 @@ open class BaseNetworkFragment : BaseFragment(), BaseNetworkWindowInterface {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mRequestCompositeDisposable = CompositeDisposable()
+        requestCompositeDisposable = CompositeDisposable()
         LocalBroadcastManager.getInstance(context!!).registerReceiver(broadcastReceiver, IntentFilter().apply {
             addAction(BaseConst.Action.USER_STATE_CHANGE)
         })
@@ -63,7 +60,7 @@ open class BaseNetworkFragment : BaseFragment(), BaseNetworkWindowInterface {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mRequestCompositeDisposable.dispose()
+        requestCompositeDisposable.dispose()
         LocalBroadcastManager.getInstance(context!!).unregisterReceiver(broadcastReceiver)
         connectivityManager.unregisterNetworkCallback(cmNetworkCallback)
     }

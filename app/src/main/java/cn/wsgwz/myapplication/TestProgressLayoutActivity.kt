@@ -1,6 +1,7 @@
 package cn.wsgwz.myapplication
 
 import android.os.Bundle
+import cn.wsgwz.basemodule.utilities.LLog
 import cn.wsgwz.basemodule.widgets.progressActivity.ProgressConstraintLayout
 import cn.wsgwz.basemodule.widgets.progressActivity.ProgressLayout
 import kotlinx.android.synthetic.main.activity_test_progress_layout.*

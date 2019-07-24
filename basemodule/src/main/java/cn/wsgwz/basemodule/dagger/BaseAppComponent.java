@@ -10,9 +10,10 @@ import dagger.android.support.AndroidSupportInjectionModule;
 
 @Component(modules = {
         BaseCommonModule.class,
-        BaseActivityModule.class,  // 用于绑定项目中的Activity
-        AndroidSupportInjectionModule.class,  // 用于绑定扩展的组件，如v4
-        AndroidInjectionModule.class})  // 用于绑定普通的组件
+        BaseActivityModule.class,
+        AndroidSupportInjectionModule.class,
+        AndroidInjectionModule.class
+})
 public interface BaseAppComponent extends AndroidInjector<BaseApplication> {
 
 }

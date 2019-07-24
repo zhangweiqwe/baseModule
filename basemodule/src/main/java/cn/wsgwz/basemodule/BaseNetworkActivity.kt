@@ -6,7 +6,6 @@ import android.net.*
 import android.os.Bundle
 import android.view.View
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import cn.wsgwz.basemodule.widgets.dialog.LoadingDialogFragment
 import cn.wsgwz.basemodule.interfaces.BaseNetworkWindowInterface
 import io.reactivex.disposables.CompositeDisposable
 import cn.wsgwz.basemodule.utilities.LLog
@@ -27,13 +26,9 @@ open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
     }
 
 
-    private lateinit var mRequestCompositeDisposable: CompositeDisposable
-    override val requestCompositeDisposable: CompositeDisposable
-        get() = mRequestCompositeDisposable
+    final override lateinit var requestCompositeDisposable: CompositeDisposable
+        private set
 
-    override val loadingDialogFragment by lazy {
-        LoadingDialogFragment()
-    }
 
 
     private val broadcastReceiver by BaseWindowBroadcastReceiverDelegate()
@@ -55,7 +50,7 @@ open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mRequestCompositeDisposable = CompositeDisposable()
+        requestCompositeDisposable = CompositeDisposable()
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, IntentFilter().apply {
             addAction(BaseConst.Action.USER_STATE_CHANGE)
         })
@@ -66,7 +61,7 @@ open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
 
     override fun onDestroy() {
         super.onDestroy()
-        mRequestCompositeDisposable.dispose()
+        requestCompositeDisposable.dispose()
         LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver)
         connectivityManager.unregisterNetworkCallback(cmNetworkCallback)
         LLog.d(TAG, "${hashCode()} ${broadcastReceiver} onDestroy")

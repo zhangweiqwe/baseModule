@@ -1,5 +1,6 @@
 package cn.wsgwz.myapplication
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,9 +15,12 @@ import cn.wsgwz.baselibrary.widgets.suspension.SuspensionWindowManager
 import cn.wsgwz.basemodule.BaseWebViewActivity
 import cn.wsgwz.basemodule.other.SimpleViewHolder
 import cn.wsgwz.basemodule.utilities.LLog
+import cn.wsgwz.basemodule.widgets.dialog.LoadingDialogFragment
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.list_item_test.view.*
+import javax.inject.Inject
+import javax.inject.Named
 
 class MainActivity : AppBaseActivity() {
 
@@ -25,9 +29,16 @@ class MainActivity : AppBaseActivity() {
     }
 
 
+
+    @Inject
+    lateinit var loadingDialogFragment: LoadingDialogFragment
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
 
         if (BuildConfig.DEBUG) {
             SuspensionWindowManager.init(this)
@@ -76,11 +87,14 @@ class MainActivity : AppBaseActivity() {
                 startActivity(Intent(this@MainActivity, TestUserManagerActivity::class.java))
             }))
 
+
             add(TestItem("数据加载中测试1", View.OnClickListener {
-                showLoadingDialog(true)
-                it.postDelayed({
-                    dismissLoadingDialog()
-                }, 10 * 1000)
+                loadingDialogFragment.apply {
+                    showLoadingDialog(true)
+                    it.postDelayed({
+                        dismissLoadingDialog()
+                    }, 10 * 1000)
+                }
             }))
 
             add(TestItem("ProgressLayout", View.OnClickListener {

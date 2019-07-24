@@ -10,7 +10,7 @@ public class Simple {
         new B().say();
     }
     interface A{
-        String str = null;
+        final String str = null;
         Simple b = new Simple();
     }
 

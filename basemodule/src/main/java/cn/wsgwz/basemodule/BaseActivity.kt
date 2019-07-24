@@ -10,14 +10,13 @@ import cn.wsgwz.basemodule.interfaces.BaseWindowInterface
 import cn.wsgwz.basemodule.utilities.DensityUtil
 import cn.wsgwz.basemodule.utilities.LLog
 import cn.wsgwz.basemodule.utilities.WindowUtil
-import dagger.android.AndroidInjection
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
+import dagger.android.*
 import javax.inject.Inject
 
 
-open class BaseActivity : AppCompatActivity(), BaseWindowInterface, HasAndroidInjector {
+open class BaseActivity : AppCompatActivity(), BaseWindowInterface, HasActivityInjector {
+
+
     companion object {
         private const val TAG = "BaseActivity"
     }
@@ -31,7 +30,9 @@ open class BaseActivity : AppCompatActivity(), BaseWindowInterface, HasAndroidIn
     private var lastActionDownTime = 0L
 
     @Inject
-    internal lateinit var androidInjector: DispatchingAndroidInjector<Any>
+    internal lateinit var androidInjector: DispatchingAndroidInjector<Activity>
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +41,6 @@ open class BaseActivity : AppCompatActivity(), BaseWindowInterface, HasAndroidIn
         BaseApplication.addActivity(this)
         WindowUtil.setStatusBarTransparent(this)
 
-        //DaggerBaseActivityComponent.builder().baseCommonModule2(BaseCommonModule2(this)).build().inject(this)
 
         LLog.d(TAG, "${androidInjector}")
     }
@@ -59,9 +59,7 @@ open class BaseActivity : AppCompatActivity(), BaseWindowInterface, HasAndroidIn
         toast(getString(resId))
     }
 
-    override fun androidInjector(): AndroidInjector<Any> {
-        return androidInjector
-    }
+    override fun activityInjector() = androidInjector
 
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {

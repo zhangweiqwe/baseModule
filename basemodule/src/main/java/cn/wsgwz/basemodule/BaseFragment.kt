@@ -8,12 +8,13 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import dagger.android.support.AndroidSupportInjection
+import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
 
-open class BaseFragment : Fragment(), BaseWindowInterface, HasAndroidInjector {
+open class BaseFragment : Fragment(), BaseWindowInterface, HasSupportFragmentInjector {
 
     @Inject
-    internal lateinit var androidInjector: DispatchingAndroidInjector<Any>
+    internal lateinit var androidInjector: DispatchingAndroidInjector<Fragment>
 
 
     override fun onAttach(context: Context) {
@@ -29,7 +30,5 @@ open class BaseFragment : Fragment(), BaseWindowInterface, HasAndroidInjector {
         toast(context?.getString(resId))
     }
 
-    override fun androidInjector(): AndroidInjector<Any> {
-        return androidInjector
-    }
+    override fun supportFragmentInjector() = androidInjector
 }

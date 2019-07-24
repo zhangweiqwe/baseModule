@@ -1,5 +1,6 @@
 package cn.wsgwz.basemodule.interfaces
 
+import android.content.Context
 import android.net.Network
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -9,9 +10,8 @@ import cn.wsgwz.basemodule.BaseNetworkFragment
 import cn.wsgwz.basemodule.widgets.dialog.LoadingDialogFragment
 
 
-interface BaseNetworkWindowInterface : BaseWindowInterface, BaseRetrofitInterface {
+interface BaseNetworkWindowInterface : BaseWindowInterface, BaseRetrofitInterface ,BaseLoadingDialogFragmentInterface{
 
-    val loadingDialogFragment: LoadingDialogFragment
 
     fun onRefresh() {}
 
@@ -23,21 +23,6 @@ interface BaseNetworkWindowInterface : BaseWindowInterface, BaseRetrofitInterfac
     fun onLogoutSuccess() {}
 
 
-    fun showLoadingDialog(isCancellable: Boolean = false) {
-        loadingDialogFragment.isCancelable = isCancellable
-        when (this) {
-            is AppCompatActivity -> {
-                loadingDialogFragment.show(supportFragmentManager)
-            }
-            is Fragment -> {
-                loadingDialogFragment.show(fragmentManager!!)
-            }
-        }
-    }
 
-
-    fun dismissLoadingDialog() {
-        loadingDialogFragment.dismiss()
-    }
 
 }

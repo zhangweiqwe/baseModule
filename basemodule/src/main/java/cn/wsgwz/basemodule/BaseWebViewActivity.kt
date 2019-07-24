@@ -16,6 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import cn.wsgwz.basemodule.interfaces.BaseJsInterface
+import cn.wsgwz.basemodule.interfaces.BaseWindowInterface
 import cn.wsgwz.basemodule.utilities.LLog
 import cn.wsgwz.basemodule.utilities.manager.UserManager
 import cn.wsgwz.basemodule.utilities.WindowUtil
@@ -23,6 +24,7 @@ import cn.wsgwz.basemodule.widgets.ScrollWebView
 import cn.wsgwz.basemodule.widgets.progressActivity.ProgressConstraintLayout
 import cn.wsgwz.basemodule.widgets.progressActivity.ProgressLayout
 import java.util.HashMap
+import javax.inject.Inject
 
 open class BaseWebViewActivity : BaseNetworkActivity() {
 
@@ -45,11 +47,16 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
         UserManager.getInstance()
     }
 
+
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base_web_view)
+
         toolbar_parent_cl = findViewById(R.id.toolbar_parent_cl)
         progress_layout = findViewById(R.id.progress_layout)
         web_view = findViewById(R.id.web_view)
