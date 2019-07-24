@@ -57,7 +57,7 @@ open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
         })
         connectivityManager.requestNetwork(NetworkRequest.Builder().build(), cmNetworkCallback)
 
-        LLog.d(TAG, "${hashCode()} ${broadcastReceiver} onCreate")
+        LLog.d(TAG, "${hashCode()} $broadcastReceiver onCreate")
     }
 
     override fun onDestroy() {
@@ -65,7 +65,7 @@ open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
         requestCompositeDisposable.dispose()
         LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver)
         connectivityManager.unregisterNetworkCallback(cmNetworkCallback)
-        LLog.d(TAG, "${hashCode()} ${broadcastReceiver} onDestroy")
+        LLog.d(TAG, "${hashCode()} $broadcastReceiver onDestroy")
     }
 
 
