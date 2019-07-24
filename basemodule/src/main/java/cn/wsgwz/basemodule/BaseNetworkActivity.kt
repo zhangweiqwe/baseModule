@@ -20,8 +20,7 @@ open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
         private const val TAG = "BaseNetworkActivity"
     }
 
-
-    open val progressLayout:ProgressLayout  by lazy {
+    val progressLayout:ProgressLayout  by lazy {
         findViewById<ProgressConstraintLayout>(R.id.progress_layout)
     }
 
@@ -78,7 +77,7 @@ open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
         progress_layout.addView(view)
     }
 
-    fun initCustomContentView() {
+    fun setCustomContentView() {
         setContentView(R.layout.activity_base_network)
     }
 
