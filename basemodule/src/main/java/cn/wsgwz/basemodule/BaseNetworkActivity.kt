@@ -30,7 +30,9 @@ open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
 
 
 
-    private val broadcastReceiver by BaseWindowBroadcastReceiverDelegate()
+    private val broadcastReceiver by lazy {
+        BaseWindowBroadcastReceiver(this)
+    }
 
     private val connectivityManager by lazy {
         getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

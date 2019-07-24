@@ -30,7 +30,9 @@ open class BaseNetworkFragment : BaseFragment(), BaseNetworkWindowInterface {
 
 
 
-    private val broadcastReceiver by BaseWindowBroadcastReceiverDelegate()
+    private val broadcastReceiver by lazy {
+        BaseWindowBroadcastReceiver(this)
+    }
 
 
     private val connectivityManager by lazy {
