@@ -5,6 +5,7 @@ import android.content.IntentFilter
 import android.net.*
 import android.os.Bundle
 import android.view.View
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import cn.wsgwz.basemodule.interfaces.BaseNetworkWindowInterface
 import io.reactivex.disposables.CompositeDisposable
@@ -21,7 +22,7 @@ open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
     }
 
     val progressLayout:ProgressLayout   by lazy {
-        findViewById<ProgressConstraintLayout>(R.id.progress_layout)
+        findViewById<ConstraintLayout>(R.id.progress_layout) as ProgressLayout
     }
 
 
@@ -70,16 +71,16 @@ open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
 
 
     fun setCustomContentView(layoutResID: Int) {
-        setContentView(R.layout.activity_base_network)
+        initCustomContentView()
         layoutInflater.inflate(layoutResID, progress_layout, true)
     }
 
     fun setCustomContentView(view: View) {
-        setContentView(R.layout.activity_base_network)
+        initCustomContentView()
         progress_layout.addView(view)
     }
 
-    fun setCustomContentView() {
+    fun initCustomContentView() {
         setContentView(R.layout.activity_base_network)
     }
 

@@ -33,6 +33,8 @@ interface BaseRetrofitInterface {
     }
 
 
+
+
     fun Disposable.add(): Disposable {
         requestCompositeDisposable.add(this)
         return this
@@ -40,6 +42,7 @@ interface BaseRetrofitInterface {
 
     private inline fun <T, R> T.lett(block: (T) -> R): R {
 
+        block.also {  }
         return block(this)
     }
 

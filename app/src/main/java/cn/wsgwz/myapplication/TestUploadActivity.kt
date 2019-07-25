@@ -59,7 +59,7 @@ class TestUploadActivity : AppBaseActivity() {
 
 
         create(CommonService::class.java).upload("https://china185.com/uploadService/uploadFile", "1142271925825835010", ProgressRequestBody(multipartBodyBuilder.build(), ProgressListener {
-            progressView.post{
+            progressView.post {
                 progressView.updateProgress(it)
             }
         }))

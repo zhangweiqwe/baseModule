@@ -7,12 +7,12 @@
     android:visibility="invisible">
 
     <ProgressBar
-        android:id="@+id/progress_layout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/progress_text"
+        android:id="@+id/loading_progress_bar"
         android:layout_width="20dp"
         android:layout_height="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/progress_text"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -22,8 +22,8 @@
         android:layout_marginLeft="2dp"
         android:text="@string/data_loading_hint"
         android:textColor="@android:color/black"
-        app:layout_constraintLeft_toRightOf="@+id/progress_layout"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/loading_progress_bar"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
