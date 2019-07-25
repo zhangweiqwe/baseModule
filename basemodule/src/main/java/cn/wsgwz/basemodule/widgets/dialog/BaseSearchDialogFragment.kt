@@ -15,7 +15,7 @@ import java.lang.Exception
 
 abstract class BaseSearchDialogFragment : DialogFragment() {
 
-    abstract fun getSearchFragment(): Fragment
+    //abstract fun getSearchFragment(): Fragment
 
 
     /*override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
