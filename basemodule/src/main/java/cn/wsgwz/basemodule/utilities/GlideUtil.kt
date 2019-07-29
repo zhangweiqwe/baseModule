@@ -17,6 +17,7 @@ object GlideUtil {
         val requestOptions = RequestOptions()
         Glide.with(view.context)
                 .load(imageUrl)
+                .thumbnail(0.05f)
                 .listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
                         LLog.d(TAG,"${imageUrl.hashCode()} onLoadFailed" )
