@@ -31,7 +31,7 @@ public class CustomDividerItemDecoration extends RecyclerView.ItemDecoration {
     private int mOrientation;
     private final Rect mBounds = new Rect();
 
-    private boolean isShowVerticalLast = false;
+    private boolean isShowVerticalLast = true;
 
     private int verticalPaddingLeft;
     private int verticalPaddingRight;
@@ -48,7 +48,7 @@ public class CustomDividerItemDecoration extends RecyclerView.ItemDecoration {
     }
 
 
-    public CustomDividerItemDecoration(Context context, int orientation, float dimen, @ColorInt int color) {
+    public CustomDividerItemDecoration(int orientation, float dimen, @ColorInt int color) {
         ShapeDrawable shapeDrawable = new ShapeDrawable();
         Paint paint = shapeDrawable.getPaint();
         paint.setColor(color);
@@ -167,7 +167,7 @@ public class CustomDividerItemDecoration extends RecyclerView.ItemDecoration {
             outRect.set(0, 0, 0, 0);
         } else {
             if (this.mOrientation == DividerItemDecoration.VERTICAL) {
-                if (position == parent.getAdapter().getItemCount() - 1 && !isShowVerticalLast) {
+                if (!isShowVerticalLast&&position == parent.getAdapter().getItemCount() - 1  ) {
                     outRect.set(0, 0, 0, 0);
                 } else {
                     outRect.set(0, 0, 0, this.mDivider.getIntrinsicHeight());
