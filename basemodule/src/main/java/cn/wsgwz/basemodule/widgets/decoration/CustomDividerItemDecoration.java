@@ -23,18 +23,14 @@ import cn.wsgwz.basemodule.utilities.DensityUtil;
 
 
 public class CustomDividerItemDecoration extends RecyclerView.ItemDecoration {
-    public static final int HORIZONTAL = 0;
-    public static final int VERTICAL = 1;
+    public static final int HORIZONTAL = DividerItemDecoration.HORIZONTAL;
+    public static final int VERTICAL = DividerItemDecoration.VERTICAL;
     private static final String TAG = "CustomDividerItem";
     private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
     private Drawable mDivider;
     private int mOrientation;
     private final Rect mBounds = new Rect();
 
-    private boolean isShowVerticalLast = true;
-
-    private int verticalPaddingLeft;
-    private int verticalPaddingRight;
 
     public CustomDividerItemDecoration(Context context, int orientation) {
         TypedArray a = context.obtainStyledAttributes(ATTRS);
@@ -57,7 +53,7 @@ public class CustomDividerItemDecoration extends RecyclerView.ItemDecoration {
         dimen = DensityUtil.dp2px( dimen);
 
         this.setOrientation(orientation);
-        if (this.mOrientation == DividerItemDecoration.VERTICAL) {
+        if (this.mOrientation == VERTICAL) {
             shapeDrawable.setIntrinsicHeight((int) dimen);
         } else {
             shapeDrawable.setIntrinsicWidth((int) dimen);
@@ -73,7 +69,7 @@ public class CustomDividerItemDecoration extends RecyclerView.ItemDecoration {
 
 
     public void setOrientation(int orientation) {
-        if (orientation != 0 && orientation != 1) {
+        if (orientation != HORIZONTAL && orientation != VERTICAL) {
             throw new IllegalArgumentException("Invalid orientation. It should be either HORIZONTAL or VERTICAL");
         } else {
             this.mOrientation = orientation;
@@ -90,7 +86,7 @@ public class CustomDividerItemDecoration extends RecyclerView.ItemDecoration {
 
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         if (parent.getLayoutManager() != null && this.mDivider != null) {
-            if (this.mOrientation == DividerItemDecoration.VERTICAL) {
+            if (this.mOrientation == VERTICAL) {
                 this.drawVertical(c, parent);
             } else {
                 this.drawHorizontal(c, parent);
@@ -113,15 +109,12 @@ public class CustomDividerItemDecoration extends RecyclerView.ItemDecoration {
         }
 
         int childCount = parent.getChildCount();
-        if (!isShowVerticalLast) {
-            childCount -= 1;
-        }
         for (int i = 0; i < childCount; ++i) {
             View child = parent.getChildAt(i);
             parent.getDecoratedBoundsWithMargins(child, this.mBounds);
             int bottom = this.mBounds.bottom + Math.round(child.getTranslationY());
             int top = bottom - this.mDivider.getIntrinsicHeight();
-            this.mDivider.setBounds(left + verticalPaddingLeft, top, right - verticalPaddingRight, bottom);
+            this.mDivider.setBounds(left , top, right , bottom);
             this.mDivider.draw(canvas);
         }
 
@@ -166,13 +159,8 @@ public class CustomDividerItemDecoration extends RecyclerView.ItemDecoration {
         if (this.mDivider == null) {
             outRect.set(0, 0, 0, 0);
         } else {
-            if (this.mOrientation == DividerItemDecoration.VERTICAL) {
-                if (!isShowVerticalLast&&position == parent.getAdapter().getItemCount() - 1  ) {
-                    outRect.set(0, 0, 0, 0);
-                } else {
-                    outRect.set(0, 0, 0, this.mDivider.getIntrinsicHeight());
-                }
-                //outRect.set(0, 0, 0, this.mDivider.getIntrinsicHeight());
+            if (this.mOrientation == VERTICAL) {
+                outRect.set(0, 0, 0, this.mDivider.getIntrinsicHeight());
 
             } else {
 
@@ -198,29 +186,6 @@ public class CustomDividerItemDecoration extends RecyclerView.ItemDecoration {
         return spanCount;
     }
 
-    public boolean isShowVerticalLast() {
-        return isShowVerticalLast;
-    }
-
-    public void setShowVerticalLast(boolean showVerticalLast) {
-        isShowVerticalLast = showVerticalLast;
-    }
-
-    public int getVerticalPaddingLeft() {
-        return verticalPaddingLeft;
-    }
-
-    public void setVerticalPaddingLeft(int verticalPaddingLeft) {
-        this.verticalPaddingLeft = verticalPaddingLeft;
-    }
-
-    public int getVerticalPaddingRight() {
-        return verticalPaddingRight;
-    }
-
-    public void setVerticalPaddingRight(int verticalPaddingRight) {
-        this.verticalPaddingRight = verticalPaddingRight;
-    }
 
 
 }
