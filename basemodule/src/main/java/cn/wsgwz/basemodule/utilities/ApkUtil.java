@@ -43,13 +43,17 @@ public class ApkUtil {
     }
 
 
-    public static int getVersionCode(Context context) {
-        int code = 0;
+    public static long getVersionCode(Context context) {
+        long code = 0;
         if (context != null) {
             PackageManager manager = context.getPackageManager();
             try {
                 PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
-                code = info.versionCode;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    code = info.getLongVersionCode();
+                }else {
+                    code = info.versionCode;
+                }
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }
