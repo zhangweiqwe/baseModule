@@ -45,7 +45,7 @@ public class ApkUtil {
 
     public static int getVersionCode(Context context) {
         int code = 0;
-        if (context == null) {
+        if (context != null) {
             PackageManager manager = context.getPackageManager();
             try {
                 PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
