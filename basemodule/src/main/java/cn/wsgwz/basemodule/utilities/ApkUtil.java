@@ -51,7 +51,7 @@ public class ApkUtil {
                 PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                     code = info.getLongVersionCode();
-                }else {
+                } else {
                     code = info.versionCode;
                 }
             } catch (PackageManager.NameNotFoundException e) {
