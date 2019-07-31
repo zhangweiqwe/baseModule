@@ -43,27 +43,33 @@ public class ApkUtil {
     }
 
 
-    public static int packageCode(Context context) {
-        PackageManager manager = context.getPackageManager();
+    public static int getVersionCode(Context context) {
         int code = 0;
-        try {
-            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
-            code = info.versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+        if (context == null) {
+            PackageManager manager = context.getPackageManager();
+            try {
+                PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+                code = info.versionCode;
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
         }
+
         return code;
     }
 
-    public static String packageName(Context context) {
-        PackageManager manager = context.getPackageManager();
+    public static String getVersionName(Context context) {
         String name = null;
-        try {
-            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
-            name = info.versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+        if (context != null) {
+            PackageManager manager = context.getPackageManager();
+            try {
+                PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+                name = info.versionName;
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
         }
+
 
         return name;
     }
