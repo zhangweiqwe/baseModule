@@ -53,7 +53,7 @@ abstract class BaseSearchDialogFragment : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_FRAME, R.style.SearchDialog)
+        setStyle(STYLE_NO_FRAME, R.style.Theme_SearchDialog)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
