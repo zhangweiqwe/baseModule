@@ -11,20 +11,12 @@ import cn.wsgwz.basemodule.interfaces.BaseNetworkWindowInterface
 import io.reactivex.disposables.CompositeDisposable
 import cn.wsgwz.basemodule.utilities.LLog
 import cn.wsgwz.basemodule.utilities.NetworkUtil
-import cn.wsgwz.basemodule.widgets.progressActivity.ProgressConstraintLayout
-import cn.wsgwz.basemodule.widgets.progressActivity.ProgressLayout
-import kotlinx.android.synthetic.main.activity_base_network.*
 
 
 open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
     companion object {
         private const val TAG = "BaseNetworkActivity"
     }
-
-    val progressLayout:ProgressLayout   by lazy {
-        findViewById<ConstraintLayout>(R.id.progress_layout) as ProgressLayout
-    }
-
 
     final override lateinit var requestCompositeDisposable: CompositeDisposable
         private set
@@ -70,19 +62,6 @@ open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
     }
 
 
-    fun setCustomContentView(layoutResID: Int) {
-        initCustomContentView()
-        layoutInflater.inflate(layoutResID, progress_layout, true)
-    }
-
-    fun setCustomContentView(view: View) {
-        initCustomContentView()
-        progress_layout.addView(view)
-    }
-
-    fun initCustomContentView() {
-        setContentView(R.layout.activity_base_network)
-    }
 
 }
 

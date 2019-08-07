@@ -8,13 +8,13 @@
         <item name="android:windowBackground">@color/windowsBackground</item>
         <!--<item name="toolbarStyle">@style/BaseToolbarStyle</item>-->
 
-        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <!--<item name="android:statusBarColor">@android:color/transparent</item>-->
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
 
-    <style name="BaseAppTheme.NoActionBar.TranslucentStatus" parent="BaseAppTheme">
+    <style name="BaseAppTheme.NoActionBar" parent="BaseAppTheme">
+        <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
 
@@ -33,9 +33,9 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <style name="SoftInputDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <!--<style name="SoftInputDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowSoftInputMode">adjustPan</item>
-    </style>
+    </style>-->
 
     <style name="LoadingDialogTheme" parent="@android:style/Theme.Dialog">
         <item name="android:colorAccent">@color/colorAccent</item>

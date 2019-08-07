@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import java.lang.reflect.Field;
 
@@ -18,14 +21,20 @@ public class WindowUtil {
         //return DensityUtil.dp2px(context,45);
     }
 
-    public static void setStatusBarTransparent(Activity activity){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+    public static void setStatusBarTransparent(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             try {
                 Class decorViewClazz = Class.forName("com.android.internal.policy.DecorView");
                 Field field = decorViewClazz.getDeclaredField("mSemiTransparentStatusBarColor");
                 field.setAccessible(true);
                 field.setInt(activity.getWindow().getDecorView(), Color.TRANSPARENT);  //改为透明
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
         }
+    }
+
+    public static void setTranslucentStatus(Activity activity) {
+        WindowManager.LayoutParams layoutParams = activity.getWindow().getAttributes();
+        layoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | layoutParams.flags);
     }
 }

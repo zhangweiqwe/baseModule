@@ -39,8 +39,6 @@ open class BaseActivity : AppCompatActivity(), BaseWindowInterface, HasActivityI
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         BaseApplication.addActivity(this)
-        WindowUtil.setStatusBarTransparent(this)
-
 
         LLog.d(TAG, "${androidInjector}")
     }

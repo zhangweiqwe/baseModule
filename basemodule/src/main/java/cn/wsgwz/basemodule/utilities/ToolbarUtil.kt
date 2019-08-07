@@ -31,11 +31,11 @@ object ToolbarUtil {
             )
         )
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             (view.parent as Toolbar).also { toolbar ->
                 toolbar.setContentInsetsAbsolute(0, 0)
             }
-        }
+        }*/
         return view
     }
 

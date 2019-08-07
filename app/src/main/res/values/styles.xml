@@ -1,17 +1,22 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="BaseAppTheme.NoActionBar.TranslucentStatus">
+    <style name="AppTheme" parent="BaseAppTheme.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <!--<item name="toolbarStyle">@style/ToolbarStyle</item>-->
-        <!--<item name="android:actionBarSize">@dimen/action_bar_size</item>-->
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="toolbarStyle">@style/ToolbarStyle</item>
+        <item name="android:actionBarSize">48dp</item>
     </style>
 
 
-    <!--<style name="ToolbarStyle" parent="BaseToolbarStyle">
-        <item name="android:background">@android:color/holo_red_light</item>
-    </style>-->
+    <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">?android:attr/statusBarColor</item>
+        <item name="elevation">0dp</item>
+        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetEnd">0dp</item>
+    </style>
+
 </resources>

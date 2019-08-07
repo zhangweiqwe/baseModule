@@ -4,5 +4,4 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="windowsBackground">@android:color/white</color>
-    <color name="toolbarBackground">#99333333</color>
 </resources>

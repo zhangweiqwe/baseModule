@@ -8,7 +8,7 @@
         <item name="android:windowBackground">@color/windowsBackground</item>
         <!--<item name="toolbarStyle">@style/BaseToolbarStyle</item>-->
 
-        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <!--<item name="android:statusBarColor">@android:color/transparent</item>-->
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowLightStatusBar">true</item>
 

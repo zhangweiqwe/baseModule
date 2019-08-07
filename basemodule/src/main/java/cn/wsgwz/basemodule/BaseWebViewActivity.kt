@@ -2,6 +2,7 @@ package cn.wsgwz.basemodule
 
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -12,11 +13,14 @@ import android.view.WindowManager
 import android.webkit.*
 import android.widget.FrameLayout
 import android.widget.ProgressBar
+import androidx.annotation.ColorInt
+import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import cn.wsgwz.basemodule.interfaces.BaseJsInterface
 import cn.wsgwz.basemodule.interfaces.BaseWindowInterface
+import cn.wsgwz.basemodule.utilities.AndroidBug5497Workaround
 import cn.wsgwz.basemodule.utilities.LLog
 import cn.wsgwz.basemodule.utilities.manager.UserManager
 import cn.wsgwz.basemodule.utilities.WindowUtil
@@ -51,19 +55,27 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
 
 
 
+    private val tempStatusBarColor:Int = Color.WHITE
+
     override fun onCreate(savedInstanceState: Bundle?) {
-
-
+        WindowUtil.setTranslucentStatus(this)
+        WindowUtil.setStatusBarTransparent(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base_web_view)
 
+        AndroidBug5497Workaround.assistActivity(this)
+
         toolbar_parent_cl = findViewById(R.id.toolbar_parent_cl)
+        toolbar_parent_cl.setBackgroundColor(Color.TRANSPARENT);
         progress_layout = findViewById(R.id.progress_layout)
         web_view = findViewById(R.id.web_view)
         video_container_fl = findViewById(R.id.video_container_fl)
         progress_bar = findViewById(R.id.progress_bar)
 
         tempRequestedOrientation = requestedOrientation
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        toolbar.setBackgroundColor(Color.TRANSPARENT)
+        setSupportActionBar(toolbar)
         onInitActionBar()
         windowTranslucentStatus = intent.getBooleanExtra("windowTranslucentStatus", false)
         if (windowTranslucentStatus) {
@@ -184,9 +196,9 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
             val height = WindowUtil.getStatusBarHeight(this) + supportActionBar.let {
                 it?.height ?: 0
             }
-            val color0 = ContextCompat.getColor(this@BaseWebViewActivity, R.color.colorPrimary)
+            //val color0 = ContextCompat.getColor(this@BaseWebViewActivity, tempStatusBarColor)
 
-            val color1 = color0 and 0x00ffffff
+            val color1 = tempStatusBarColor and 0x00ffffff
             web_view.setOnScrollChangeListener(object : ScrollWebView.OnScrollChangeListener {
                 override fun onScrollChange(v: View, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int) {
                     if (height > scrollY) {
@@ -194,7 +206,7 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
                         toolbar_parent_cl.setBackgroundColor(color)
                         //supportActionBar?.setBackgroundDrawable(ColorDrawable(color))
                     } else {
-                        toolbar_parent_cl.setBackgroundColor(color0)
+                        toolbar_parent_cl.setBackgroundColor(tempStatusBarColor)
                         //supportActionBar?.setBackgroundDrawable(ColorDrawable(color0))
                     }
 
@@ -217,7 +229,6 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
     }
 
     open fun onInitActionBar() {
-        setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.also {
             //it.setHomeButtonEnabled(true)
             it.setDisplayHomeAsUpEnabled(true)

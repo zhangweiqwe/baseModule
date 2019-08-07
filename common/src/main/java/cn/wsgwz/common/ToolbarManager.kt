@@ -10,7 +10,9 @@ import android.view.ViewStub
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.StringRes
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import cn.wsgwz.basemodule.utilities.DensityUtil
 import cn.wsgwz.basemodule.utilities.ToolbarUtil
@@ -29,25 +31,32 @@ class ToolbarManager private constructor() {
 
 
         @JvmStatic
-        fun with(appCompatActivity: AppCompatActivity): Toolbar {
+        fun with(appCompatActivity: AppCompatActivity): CustomToolbar {
             ToolbarUtil.setCustomView(appCompatActivity, R.layout.custom_toolbar)
-            return Toolbar(appCompatActivity)
+            return CustomToolbar(appCompatActivity)
         }
 
 
         @JvmStatic
-        fun with(toolbarView: View): Toolbar {
-            ToolbarUtil.setCustomView(toolbarView.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar), R.layout.custom_toolbar)
-            return Toolbar(toolbarView)
+        fun with(toolbarView: View): CustomToolbar {
+            ToolbarUtil.setCustomView(toolbarView.findViewById<Toolbar>(R.id.toolbar), R.layout.custom_toolbar)
+            return CustomToolbar(toolbarView)
+        }
+
+        @JvmStatic
+        fun with(toolbar: Toolbar): CustomToolbar {
+            val view = ToolbarUtil.setCustomView(toolbar, R.layout.custom_toolbar)
+            return CustomToolbar(view)
+            throw Throwable("non support")
         }
 
     }
 
 
-    class Toolbar(private val toolbarView: View) {
+    class CustomToolbar(private val toolbarView: View) {
         private val context: Context = toolbarView.context
 
-        constructor(appCompatActivity: AppCompatActivity) : this(appCompatActivity.findViewById<View>(R.id.toolbar_parent_cl)) {
+        constructor(appCompatActivity: AppCompatActivity) : this(appCompatActivity.findViewById<View>(R.id.toolbar_cl)) {
             toolbarView.apply {
                 if (findViewById<View>(R.id.toolbar_back_cl) == null) {
                     findViewById<ViewStub>(R.id.toolbar_back_vs).inflate()
@@ -59,7 +68,7 @@ class ToolbarManager private constructor() {
         }
 
 
-        fun title(text: CharSequence?): Toolbar {
+        fun title(text: CharSequence?): CustomToolbar {
             toolbarView.apply {
                 if (findViewById<TextView>(R.id.toolbar_title_tv) == null) {
                     findViewById<ViewStub>(R.id.toolbar_title_vs).inflate()
@@ -84,7 +93,7 @@ class ToolbarManager private constructor() {
                 }
         )
 
-        fun addMenu(view: View, params: LinearLayout.LayoutParams): Toolbar {
+        fun addMenu(view: View, params: LinearLayout.LayoutParams): CustomToolbar {
             toolbarView.apply {
                 if (findViewById<LinearLayout>(R.id.toolbar_right_multiple_menu_ll) == null) {
                     findViewById<ViewStub>(R.id.toolbar_right_multiple_menu_vs).inflate()
@@ -110,7 +119,7 @@ class ToolbarManager private constructor() {
         }
 
 
-        fun removeMenu(view: View): Toolbar {
+        fun removeMenu(view: View): CustomToolbar {
             toolbarView.findViewById<LinearLayout>(R.id.toolbar_right_multiple_menu_ll)?.removeView(view)
             return this
         }

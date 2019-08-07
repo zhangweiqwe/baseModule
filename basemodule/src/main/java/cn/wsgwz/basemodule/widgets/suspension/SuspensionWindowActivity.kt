@@ -11,6 +11,7 @@ import android.view.KeyEvent
 import cn.wsgwz.baselibrary.widgets.suspension.SuspensionWindowManager
 import cn.wsgwz.baselibrary.widgets.suspension.SuspensionWindowType
 import cn.wsgwz.basemodule.BaseActivity
+import cn.wsgwz.basemodule.utilities.WindowUtil
 
 private const val REQUEST_CODE_OVERLAY_PERMISSION = 1000
 
@@ -20,6 +21,7 @@ class SuspensionWindowActivity : BaseActivity() {
     private lateinit var suspensionWindowType: SuspensionWindowType
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        //WindowUtil.setStatusBarTransparent(this)
         super.onCreate(savedInstanceState)
 
         suspensionWindowType = intent.getSerializableExtra("suspensionWindowType") as SuspensionWindowType
@@ -53,7 +55,7 @@ class SuspensionWindowActivity : BaseActivity() {
                     suspensionWindowManager.show(suspensionWindowType)
                 }
                 finish()
-            }, 800)
+            }, 400)
         } else {
             finish()
         }

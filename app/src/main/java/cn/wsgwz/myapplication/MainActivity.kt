@@ -1,13 +1,12 @@
 package cn.wsgwz.myapplication
 
-import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
+import android.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cn.wsgwz.baselibrary.permission.PermissionV2
@@ -15,12 +14,12 @@ import cn.wsgwz.baselibrary.widgets.suspension.SuspensionWindowManager
 import cn.wsgwz.basemodule.BaseWebViewActivity
 import cn.wsgwz.basemodule.other.SimpleViewHolder
 import cn.wsgwz.basemodule.utilities.LLog
+import cn.wsgwz.basemodule.utilities.WindowUtil
 import cn.wsgwz.basemodule.widgets.dialog.LoadingDialogFragment
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.list_item_test.view.*
 import javax.inject.Inject
-import javax.inject.Named
 
 class MainActivity : AppBaseActivity() {
 
@@ -29,22 +28,18 @@ class MainActivity : AppBaseActivity() {
     }
 
 
-
     @Inject
     lateinit var loadingDialogFragment: LoadingDialogFragment
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
+        toolbar.title("测试")
         if (BuildConfig.DEBUG) {
             SuspensionWindowManager.init(this)
         }
 
-        toolbar.title("测试").addMenu(TextView(this).apply { text = getString(R.string.app_name) })
 
         //LLog.d(TAG,s)
 

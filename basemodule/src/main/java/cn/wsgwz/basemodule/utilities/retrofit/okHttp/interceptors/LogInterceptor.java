@@ -57,6 +57,7 @@ public class LogInterceptor
         if (token == null) {
             token = "";
         }
+
         if (requestBody != null) {
 
 
