@@ -66,7 +66,7 @@
 
     <!--progressLayout-->
     <string name="progress_layout_empty_button">@string/refresh</string>
-    <string name="progress_layout_empty_description">@string/empty_content</string>
+    <string name="progress_layout_empty_description">内容为空\n点击空白处刷新</string>
     <string name="progress_layout_error_button">@string/reload</string>
     <string name="progress_layout_error_description">加载失败，请稍候重试</string>
 

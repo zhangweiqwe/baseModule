@@ -38,7 +38,7 @@ internal class LayoutDelegateImpl : LayoutDelegate {
     private fun inflateEmptyView(context: Context, parentView: ViewGroup) {
         if (emptyState == null) {
             emptyState = LayoutInflater.from(context).inflate(R.layout.view_progress_layout_empty, null)
-            parentView.addView(emptyState, getLayoutParams())
+            parentView.addView(emptyState, ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
         } else {
             emptyState?.visibility = View.VISIBLE
         }
@@ -70,7 +70,7 @@ internal class LayoutDelegateImpl : LayoutDelegate {
                 inflateEmptyView(context, parentView)
                 emptyState?.apply {
                     empty_state_text.text = description
-                    empty_state_bn.setOnClickListener(buttonClickListener)
+                    setOnClickListener(buttonClickListener)
                 }
             }
             ProgressLayout.STATE_ERROR -> {

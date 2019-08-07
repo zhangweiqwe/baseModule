@@ -27,7 +27,7 @@ class TestProgressLayoutActivity : AppBaseActivity() {
                     }
                 }
 
-            }, 2000)
+            }, 1200)
 
         }
 

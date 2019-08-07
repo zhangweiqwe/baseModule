@@ -6,16 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!--<include
-        layout="@layout/toolbar_layout"
-        app:layout_constraintTop_toTopOf="parent" />-->
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
-    </androidx.appcompat.widget.Toolbar>
+    <include layout="@layout/view_toolbar" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/content_rv"

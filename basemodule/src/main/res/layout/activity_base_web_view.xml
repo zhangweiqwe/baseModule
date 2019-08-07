@@ -29,7 +29,7 @@
     </cn.wsgwz.basemodule.widgets.progressActivity.ProgressConstraintLayout>
 
     <include
-        layout="@layout/toolbar_layout"
+        layout="@layout/view_toolbar_layout"
         app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
