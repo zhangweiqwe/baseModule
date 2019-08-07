@@ -22,12 +22,16 @@ public class WindowUtil {
     }
 
     public static void setStatusBarTransparent(Activity activity) {
+        setStatusBarTransparent(activity.getWindow());
+    }
+
+    public static void setStatusBarTransparent(Window window) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             try {
                 Class decorViewClazz = Class.forName("com.android.internal.policy.DecorView");
                 Field field = decorViewClazz.getDeclaredField("mSemiTransparentStatusBarColor");
                 field.setAccessible(true);
-                field.setInt(activity.getWindow().getDecorView(), Color.TRANSPARENT);  //改为透明
+                field.setInt(window.getDecorView(), Color.TRANSPARENT);  //改为透明
             } catch (Exception e) {
             }
         }

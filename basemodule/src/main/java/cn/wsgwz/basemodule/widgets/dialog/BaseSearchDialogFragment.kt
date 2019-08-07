@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import cn.wsgwz.basemodule.R
+import cn.wsgwz.basemodule.utilities.WindowUtil
 import java.lang.Exception
 
 
@@ -25,16 +26,16 @@ abstract class BaseSearchDialogFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-       /* sv = view.findViewById(R.id.sv)
-        sv.requestFocus()
-        sv.apply {
-            val fragment = this@BaseSearchDialogFragment.fragment
-            if (fragment is SearchView.OnQueryTextListener) {
-                setOnQueryTextListener(fragment)
-            } else {
-                throw Exception("non support")
-            }
-            *//*try {
+        /* sv = view.findViewById(R.id.sv)
+         sv.requestFocus()
+         sv.apply {
+             val fragment = this@BaseSearchDialogFragment.fragment
+             if (fragment is SearchView.OnQueryTextListener) {
+                 setOnQueryTextListener(fragment)
+             } else {
+                 throw Exception("non support")
+             }
+             *//*try {
                 val tv = findViewById<SearchView.SearchAutoComplete>(R.id.search_src_text)
                 tv.setTextColor(color)
                 tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14F)
@@ -51,25 +52,13 @@ abstract class BaseSearchDialogFragment : DialogFragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_FRAME, R.style.Theme_SearchDialog)
+        setStyle(STYLE_NO_FRAME, R.style.SearchDialogTheme)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return super.onCreateDialog(savedInstanceState).apply {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                try {
-                    val decorViewClazz = Class.forName("com.android.internal.policy.DecorView")
-                    val field = decorViewClazz.getDeclaredField("mSemiTransparentStatusBarColor")
-                    field.isAccessible = true
-                    field.setInt(window.decorView, Color.TRANSPARENT)  //改为透明
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-
-            }
-
+            WindowUtil.setStatusBarTransparent(window)
         }
     }
 

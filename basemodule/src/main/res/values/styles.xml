@@ -26,7 +26,7 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <style name="BaseWidget.AppCompat.Toolbar" parent="Widget.AppCompat.Toolbar">
+    <style name="BaseToolbarStyle" parent="Widget.AppCompat.Toolbar">
         <item name="elevation">0dp</item>
         <item name="contentInsetStart">0dp</item>
         <item name="contentInsetEnd">0dp</item>
@@ -38,7 +38,7 @@
         <item name="android:windowSoftInputMode">adjustPan</item>
     </style>-->
 
-    <style name="Theme.LoadingDialog" parent="@android:style/Theme.Dialog">
+    <style name="LoadingDialogTheme" parent="@android:style/Theme.Dialog">
         <item name="android:colorAccent">@color/colorAccent</item>
         <item name="android:colorPrimary">@color/colorPrimary</item>
         <item name="android:windowFrame">@null</item>
@@ -61,7 +61,7 @@
         <item name="android:windowExitAnimation">@anim/zoom_out</item>
     </style>
 
-    <style name="Theme.SearchDialog" parent="android:Theme.Holo.Light.NoActionBar.TranslucentDecor">
+    <style name="SearchDialogTheme" parent="android:Theme.Holo.Light.NoActionBar.TranslucentDecor">
         <item name="android:windowTranslucentNavigation">false</item>
     </style>
 </resources>
