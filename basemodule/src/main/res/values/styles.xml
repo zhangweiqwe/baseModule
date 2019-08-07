@@ -1,14 +1,10 @@
 <resources>
 
     <style name="BaseAppTheme" parent="Theme.AppCompat.Light">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/windowsBackground</item>
-        <!--<item name="toolbarStyle">@style/BaseToolbarStyle</item>-->
-
-        <!--<item name="android:statusBarColor">@android:color/transparent</item>-->
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
 
@@ -34,10 +30,6 @@
 
 
 
-    <!--<style name="SoftInputDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:windowSoftInputMode">adjustPan</item>
-    </style>-->
-
     <style name="LoadingDialogTheme" parent="@android:style/Theme.Dialog">
         <item name="android:colorAccent">@color/colorAccent</item>
         <item name="android:colorPrimary">@color/colorPrimary</item>
@@ -54,9 +46,7 @@
 
 
 
-    <style name="Theme.Zoom" parent="android:Theme.Holo.Light.NoActionBar.TranslucentDecor">
-        <item name="android:windowTranslucentNavigation">false</item>
-        <item name="android:background">@android:color/transparent</item>
+    <style name="LogSuspensionWindowStyle">
         <item name="android:windowEnterAnimation">@anim/zoom_in</item>
         <item name="android:windowExitAnimation">@anim/zoom_out</item>
     </style>

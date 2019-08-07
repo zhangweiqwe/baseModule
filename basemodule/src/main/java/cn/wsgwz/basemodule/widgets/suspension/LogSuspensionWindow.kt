@@ -85,7 +85,7 @@ class LogSuspensionWindow private constructor(private val context: Context) : Su
             height = DensityUtil.dp2px(227f).toInt().apply {
                 wHeight = this
             }
-            windowAnimations = R.style.Theme_Zoom
+            windowAnimations = R.style.LogSuspensionWindowStyle
 
             type = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {//8.0新特性
                 WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
