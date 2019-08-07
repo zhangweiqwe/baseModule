@@ -21,7 +21,7 @@ class SuspensionWindowActivity : BaseActivity() {
     private lateinit var suspensionWindowType: SuspensionWindowType
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        //WindowUtil.setStatusBarTransparent(this)
+        WindowUtil.setStatusBarTransparent(this)
         super.onCreate(savedInstanceState)
 
         suspensionWindowType = intent.getSerializableExtra("suspensionWindowType") as SuspensionWindowType
