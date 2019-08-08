@@ -12,7 +12,10 @@ import cn.wsgwz.basemodule.R
 object ToolbarUtil {
 
     fun setCustomView(appCompatActivity: AppCompatActivity, @LayoutRes resId: Int): View {
-        val toolbar = appCompatActivity.findViewById<Toolbar>(R.id.toolbar)
+        var toolbar = appCompatActivity.findViewById<Toolbar>(R.id.toolbar_stub)
+        if(toolbar==null){
+            toolbar = appCompatActivity.findViewById<Toolbar>(R.id.toolbar)
+        }
         appCompatActivity.setSupportActionBar(toolbar)
         return setCustomView(toolbar, resId)
     }

@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar_cl"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="?android:attr/actionBarSize">
 
 
     <ViewStub
         android:id="@+id/toolbar_back_vs"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:inflatedId="@+id/toolbar_back_cl"
+        android:layout_height="?android:attr/actionBarSize"
+        android:inflatedId="@+id/toolbar_back_iv"
         android:layout="@layout/toolbar_left_back_item"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -34,7 +34,7 @@
     <ViewStub
         android:id="@+id/toolbar_right_multiple_menu_vs"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
         android:inflatedId="@+id/toolbar_right_multiple_menu_ll"
         android:layout="@layout/toolbar_right_multiple_menu_item"
         app:layout_constraintBottom_toBottomOf="parent"

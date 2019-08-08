@@ -2,6 +2,10 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/toolbar_title_tv"
     android:layout_width="wrap_content"
+    android:lines="1"
+    android:maxEms="14"
+    android:text="发生地方大师傅发生大发撒的方法发顺丰"
+    android:ellipsize="end"
     android:gravity="center"
     android:layout_height="wrap_content"
     />

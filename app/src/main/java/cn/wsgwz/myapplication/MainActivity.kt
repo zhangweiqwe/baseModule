@@ -1,22 +1,25 @@
 package cn.wsgwz.myapplication
 
 import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.view.*
 import android.widget.TextView
-import android.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cn.wsgwz.baselibrary.permission.PermissionV2
 import cn.wsgwz.baselibrary.widgets.suspension.SuspensionWindowManager
+import cn.wsgwz.basemodule.BaseApplication
 import cn.wsgwz.basemodule.BaseWebViewActivity
 import cn.wsgwz.basemodule.other.SimpleViewHolder
-import cn.wsgwz.basemodule.utilities.LLog
-import cn.wsgwz.basemodule.utilities.WindowUtil
 import cn.wsgwz.basemodule.widgets.dialog.LoadingDialogFragment
+import cn.wsgwz.common.ToolbarManager
 import com.tbruyelle.rxpermissions2.RxPermissions
+import io.reactivex.Observable
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.list_item_test.view.*
 import javax.inject.Inject
@@ -34,14 +37,44 @@ class MainActivity : AppBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setCustomContentView(R.layout.activity_main)
         toolbar.title("测试")
         if (BuildConfig.DEBUG) {
             SuspensionWindowManager.init(this)
         }
 
 
-        //LLog.d(TAG,s)
+
+        /*Observable.create<Int> {
+            for (i in 0..100) {
+              Thread.sleep(1000)
+                it.onNext(i)
+            }
+        }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(object : Observer<Int> {
+                    override fun onComplete() {
+
+                    }
+
+                    override fun onSubscribe(d: Disposable) {
+                    }
+
+                    override fun onNext(t: Int) {
+                        if (t % 2 == 0) {
+                            supportActionBar?.hide()
+                        } else {
+                            supportActionBar?.show()
+                        }
+                    }
+
+                    override fun onError(e: Throwable) {
+                    }
+
+                })*/
+
+
+
+
 
         class TestItem(val name: String?, val onClickListener: View.OnClickListener?)
 

@@ -5,11 +5,13 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
+import cn.wsgwz.basemodule.R
 import cn.wsgwz.basemodule.utilities.LLog
 import cn.wsgwz.basemodule.widgets.progressActivity.ProgressLayout.Companion.STATE_CONTENT
 import cn.wsgwz.basemodule.widgets.progressActivity.ProgressLayout.Companion.STATE_EMPTY
 import cn.wsgwz.basemodule.widgets.progressActivity.ProgressLayout.Companion.STATE_ERROR
 import cn.wsgwz.basemodule.widgets.progressActivity.ProgressLayout.Companion.STATE_LOADING
+import kotlinx.android.synthetic.main.activity_base_network.view.*
 import java.util.ArrayList
 
 open class ProgressConstraintLayout @JvmOverloads constructor(
@@ -76,11 +78,26 @@ open class ProgressConstraintLayout @JvmOverloads constructor(
         }
     }
 
-    private fun setContentVisibility(visible: Boolean, skipIds: List<Int>?) {
+    private fun setContentVisibility(visible: Boolean, skipIds: ArrayList<Int>?) {
+
+        val mSkipIds = ArrayList<Int>().apply {
+            add(R.id.toolbar_stub)
+        }
+        skipIds?.also {
+            mSkipIds.addAll(it)
+        }
+
         for (v in contentViews) {
 
             LLog.d(TAG, "setContentVisibility ${v?.hashCode()}")
-            if (skipIds == null) {
+
+
+            if (!mSkipIds.contains(v.id)) {
+                v.visibility = if (visible) View.VISIBLE else View.GONE
+            } else {
+                LLog.d(TAG, "setContentVisibility skipIds ${v.id}")
+            }
+            /*if (skipIds == null) {
                 v.visibility = if (visible) View.VISIBLE else View.GONE
             } else {
                 if (!skipIds.contains(v.id)) {
@@ -88,7 +105,9 @@ open class ProgressConstraintLayout @JvmOverloads constructor(
                 } else {
                     LLog.d(TAG, "setContentVisibility skipIds ${v.id}")
                 }
-            }
+            }*/
+
+
         }
     }
 
@@ -107,7 +126,7 @@ open class ProgressConstraintLayout @JvmOverloads constructor(
 
     }
 
-    private fun switchState(currentState: Int, description: CharSequence? = null, buttonClickListener: OnClickListener? = null, skipIds: List<Int>? = null) {
+    private fun switchState(currentState: Int, description: CharSequence? = null, buttonClickListener: OnClickListener? = null, skipIds: ArrayList<Int>? = null) {
         mCurrentState = currentState
         hideAllStates()
         when (currentState) {

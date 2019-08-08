@@ -5,8 +5,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:statusBarColor">@android:color/white</item>
-        <item name="toolbarStyle">@style/AppToolbarStyle</item>
         <item name="android:actionBarSize">48dp</item>
+        <item name="toolbarStyle">@style/AppToolbarStyle</item>
         <item name="android:windowBackground">@color/windowsBackground</item>
     </style>
 

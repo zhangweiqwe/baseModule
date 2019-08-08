@@ -20,7 +20,7 @@ interface ProgressLayout {
     class Config private constructor(builder: Builder) {
 
         internal var description: CharSequence? = null
-        internal var skipIds: List<Int>? = null
+        internal var skipIds: ArrayList<Int>? = null
         internal var buttonClickListener: View.OnClickListener? = null
 
         init {
@@ -31,7 +31,7 @@ interface ProgressLayout {
 
         class Builder {
             internal var description: CharSequence? = null
-            internal var skipIds: List<Int>? = null
+            internal var skipIds: ArrayList<Int>? = null
             internal var buttonClickListener: View.OnClickListener? = null
 
 
@@ -41,7 +41,7 @@ interface ProgressLayout {
             }
 
 
-            fun skipIds(skipIds: List<Int>?): Builder {
+            fun skipIds(skipIds: ArrayList<Int>?): Builder {
                 this.skipIds = skipIds
                 return this
             }
@@ -74,6 +74,7 @@ interface ProgressLayout {
     }).description(BaseApplication.getInstance().getString(R.string.progress_layout_error_description)).build())
 
     fun getCurrentState(): Int
+
 
     fun isContentCurrentState() = getCurrentState() == STATE_CONTENT
     fun isLoadingCurrentState() = getCurrentState() == STATE_LOADING
