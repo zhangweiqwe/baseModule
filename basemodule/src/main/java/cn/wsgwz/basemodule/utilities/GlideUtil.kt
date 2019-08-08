@@ -10,7 +10,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 
-object GlideUtil {
+internal object GlideUtil {
     private const val TAG = "GlideUtil"
     fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
         LLog.d(TAG, "${imageUrl.hashCode()} $imageUrl")
