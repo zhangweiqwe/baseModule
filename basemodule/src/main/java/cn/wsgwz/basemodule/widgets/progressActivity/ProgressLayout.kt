@@ -82,8 +82,6 @@ interface ProgressLayout {
     fun isErrorCurrentState() = getCurrentState() == STATE_ERROR
 
 
-    fun setLayoutDelegate(layoutDelegate: LayoutDelegate)
-    fun getLayoutDelegate(): LayoutDelegate
 
 
 }

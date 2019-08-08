@@ -4,17 +4,11 @@ import android.content.Context
 import android.content.IntentFilter
 import android.net.*
 import android.os.Bundle
-import android.view.View
-import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import cn.wsgwz.basemodule.interfaces.BaseNetworkWindowInterface
 import io.reactivex.disposables.CompositeDisposable
 import cn.wsgwz.basemodule.utilities.LLog
 import cn.wsgwz.basemodule.utilities.NetworkUtil
-import cn.wsgwz.basemodule.widgets.progressActivity.ProgressConstraintLayout
-import cn.wsgwz.basemodule.widgets.progressActivity.ProgressLayout
-import kotlinx.android.synthetic.main.activity_base_network.*
 
 
 open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
@@ -22,9 +16,6 @@ open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
         private const val TAG = "BaseNetworkActivity"
     }
 
-    val progressLayout: ProgressLayout   by lazy {
-        (findViewById<ViewGroup>(R.id.progress_layout) as ProgressLayout)
-    }
 
 
     final override lateinit var requestCompositeDisposable: CompositeDisposable
@@ -67,26 +58,6 @@ open class BaseNetworkActivity : BaseActivity(), BaseNetworkWindowInterface {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver)
         connectivityManager.unregisterNetworkCallback(cmNetworkCallback)
         LLog.d(TAG, "${hashCode()} $broadcastReceiver onDestroy")
-    }
-
-
-    fun setCustomContentView(layoutResID: Int) {
-        initCustomContentView()
-        layoutInflater.inflate(layoutResID, content, true)
-    }
-
-    fun setCustomContentView(view: View) {
-        initCustomContentView()
-        content.addView(view)
-    }
-
-    fun setCustomContentView(view: View?, params: ViewGroup.LayoutParams?) {
-        initCustomContentView()
-        content.addView(view, params)
-    }
-
-    private fun initCustomContentView() {
-        setContentView(R.layout.activity_base_network)
     }
 
 }

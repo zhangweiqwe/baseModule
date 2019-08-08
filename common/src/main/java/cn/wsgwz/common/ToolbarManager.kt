@@ -16,7 +16,6 @@ class ToolbarManager private constructor() {
 
         @JvmStatic
         fun with(appCompatActivity: AppCompatActivity, isGoBack: Boolean): MyToolbar {
-            appCompatActivity.findViewById<ViewStub>(R.id.toolbar_stub)?.inflate()
             val toolbarView = ToolbarUtil.setCustomView(appCompatActivity, R.layout.custom_toolbar)
             return MyToolbar(toolbarView).apply {
                 isGoBack(isGoBack)

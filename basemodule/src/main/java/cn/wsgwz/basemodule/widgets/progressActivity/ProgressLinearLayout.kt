@@ -1,12 +1,14 @@
 package cn.wsgwz.basemodule.widgets.progressActivity
 
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
+import android.widget.FrameLayout
+import android.widget.LinearLayout
 import cn.wsgwz.basemodule.R
 import cn.wsgwz.basemodule.widgets.progressActivity.ProgressLayout.Companion.STATE_CONTENT
 import cn.wsgwz.basemodule.widgets.progressActivity.ProgressLayout.Companion.STATE_EMPTY
@@ -16,11 +18,11 @@ import kotlinx.android.synthetic.main.view_progress_layout_empty.view.*
 import kotlinx.android.synthetic.main.view_progress_layout_error.view.*
 import java.util.ArrayList
 
-class ProgressConstraintLayout @JvmOverloads constructor(
+class ProgressLinearLayout @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : ConstraintLayout(context, attrs, defStyleAttr), ProgressLayout {
+) : LinearLayout(context, attrs, defStyleAttr), ProgressLayout {
     companion object {
-        private const val TAG = "ProgressConstraintLayout"
+        private const val TAG = "ProgressLinearLayout"
     }
 
 
@@ -71,7 +73,7 @@ class ProgressConstraintLayout @JvmOverloads constructor(
                     v.visibility = if (visible) View.VISIBLE else View.GONE
                 }
             } else {
-                if (!skipIds.contains(v.id)&&!commonSkipIds.contains(v.id)) {
+                if (!skipIds.contains(v.id) && !commonSkipIds.contains(v.id)) {
                     v.visibility = if (visible) View.VISIBLE else View.GONE
                 }
             }
@@ -102,13 +104,7 @@ class ProgressConstraintLayout @JvmOverloads constructor(
                 setContentVisibility(false, skipIds)
                 if (loadingState == null) {
                     loadingState = LayoutInflater.from(context).inflate(R.layout.view_progress_layout_loading, null)
-                    addView(loadingState, LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT).apply {
-                        topToTop = ConstraintSet.PARENT_ID
-                        bottomToBottom = ConstraintSet.PARENT_ID
-                        startToStart = ConstraintSet.PARENT_ID
-                        endToEnd = ConstraintSet.PARENT_ID
-                    })
+                    addView(loadingState, LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
                 } else {
                     loadingState?.visibility = View.VISIBLE
                 }
@@ -130,13 +126,7 @@ class ProgressConstraintLayout @JvmOverloads constructor(
                 setContentVisibility(false, skipIds)
                 if (errorState == null) {
                     errorState = LayoutInflater.from(context).inflate(R.layout.view_progress_layout_error, null)
-                    addView(errorState, LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT).apply {
-                        topToTop = ConstraintSet.PARENT_ID
-                        bottomToBottom = ConstraintSet.PARENT_ID
-                        startToStart = ConstraintSet.PARENT_ID
-                        endToEnd = ConstraintSet.PARENT_ID
-                    })
+                    addView(errorState, LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
 
                     errorState?.apply {
                         error_state_text.text = description

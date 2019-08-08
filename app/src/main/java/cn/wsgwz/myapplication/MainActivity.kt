@@ -37,7 +37,7 @@ class MainActivity : AppBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setCustomContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main)
         toolbar.title("测试")
         if (BuildConfig.DEBUG) {
             SuspensionWindowManager.init(this)
