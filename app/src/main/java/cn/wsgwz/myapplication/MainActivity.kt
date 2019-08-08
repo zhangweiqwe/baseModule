@@ -39,6 +39,7 @@ class MainActivity : AppBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         toolbar.title("测试")
+
         if (BuildConfig.DEBUG) {
             SuspensionWindowManager.init(this)
         }
