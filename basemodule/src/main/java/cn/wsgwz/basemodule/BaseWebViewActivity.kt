@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.webkit.*
 import android.widget.FrameLayout
-import android.widget.ProgressBar
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
@@ -22,24 +21,19 @@ import cn.wsgwz.basemodule.utilities.LLog
 import cn.wsgwz.basemodule.utilities.manager.UserManager
 import cn.wsgwz.basemodule.utilities.WindowUtil
 import cn.wsgwz.basemodule.widgets.ScrollWebView
-import cn.wsgwz.basemodule.widgets.progressActivity.BaseProgressConstraintLayout
+import cn.wsgwz.basemodule.widgets.progressActivity.WebViewProgressConstraintLayout
+import kotlinx.android.synthetic.main.activity_base_web_view.*
+import kotlinx.android.synthetic.main.view_toolbar_layout.*
 import java.util.HashMap
+
+private const val TAG = "BaseWebViewActivity"
 
 open class BaseWebViewActivity : BaseNetworkActivity() {
 
-    companion object {
-        private val TAG by lazy { BaseWebViewActivity::class.java.simpleName }
-    }
 
     private var tempRequestedOrientation = 0
 
     private var windowTranslucentStatus: Boolean = false
-
-    protected lateinit var toolbar_parent_cl: ConstraintLayout
-    private lateinit var progress_layout: BaseProgressConstraintLayout
-    private lateinit var web_view: ScrollWebView
-    private lateinit var video_container_fl: FrameLayout
-    private lateinit var progress_bar: ProgressBar
 
 
     private val userManager by lazy {
@@ -47,41 +41,66 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
     }
 
 
+    private val videoContainer by lazy {
+        FrameLayout(this).apply {
+            id = progress_layout.videoContainerId
+            setBackgroundColor(Color.RED)
+            progress_layout.addView(this, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
+        }
+    }
 
 
+    private var tempStatusBarColor = 0
 
-    private val tempStatusBarColor:Int = Color.WHITE
+
+    private fun WebViewProgressConstraintLayout.showContent(isShow: Boolean) {
+        for (v in arrayOf(findViewById<View>(R.id.toolbar_parent_layout), web_view)) {
+
+            LLog.d(TAG, "$isShow ${v.hashCode()}")
+            v.visibility = isShow.let {
+                if (it) {
+                    View.VISIBLE
+                } else {
+                    View.INVISIBLE
+                }
+            }
+        }
+
+
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        WindowUtil.setTranslucentStatus(this)
         WindowUtil.setStatusBarTransparent(this)
+        WindowUtil.setTranslucentStatus(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base_web_view)
-
         AndroidBug5497Workaround.assistActivity(this)
 
-        toolbar_parent_cl = findViewById(R.id.toolbar_parent_cl)
-        toolbar_parent_cl.setBackgroundColor(Color.TRANSPARENT);
-        progress_layout = findViewById(R.id.progress_layout)
-        web_view = findViewById(R.id.web_view)
-        video_container_fl = findViewById(R.id.video_container_fl)
-        progress_bar = findViewById(R.id.progress_bar)
-
+        tempStatusBarColor = window.statusBarColor
         tempRequestedOrientation = requestedOrientation
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        toolbar.setBackgroundColor(Color.TRANSPARENT)
-        setSupportActionBar(toolbar)
+
+
         onInitActionBar()
+        supportActionBar?.also {
+            it.setBackgroundDrawable(null)
+        }
+
+
         windowTranslucentStatus = intent.getBooleanExtra("windowTranslucentStatus", false)
         if (windowTranslucentStatus) {
-            progress_layout.layoutParams = (progress_layout.layoutParams as ConstraintLayout.LayoutParams).also {
-                it.topToTop = ConstraintSet.PARENT_ID
+
+            web_view.also {
+                it.layoutParams = (it.layoutParams as ConstraintLayout.LayoutParams).also {
+                    it.topToTop = ConstraintSet.PARENT_ID
+                }
             }
 
-
-            /*window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))*/
-
+            progress_bar.also {
+                it.layoutParams = (it.layoutParams as ConstraintLayout.LayoutParams).also {
+                    it.topToTop = ConstraintSet.PARENT_ID
+                }
+            }
         }
         web_view.settings.also {
             //webSettings.setSupportZoom(true);
@@ -100,12 +119,12 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
             override fun onShowCustomView(view: View?, callback: CustomViewCallback?) {
                 super.onShowCustomView(view, callback)
 
-                LLog.d(TAG, "onShowCustomView")
-                progress_layout.visibility = View.INVISIBLE
+                LLog.d(TAG, "onShowCustomView ${view?.hashCode()}")
+                progress_layout.showContent(false)
                 supportActionBar?.hide()
                 window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
-                video_container_fl.also {
+                videoContainer.also {
                     it.visibility = View.VISIBLE
                     it.addView(view)
                 }
@@ -114,10 +133,12 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
 
             override fun onHideCustomView() {
                 super.onHideCustomView()
+                LLog.d(TAG, "onHideCustomView")
                 supportActionBar?.show()
                 window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-                video_container_fl.visibility = View.GONE
-                progress_layout.visibility = View.VISIBLE
+                videoContainer.visibility = View.GONE
+                videoContainer.removeAllViews()
+                progress_layout.showContent(true)
 
                 requestedOrientation = tempRequestedOrientation
             }
@@ -142,7 +163,6 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
         web_view.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
-                //progress_layout.showContent()
                 LLog.d(TAG, "onPageFinished")
             }
 
@@ -191,18 +211,15 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
             val height = WindowUtil.getStatusBarHeight(this) + supportActionBar.let {
                 it?.height ?: 0
             }
-            //val color0 = ContextCompat.getColor(this@BaseWebViewActivity, tempStatusBarColor)
 
             val color1 = tempStatusBarColor and 0x00ffffff
             web_view.setOnScrollChangeListener(object : ScrollWebView.OnScrollChangeListener {
                 override fun onScrollChange(v: View, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int) {
                     if (height > scrollY) {
                         val color = 255 * scrollY / height shl 24 or color1
-                        toolbar_parent_cl.setBackgroundColor(color)
-                        //supportActionBar?.setBackgroundDrawable(ColorDrawable(color))
+                        toolbar_parent_layout.setBackgroundColor(color)
                     } else {
-                        toolbar_parent_cl.setBackgroundColor(tempStatusBarColor)
-                        //supportActionBar?.setBackgroundDrawable(ColorDrawable(color0))
+                        toolbar_parent_layout.setBackgroundColor(tempStatusBarColor)
                     }
 
                 }
@@ -224,6 +241,8 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
     }
 
     open fun onInitActionBar() {
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
         supportActionBar?.also {
             //it.setHomeButtonEnabled(true)
             it.setDisplayHomeAsUpEnabled(true)

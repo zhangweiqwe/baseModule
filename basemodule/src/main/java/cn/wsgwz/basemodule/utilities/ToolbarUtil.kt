@@ -17,18 +17,19 @@ object ToolbarUtil {
         return setCustomView(toolbar, resId)
     }
 
-    fun setCustomView(toolbar: Toolbar,  @LayoutRes resId: Int): View {
+    fun setCustomView(toolbar: Toolbar, @LayoutRes resId: Int): View {
         return LayoutInflater.from(toolbar.context).inflate(resId, null).apply {
             setCustomView(toolbar, this)
         }
     }
+
     fun setCustomView(toolbar: Toolbar, view: View): View {
         toolbar.addView(
-            view,
-            Toolbar.LayoutParams(
-                ActionBar.LayoutParams.MATCH_PARENT,
-                ActionBar.LayoutParams.MATCH_PARENT
-            )
+                view,
+                Toolbar.LayoutParams(
+                        ActionBar.LayoutParams.MATCH_PARENT,
+                        ActionBar.LayoutParams.MATCH_PARENT
+                )
         )
 
         /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

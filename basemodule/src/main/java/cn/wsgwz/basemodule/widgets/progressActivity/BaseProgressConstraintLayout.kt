@@ -91,6 +91,7 @@ abstract class BaseProgressConstraintLayout @JvmOverloads constructor(
     }
 
 
+
     private fun switchState(currentState: Int, description: CharSequence? = null, buttonClickListener: OnClickListener? = null, skipIds: ArrayList<Int>? = null) {
         mCurrentState = currentState
         hideAllStates()

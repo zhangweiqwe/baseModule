@@ -15,7 +15,17 @@ public class WindowUtil {
         int result = 0;
         int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {
-            result = (int) context.getResources().getDimension(resourceId);
+            result = context.getResources().getDimensionPixelOffset(resourceId);
+        }
+        return result;
+        //return DensityUtil.dp2px(context,45);
+    }
+
+    public static int getStatusBarColor(Context context) {
+        int result = Color.RED;
+        int resourceId = context.getResources().getIdentifier("status_bar_color", "attr", "android");
+        if (resourceId > 0) {
+            result = (int) context.getResources().getColor(resourceId);
         }
         return result;
         //return DensityUtil.dp2px(context,45);
