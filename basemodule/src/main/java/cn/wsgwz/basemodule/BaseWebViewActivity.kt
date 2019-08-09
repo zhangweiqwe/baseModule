@@ -242,7 +242,6 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.also {
-            //it.setHomeButtonEnabled(true)
             it.setBackgroundDrawable(null)
             it.setDisplayHomeAsUpEnabled(true)
             it.title = intent.getStringExtra("title")
