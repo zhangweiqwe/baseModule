@@ -13,22 +13,17 @@ import android.view.WindowManager
 import android.webkit.*
 import android.widget.FrameLayout
 import android.widget.ProgressBar
-import androidx.annotation.ColorInt
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
-import androidx.core.content.ContextCompat
 import cn.wsgwz.basemodule.interfaces.BaseJsInterface
-import cn.wsgwz.basemodule.interfaces.BaseWindowInterface
 import cn.wsgwz.basemodule.utilities.AndroidBug5497Workaround
 import cn.wsgwz.basemodule.utilities.LLog
 import cn.wsgwz.basemodule.utilities.manager.UserManager
 import cn.wsgwz.basemodule.utilities.WindowUtil
 import cn.wsgwz.basemodule.widgets.ScrollWebView
-import cn.wsgwz.basemodule.widgets.progressActivity.ProgressConstraintLayout
-import cn.wsgwz.basemodule.widgets.progressActivity.ProgressLayout
+import cn.wsgwz.basemodule.widgets.progressActivity.BaseProgressConstraintLayout
 import java.util.HashMap
-import javax.inject.Inject
 
 open class BaseWebViewActivity : BaseNetworkActivity() {
 
@@ -41,7 +36,7 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
     private var windowTranslucentStatus: Boolean = false
 
     protected lateinit var toolbar_parent_cl: ConstraintLayout
-    private lateinit var progress_layout: ProgressConstraintLayout
+    private lateinit var progress_layout: BaseProgressConstraintLayout
     private lateinit var web_view: ScrollWebView
     private lateinit var video_container_fl: FrameLayout
     private lateinit var progress_bar: ProgressBar

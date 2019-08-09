@@ -17,46 +17,7 @@ interface ProgressLayout {
     }
 
 
-    class Config private constructor(builder: Builder) {
 
-        internal var description: CharSequence? = null
-        internal var skipIds: ArrayList<Int>? = null
-        internal var buttonClickListener: View.OnClickListener? = null
-
-        init {
-            description = builder.description
-            skipIds = builder.skipIds
-            buttonClickListener = builder.buttonClickListener
-        }
-
-        class Builder {
-            internal var description: CharSequence? = null
-            internal var skipIds: ArrayList<Int>? = null
-            internal var buttonClickListener: View.OnClickListener? = null
-
-
-            fun description(description: CharSequence?): Builder {
-                this.description = description
-                return this
-            }
-
-
-            fun skipIds(skipIds: ArrayList<Int>?): Builder {
-                this.skipIds = skipIds
-                return this
-            }
-
-
-            fun buttonClickListener(buttonClickListener: View.OnClickListener?): Builder {
-                this.buttonClickListener = buttonClickListener
-                return this
-            }
-
-            fun build() = Config(this)
-
-
-        }
-    }
 
 
     fun showContent()
@@ -64,12 +25,12 @@ interface ProgressLayout {
     fun showLoading()
 
     fun showEmpty(config: Config)
-    fun showEmpty(l: (View) -> Unit) = showEmpty(ProgressLayout.Config.Builder().buttonClickListener(View.OnClickListener {
+    fun showEmpty(l: (View) -> Unit) = showEmpty(Config.Builder().buttonClickListener(View.OnClickListener {
         l(it)
     }).description(BaseApplication.getInstance().getString(R.string.progress_layout_empty_description)).build())
 
     fun showError(config: Config)
-    fun showError(l: (View) -> Unit) = showError(ProgressLayout.Config.Builder().buttonClickListener(View.OnClickListener {
+    fun showError(l: (View) -> Unit) = showError(Config.Builder().buttonClickListener(View.OnClickListener {
         l(it)
     }).description(BaseApplication.getInstance().getString(R.string.progress_layout_error_description)).build())
 
