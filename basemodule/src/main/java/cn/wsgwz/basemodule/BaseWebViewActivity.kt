@@ -82,9 +82,7 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
 
 
         onInitActionBar()
-        supportActionBar?.also {
-            it.setBackgroundDrawable(null)
-        }
+
 
 
         windowTranslucentStatus = intent.getBooleanExtra("windowTranslucentStatus", false)
@@ -245,6 +243,7 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.also {
             //it.setHomeButtonEnabled(true)
+            it.setBackgroundDrawable(null)
             it.setDisplayHomeAsUpEnabled(true)
             it.title = intent.getStringExtra("title")
         }
