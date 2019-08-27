@@ -155,6 +155,18 @@ open class BaseWebViewActivity : BaseNetworkActivity() {
                     progress_bar.visibility = View.INVISIBLE
                 }
             }
+
+            override fun onJsConfirm(view: WebView?, url: String?, message: String?, result: JsResult?): Boolean {
+
+                LLog.d(TAG,"onJsConfirm$url $message $result")
+                return super.onJsConfirm(view, url, message, result)
+            }
+
+            override fun onJsPrompt(view: WebView?, url: String?, message: String?, defaultValue: String?, result: JsPromptResult?): Boolean {
+
+                LLog.d(TAG,"onJsPrompt$url $message $defaultValue $result")
+                return super.onJsPrompt(view, url, message, defaultValue, result)
+            }
         }
 
 

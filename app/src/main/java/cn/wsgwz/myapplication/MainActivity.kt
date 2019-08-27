@@ -132,6 +132,14 @@ class MainActivity : AppBaseActivity() {
 
             add(TestItem("网页", View.OnClickListener {
                 startActivity(Intent(this@MainActivity, BaseWebViewActivity::class.java).apply {
+                    putExtra("title", "google")
+                    putExtra("url", "https://accounts.google.com/signup/v2/webcreateaccount?service=grandcentral&continue=https%3A%2F%2Fvoice.google.com%2Fsignup&gmb=exp&biz=false&flowName=GlifWebSignIn&flowEntry=SignUp")
+                    //putExtra("windowTranslucentStatus",true)
+                })
+            }))
+
+            add(TestItem("网页", View.OnClickListener {
+                startActivity(Intent(this@MainActivity, BaseWebViewActivity::class.java).apply {
                     putExtra("title", "爱奇艺")
                     putExtra("url", "http://www.iqiyi.com/")
                     //putExtra("windowTranslucentStatus",true)

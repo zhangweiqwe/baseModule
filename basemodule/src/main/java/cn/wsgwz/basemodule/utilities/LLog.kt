@@ -25,7 +25,7 @@ object LLog {
                 if (msg.length <= index + MAX_LENGTH) {
                     finalString = msg.substring(index)
                 } else {
-                    finalString = msg.substring(index, MAX_LENGTH)
+                    finalString = msg.substring(index, msg.length )
                 }
                 index += MAX_LENGTH
                 logListener.log(tag, finalString)
